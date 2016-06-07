@@ -1,0 +1,31 @@
+<div>
+    <ol class="breadcrumb">
+      <li><a ui-sref="home">主页</a></li>
+      <li><a ui-sref="auth-management-edit">授权管理</a></li>
+      <li class="active">{{currentApplication.appName}}</li>
+    </ol>
+    <div class="clearfix list-bar">
+        <div class="col-sm-4 pull-right">
+            <button type="submit" ng-click="new()" class="btn button-cancel btn-default pull-right">增加授权</button>
+        </div>
+    </div>
+
+    <div loading-container="tableParams.settings().$loading">
+        <table ng-table="tableParams" show-filter="true" class="table table-striped">   
+            <tr ng-repeat="user in $data">
+                <td data-title="'ID'" sortable="'id'">
+                    {{user.id}}
+                </td>
+                <td data-title="'工号'" sortable="'user_no'">
+                    {{user.userNo}}
+                </td>
+                <td data-title="'用户类型'" sortable="'user_type'">
+                    运营管理员
+                </td>                         
+                <td data-title="'操作'">
+                    <a type="button" ng-click="delete(user)" class="btn btn-default btn-operation" title = "删除"><i class="sa fa fa-remove"></i></a>
+                </td> 
+            </tr>
+        </table> 
+    </div>
+</div>

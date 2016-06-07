@@ -1,0 +1,117 @@
+<section>
+    <div class="section-main">
+        <div class="section-auto">
+            <div class="main-title">
+                <h2 class="section-title">自定义菜单</h2>
+            </div>
+            <div class="main-content">
+                <div class="menu-notopen hidden">
+                    <dl>
+                        <dt></dt>
+                        <dd class="title">未开启自定义菜单</dd>
+                        <dd class="desc">通过编辑和发布自定义菜单来进行便捷管理。</dd>
+                    </dl>
+                </div>
+                <div class="menu-action">
+                    <!--左侧-->
+                    <div class="item-content">
+                        <div menu-edit nodes="mynodes" selected-node="selectedNode"></div>
+                        <div class="edit-action">
+                            <div class="btn-group">
+                                <a ng-click="preview()" class="lbf-button" id="preview">预览</a>
+                                <span ng-click="publish()" class="lbf-button lbf-button-primary" id="publish">发布</span>
+                            </div>
+                            <p>每次编辑完成，必须进行发布才能更新到粉丝手机上。</p>
+                        </div>
+                    </div>
+                    <!--右侧-->
+                    <div class="item-action" id="item-edit">
+                        <div class="editing">
+                            <div class="list-tit">
+                                菜单名称
+                            </div>
+                            <div class="list-con list-name ">
+                                <div class="lbf-text-input">
+                                    <input class="lbf-text-input" id="item-name" ng-model="selectedNode.name" maxlength="8">
+                                    <label class="lbf-text-input-placeholder" style="display: none;">请输入菜单名称</label>
+                                </div>
+                                <span class="letter-count">{{8-selectedNode.name.length}}/8</span>
+                            </div>
+                            <div class="list-tit">
+                                菜单动作
+                            </div>
+                            <div class="list-con list-action">
+                                <ul ng-show="!selectedNode.isMainmenu" class="action-type">
+                                    <li>
+                                        <input tabindex="0" type="radio" ng-model="selectedNode.type" value="click">
+                                        <label for="item-action-reply">回复消息</label>
+                                    </li>
+                                    <li><input tabindex="0" type="radio" ng-model="selectedNode.type" value="view">
+                                        <label for="item-action-url">跳转到链接</label>
+                                    </li>
+                                </ul>
+                                <ul ng-show="selectedNode.isMainmenu&&('undefined'==selectedNode.sub_button||0==selectedNode.sub_button.length)" class="action-type">
+
+                                    <li>
+                                        <input tabindex="0" type="radio" ng-model="selectedNode.type" value="click">
+                                        <label for="item-action-reply">跳转到流程</label>
+                                    </li>
+
+                                    <li>
+                                        <input tabindex="0" type="radio" ng-model="selectedNode.type" value="view">
+                                        <label for="item-action-url" class="">跳转到链接</label>
+                                    </li>
+                                    
+                                </ul>
+                                <div ng-show="selectedNode.type=='view'" class="action-view">
+                                    <p class="tip-next">点击菜单将会跳转到以下链接：</p>
+                                    <p class="jump-url">
+                                        <div class="lbf-text-input">
+                                            <input placeholder="请输入链接" ng-model="selectedNode.url">
+                                        </div>
+                                        <span class="url-selector"></span>
+                                    </p>
+                                </div>
+                                <div ng-show="selectedNode.type=='click'" class="action-reply">
+                                    <p class="tip-next">点击菜单将会跳转到以下关键字对应流程：</p>
+                                    <p class="jump-url">
+                                        <div class="lbf-text-input">
+                                            <input placeholder="请输入关键字" ng-model="selectedNode.key">
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="showPreview" id="menu-preview">
+            <div class="overlay-menu-preview">
+                <div class="menu-preview">
+                    <div class="iphone-simulator">
+                        <h2 class="title">招行卡公众号测试</h2>
+                        <div class="preview-nav">
+                            <div class="top-nav">
+                                <ul>
+                                    <li class="icon-keyboard"></li>
+                                    <li ng-repeat="mainButton in mynodes.button" class="dropup menu-item top-nav-2" style="width:80.67px">
+                                        <a class="menu-item top-nav-2 dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{mainButton.name}}
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                            <li ng-repeat="sub_button in mainButton.sub_button"><a href="#">{{sub_button.name}}</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <a ng-click="exitPreview()" class="lbf-button btn-exit" title="退出预览">退出预览</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

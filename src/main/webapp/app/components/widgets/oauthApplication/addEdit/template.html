@@ -1,0 +1,56 @@
+<div class="popup">
+    <div class="popup-header">
+        <h2 class="popup-title text-center">{{method}}应用</h2>
+    </div>
+    <div class="popup-body">
+        <form class="form-horizontal">
+            <label for="warning-info" class="expire-color error-label">{{errorMsg}}</label>
+
+            <div class="form-group oauthApplication-property">
+                <label for="oauthApplication-accessAppName" class="col-sm-2 control-label">应用名</label>
+                <div class="col-sm-9">
+                    <input type="text" ng-click="oauthApplicationInputClick()" class="form-control oauthApplication-input" id="oauthApplication-accessAppName" placeholder="(必填)" ng-model="oauthApplication.appName" value="{{oauthApplication.appName}}" maxlength="47">
+                </div>
+            </div>
+
+            <div class="form-group oauthApplication-property">
+                <label for="oauthApplication-domain" class="col-sm-2 control-label">回调域名</label>
+                <div class="col-sm-9">
+                    <input type="text" ng-click="oauthApplicationInputClick()" class="form-control oauthApplication-input" id="oauthApplication-domain" placeholder="(必填 http://)" ng-model="oauthApplication.domain" value="{{oauthApplication.domain}}" maxlength="254">
+                </div>
+            </div>
+
+            <div class="form-group oauthApplication-property">
+                <label for="oauthApplication-applicationId" class="col-sm-2 control-label">应用ID</label>
+                <div class="col-sm-9">
+                    <input type="text" ng-click="oauthApplicationInputClick()" class="form-control oauthApplication-input" id="oauthApplication-applicationId" placeholder="(必填)" ng-model="oauthApplication.applicationId" value="{{oauthApplication.applicationId}}" maxlength="47">
+                </div>
+            </div>
+
+            <div class="form-group oauthApplication-property">
+                <label for="oauthApplication-aesSecret" class="col-sm-2 control-label">密钥</label>
+                <div class="col-sm-7">
+                    <input type="text" ng-click="oauthApplicationInputClick()" class="form-control oauthApplication-input" id="oauthApplication-aesSecret" placeholder="(必填)" ng-model="oauthApplication.aesSecret" value="{{oauthApplication.aesSecret}}" maxlength="24">
+                </div>
+                <button type="submit" ng-click="getKey()" class="btn btn-default">换一个</button>
+            </div>
+
+            <div class="form-group oauthApplication-property">
+                <label for="oauthApplication-isActive" class="col-sm-2 control-label">是否有效</label>
+                <div class="oauthApplication-switch col-sm-2">
+                    <switch class="wide" name="enabled" ng-model="oauthApplication.isActive"></switch>
+                </div>
+                <label for="oauthApplication-isTrustable" class="col-sm-3 control-label">是否为可信用户</label>
+                <div class="oauthApplication-switch col-sm-2">
+                    <switch class="wide" name="enabled" ng-model="oauthApplication.isTrustable"></switch>
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
+                <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">提交</button>
+            </div>
+
+        </form>
+    </div>  
+</div>

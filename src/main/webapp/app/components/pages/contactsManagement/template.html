@@ -1,0 +1,93 @@
+<div class="col-sm-12">
+    <div class="col-sm-4 dropdown">
+        <ol class="breadcrumb">
+          <li><a ui-sref="home">主页</a></li>
+          <li><span class="dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">部门<span class="caret"></span>
+            </span>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <li><a ui-sref="contacts-management">部门管理</a></li>
+                <li><a ui-sref="tag-management">标签管理</a></li>
+            </ul></li>
+        </ol>           
+    </div>
+    <div class="col-sm-6">
+        <h3>成员</h3>
+    </div>
+    <div class="col-sm-2">
+        <a type="button" ng-click="newUser(this)" class="list-action-new btn btn-default pull-right" title = "新建成员"><i class=" sa fa fa-plus"></i></a>
+    </div>
+</div>
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html">
+    <div ui-tree-handle data-nodrag class="tree-node tree-node-content">
+        <a ng-if="node.children && (node.children.length > 0)" data-nodrag ng-click="toggle(this)"><span
+        class="glyphicon"
+        ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed
+        }"></span>
+        </a>
+
+        <span ng-click="getMemberList(this.$modelValue.id)">{{node.name}}</span>
+
+        <div class="btn-group">
+            <span id+"dropDownCarset" class="caret dropdown-toggle" data-toggle="dropdown"></span>
+            <ul class="dropdown-menu" role="menu">
+                <li><a  ng-if="this.$modelValue.parentid > 0" ng-click="delete(this)" >删除</a></li>
+                <li><a ng-click="rename(this)">重命名</a></li>
+                <li><a ng-click="newSubItem(this)">增加子部门</a></li>
+                <li><a ng-if="this.$modelValue.parentid > 0" ng-click="newItem(this)">增加同级部门</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <ol ui-tree-nodes="" ng-model="node.children" ng-class="{hidden: collapsed}">
+        <li ng-repeat="node in node.children" ui-tree-node ng-include="'nodes_renderer.html'">
+        </li>
+    </ol>
+</script>
+
+<div class="col-sm-4 fixed-height">
+    <div ui-tree id="tree-root" class="fixed-height">
+        <ol ui-tree-nodes ng-model="data">
+            <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+        </ol>
+    </div>
+</div>
+
+<div class="col-sm-8 fixed-height">
+    <div loading-container="tableParams.settings().$loading">
+
+    <table ng-table="tableParams" show-filter="true" class="table table-striped">        
+        <tr ng-repeat="user in $data">
+
+            <td data-title="'姓名'">
+                {{user.name}}
+            </td>
+            <td data-title="'账号'">
+                {{user.userid}}
+            </td>
+            <td data-title="'职位'">
+                {{user.position}}
+            </td>
+            <td data-title="'手机'">
+                {{user.mobile}}
+            </td>  
+            <td data-title="'邮箱'">
+                {{user.email}}
+            </td>
+            <td data-title="'微信号'">
+                {{user.weixinid}}
+            </td>
+            <td data-title="'状态'">
+                {{user.status | memberStatus}}
+            </td>
+
+            <td data-title="'操作'">
+                <a type="button" ng-click="editUser(user)" class="btn btn-default btn-operation" title = "编辑"><i class="sa fa fa-edit"></i></a>
+                <a type="button" ng-click="deleteUser(user)" class="btn btn-default btn-operation" title = "删除"><i class="sa fa fa-remove"></i></a>
+            </td>
+        </tr>
+    </table> 
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="popup">
+    <div class="popup-header">
+        <h2 class="popup-title text-center">用户授权管理</h2>
+    </div>
+    <div class="popup-body">
+        <form class="form-horizontal">
+            <label for="warning-info" class="expire-color error-label">{{errorMsg}}</label>
+            <form action="" method="get">
+            <div class="height-fixed">
+                <div loading-container="tableParams.settings().$loading">
+                <table ng-table="editTable" show-filter="true" class="table table-striped"> 
+                    <tr ng-repeat="application in $data">
+                        
+                        <td data-title="'appName'" sortable="'app_name'">
+                            {{application.appName}}
+                        </td>
+                    
+                        <td data-title="'appId'" sortable="'app_id'">
+                            {{application.appId}}
+                        </td>  
+
+                        <td data-title="'是否授权'">
+                        <input name="isOauth" type="checkbox" class="big-checkbox" ng-model="application.isChecked" />
+                        </td>
+        
+                    </tr>
+                </table> 
+                </div>
+        </div>
+            <div class="form-group isActive-switch">
+                <label for="isActive-switch" class="col-sm-3 control-label">用户是否有效</label>
+                <div class="user-switch col-sm-9">
+                    <switch class="wide" name="enabled" ng-model="user.isActive"></switch>
+                </div>
+            </div>
+          
+            <div class="clearfix">
+                <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
+                <button type="submit" ng-click="submit(editTable, user.isActive)" class="btn btn-primary pull-right">提交</button>
+            </div>
+        </form>
+    </div>  
+</div>

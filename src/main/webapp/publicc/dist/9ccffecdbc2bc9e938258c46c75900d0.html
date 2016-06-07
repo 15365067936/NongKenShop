@@ -1,0 +1,21 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav pull-right">                
+            <li class="select-con" ng-show="user.userInfo.role=='operator'">
+                <select class="refine-select" ng-model="data.currentApp" ng-change="changedValue(data.currentApp)" ng-options="s.appName for s in user.userInfo.data">
+                </select>
+            </li>
+            <li id="fat-menu" class="dropdown">
+                <a role="button" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-user"></i>欢迎你：{{user.userInfo.username || '游客'}}
+                    <i class="icon-caret-down"></i>
+                </a>
+            </li>
+            <li><a ng-if = "user.userInfo.username" ng-click="logout()">登出</a>
+                <a ng-if = "!user.userInfo.username" ui-sref="login">登录</a>
+            </li>
+            
+        </ul>
+            <a class="brand" ui-sref="home"><span class="first">接入平台</span> <span class="second">管理系统</span></a>
+    </div>
+</div>
