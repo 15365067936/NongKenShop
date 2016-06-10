@@ -12,7 +12,7 @@
 	
 	<appender name="filelogger" class="org.apache.log4j.RollingFileAppender">
 		<param name="Append" value="true"/>
-		<param name="File" value="D:/oaBase/LOG/iR.log"/>
+		<param name="File" value="${webapp.root}/logs/sys.log"/>
 		<param name="MaxFileSize" value="100MB"/>
 		<param name="MaxBackupIndex" value="20"/>
 		<layout class="org.apache.log4j.PatternLayout">

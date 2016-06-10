@@ -2,6 +2,7 @@ package com.cmc777.shop.controller.admin;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,18 @@ public class LoginController {
 		} catch (BaseException e) {
 			LOGGER.error("用户登录失败" + login.getLoginName(), e);
 			return new RetMsg(e.getErrorCode(), e.getMessage());
+		}
+	}
+	
+	@RequestMapping("logout.json")
+	@ResponseBody
+	public RetMsg logout(HttpServletRequest request) {
+		if (StringUtils.isNotBlank(request.getAttribute(Global.KEY_CURRENT_USER).toString())) {
+			request.getSession().removeAttribute(Global.KEY_CURRENT_USER);
+			
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} else {
+			return new RetMsg(RespInfo.NO_LOGIN.getRespCode(), RespInfo.NO_LOGIN.getRespMsg());
 		}
 	}
 	
