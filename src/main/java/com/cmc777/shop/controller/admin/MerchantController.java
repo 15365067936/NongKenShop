@@ -16,6 +16,8 @@ import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Merchant;
 import com.cmc777.shop.service.MerchantService;
 import com.cmc777.shop.util.BeanUtil;
+import com.cmc777.shop.util.JsonUtil;
+import com.cmc777.shop.util.MD5;
 
 /**
  * 商户管理
@@ -32,13 +34,18 @@ public class MerchantController {
 	
 	@RequestMapping(value = "get-merchants-page.json", method = RequestMethod.GET)
 	@ResponseBody
-	public RetMsg getMerchantsPage(Merchant merchant, Integer pageNo, Integer size) {
-		Page<Merchant> page = merchantService.find(merchant, pageNo, size);
+	public RetMsg getMerchantsPage(Merchant merchant, Integer page, Integer count) {
+		LOGGER.info(JsonUtil.objectToJson(merchant));
+		Page<Merchant> merchants = merchantService.find(merchant, page, count);
 		
-		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), page);
+		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), merchants);
 	}
 	
 	
+	/**
+	 * @param merchant
+	 * @return
+	 */
 	@RequestMapping(value = "save.json", method = RequestMethod.POST)
 	@ResponseBody
 	public RetMsg saveMerchant(Merchant merchant) {
@@ -48,6 +55,7 @@ public class MerchantController {
 		}
 		
 		try {
+			merchant.setPassword(MD5.GetMD5Code(merchant.getPassword()));
 			merchantService.save(merchant);
 			
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
