@@ -19,7 +19,7 @@ module.exports = {
         // lazy pack file [id] 1,2,3.....
         chunkFilename: "[id].bundle.js",
         //网站运行时的访问路径
-        publicPath: '../../publicc/dist/'
+        publicPath: '../publicc/dist/'
     },
     //加载器
     module: {

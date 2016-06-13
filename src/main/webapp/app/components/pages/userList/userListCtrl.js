@@ -1,6 +1,6 @@
 module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService) {
 
-    var Api = $resource('/user/sys/queryuser');
+    var Api = $resource('/NongKenShop/merchant/get-merchants-page.json');
     $scope.userTypeList = variableService.getUserTypeList();
 
     if($stateParams.processId) {
@@ -10,7 +10,7 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         page: 1,           
         count: 5,
         sorting: {
-            is_fobidden: 'desc'   
+            is_forbidden: 'desc'
         }
     }, {
         counts: [10, 20, 50],
@@ -19,8 +19,9 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         getData: function (params) {
             console.log('in api');
             return Api.get(params.url()).$promise.then(function (data) {
-                params.total(data.total);
-                return data.data;
+                console.log(data);
+                params.total(data.data.content.length);
+                return data.data.content;
             });
         }
     });
@@ -103,7 +104,7 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         });
 
         modalInstance.result.then(function () {
-            $resource('/user/sys/deleteuser').save(User.id).$promise.then(function (ack) {
+            $resource('/NongKenShop/merchant/delete.json').save({id: User.id}).$promise.then(function (ack) {
                 console.log(ack.respCode);
                 if (ack.respCode != '1000') {
                     alert(ack.respMsg);
@@ -119,5 +120,3 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
 
            
 }
-
-

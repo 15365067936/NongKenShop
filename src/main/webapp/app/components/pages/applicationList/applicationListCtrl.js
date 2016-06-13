@@ -1,6 +1,6 @@
 module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService) {
 
-    var url = $resource('/application/sys/queryapp');
+    var url = $resource('/merchant/get-merchants-page.json');
     $scope.filterField = {app_id: '', channel: '', id: ''};
     $scope.channelList = variableService.getChannelList();
     

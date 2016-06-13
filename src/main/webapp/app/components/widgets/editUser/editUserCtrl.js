@@ -1,39 +1,34 @@
-module.exports = function ($scope, $uibModalInstance, method, currentUser) {
+module.exports = function ($scope, $uibModalInstance, $resource, method, currentUser) {
 
-    $scope.user = currentuser;
+    $scope.user = currentUser;
 
     $scope.method = method;
-    var url = '/user/sys/addapp';
+    var url = '/NongKenShop/merchant/save.json';
 
     if (!isEditModel()) {
-        $scope.user.channel = 'weixin';
-        $scope.user.isActive = true;
-        $scope.user.enableToken = false;
+        $scope.user.isForbidden = true;
     }
 
-    $scope.submit = function (NgTableParams) {
+    $scope.submit = function () {
+        $('#merchantForm').ajaxSubmit(function(message) {
 
-        if (!$scope.user.appName || !$scope.user.secretKey || !$scope.user.channel || !$scope.user.appId) {
-            $scope.errorMsg = '参数不能为空!';
-            return;
-        }
-        
-        if (isEditModel()) {
-            url = '/user/sys/updateapp';
-        }
-
-        $resource(url).save($scope.user).$promise.then(
-            function (ack) {
-
-            if (ack.respCode != '1000') {
-                $scope.errorMsg = ack.respMsg;
-                return;
-            }
-            
-            $uibModalInstance.close();
-            $scope.tableParams.page(1);
-            $scope.tableParams.reload();
+            alert(message);
         });
+        return false; 
+        // console.log($scope.user);
+        // $resource(url).save($scope.user).$promise.then(
+        //     function (ack) {
+        //     console.log(ack);
+
+        //     if (ack.respCode != '1000') {
+        //         $scope.errorMsg = ack.respMsg;
+        //         return;
+        //     }
+            
+        //     $uibModalInstance.close();
+        //     $scope.tableParams.page(1);
+        //     $scope.tableParams.reload();
+        // });
 
     };
 

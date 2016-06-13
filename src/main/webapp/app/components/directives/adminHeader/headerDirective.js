@@ -7,17 +7,17 @@ module.exports = function($rootScope, $scope, $resource, $state, userService, lo
             $scope.data = {currentApp: angular.copy(userService.currentApp)};
             $scope.user = userService;
             $rootScope.logout = function() {
-                
-                $resource("/user/logout").save().$promise.then(function(data) {
-                    console.log(data);
+                window.location = '../admin/admin_login.html';
+            //     $resource("/user/logout").save().$promise.then(function(data) {
+            //         console.log(data);
 
-                    if (data.respCode == 1000) {
-                        $rootScope.userInfo = {};
-                        $state.go('login');
-                    } else {
-                        alert('logout failed!');
-                    }
-                });
+            //         if (data.respCode == 1000) {
+            //             $rootScope.userInfo = {};
+            //             $state.go('login');
+            //         } else {
+            //             alert('logout failed!');
+            //         }
+            //     });
             }
 
             $scope.changedValue = function(selected) {

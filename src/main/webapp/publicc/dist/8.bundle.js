@@ -105,7 +105,7 @@ webpackJsonp([8],{
 
 	module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService) {
 
-	    var Api = $resource('/user/sys/queryuser');
+	    var Api = $resource('/NongKenShop/merchant/get-merchants-page.json');
 	    $scope.userTypeList = variableService.getUserTypeList();
 
 	    if($stateParams.processId) {
@@ -115,7 +115,7 @@ webpackJsonp([8],{
 	        page: 1,           
 	        count: 5,
 	        sorting: {
-	            is_fobidden: 'desc'   
+	            is_forbidden: 'desc'
 	        }
 	    }, {
 	        counts: [10, 20, 50],
@@ -124,8 +124,9 @@ webpackJsonp([8],{
 	        getData: function (params) {
 	            console.log('in api');
 	            return Api.get(params.url()).$promise.then(function (data) {
-	                params.total(data.total);
-	                return data.data;
+	                console.log(data);
+	                params.total(data.data.content.length);
+	                return data.data.content;
 	            });
 	        }
 	    });
@@ -208,7 +209,7 @@ webpackJsonp([8],{
 	        });
 
 	        modalInstance.result.then(function () {
-	            $resource('/user/sys/deleteuser').save(User.id).$promise.then(function (ack) {
+	            $resource('/NongKenShop/merchant/delete.json').save({id: User.id}).$promise.then(function (ack) {
 	                console.log(ack.respCode);
 	                if (ack.respCode != '1000') {
 	                    alert(ack.respMsg);
@@ -225,15 +226,12 @@ webpackJsonp([8],{
 	           
 	}
 
-
-
-
 /***/ },
 
 /***/ 149:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "a40b50f6eb742955e7953848709e3c8b.html";
+	module.exports = __webpack_require__.p + "dafa2007c63990da660d078fc6041234.html";
 
 /***/ },
 
@@ -285,7 +283,7 @@ webpackJsonp([8],{
 	var editUserCtrl = __webpack_require__(153);
 	__webpack_require__(154);
 	var mod = angular.module('app.editUser', []);
-	mod.controller('editUserCtrl', ['$scope', '$uibModalInstance', 'method', 'currentUser', editUserCtrl]);
+	mod.controller('editUserCtrl', ['$scope', '$uibModalInstance', '$resource', 'method', 'currentUser', editUserCtrl]);
 	module.exports = mod;
 
 /***/ },
@@ -293,42 +291,37 @@ webpackJsonp([8],{
 /***/ 153:
 /***/ function(module, exports) {
 
-	module.exports = function ($scope, $uibModalInstance, method, currentUser) {
+	module.exports = function ($scope, $uibModalInstance, $resource, method, currentUser) {
 
-	    $scope.user = currentuser;
+	    $scope.user = currentUser;
 
 	    $scope.method = method;
-	    var url = '/user/sys/addapp';
+	    var url = '/NongKenShop/merchant/save.json';
 
 	    if (!isEditModel()) {
-	        $scope.user.channel = 'weixin';
-	        $scope.user.isActive = true;
-	        $scope.user.enableToken = false;
+	        $scope.user.isForbidden = true;
 	    }
 
-	    $scope.submit = function (NgTableParams) {
+	    $scope.submit = function () {
+	        $('#merchantForm').ajaxSubmit(function(message) {
 
-	        if (!$scope.user.appName || !$scope.user.secretKey || !$scope.user.channel || !$scope.user.appId) {
-	            $scope.errorMsg = '参数不能为空!';
-	            return;
-	        }
-	        
-	        if (isEditModel()) {
-	            url = '/user/sys/updateapp';
-	        }
-
-	        $resource(url).save($scope.user).$promise.then(
-	            function (ack) {
-
-	            if (ack.respCode != '1000') {
-	                $scope.errorMsg = ack.respMsg;
-	                return;
-	            }
-	            
-	            $uibModalInstance.close();
-	            $scope.tableParams.page(1);
-	            $scope.tableParams.reload();
+	            alert(message);
 	        });
+	        return false; 
+	        // console.log($scope.user);
+	        // $resource(url).save($scope.user).$promise.then(
+	        //     function (ack) {
+	        //     console.log(ack);
+
+	        //     if (ack.respCode != '1000') {
+	        //         $scope.errorMsg = ack.respMsg;
+	        //         return;
+	        //     }
+	            
+	        //     $uibModalInstance.close();
+	        //     $scope.tableParams.page(1);
+	        //     $scope.tableParams.reload();
+	        // });
 
 	    };
 

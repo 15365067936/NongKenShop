@@ -22,7 +22,6 @@
     "debug": "*",
     "font-awesome": "^4.4.0",
     "lodash": "*",
-    "jquery": "*",
     "angular-local-storage": "*"
   },
   "devDependencies": {
