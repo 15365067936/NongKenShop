@@ -27,15 +27,7 @@ public class GoodsController {
 	
 	@RequestMapping("get-goods-page.json")
 	@ResponseBody
-	public RetMsg getGoodsPage(SearchFilter<Goods> filter, Integer page, Integer count) {
-		Goods goods = new Goods();
-		try {
-			goods = filter.getParams(Goods.class);
-		} catch (Exception e) {
-			LOGGER.error("参数转换失败", e);
-			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
-		} 
-		
+	public RetMsg getGoodsPage(Goods goods, Integer page, Integer count) {
 		Page<Goods> goodsPage = goodsService.find(goods, page, count);
 		
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goodsPage);
