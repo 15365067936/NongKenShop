@@ -1,6 +1,6 @@
 <div class="popup">
     <div class="popup-header">
-        <h2 class="popup-title text-center">{{method}}应用</h2>
+        <h2 class="popup-title text-center">{{method}}商品</h2>
     </div>
     <div class="popup-body">
         <form class="form-horizontal">
@@ -12,90 +12,53 @@
                 </p>
             </div>
              <div class="form-group application-property">
-                <label for="application-id" class="col-sm-3 control-label">渠道应用ID</label>
+                <label for="application-id" class="col-sm-3 control-label">名称</label>
                 <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-id" placeholder="(必填)" ng-model="application.appId" value="{{application.appId}}" maxlength="47">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-id" placeholder="(必填)" ng-model="application.name" value="{{application.name}}" maxlength="47">
                 </div>
             </div>
             <div class="form-group application-property">
-                <label for="application-name" class="col-sm-3 control-label">应用名</label>
+                <label for="application-name" class="col-sm-3 control-label">所属商户</label>
                 <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.appName" value="{{application.appName}}" maxlength="47">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchantId" value="{{application.merchantId}}" maxlength="47">
                 </div>
             </div>
             <div class="form-group application-property">
-                <label for="application-channel" class="col-sm-3 control-label">渠道</label>
+                <label for="application-name" class="col-sm-3 control-label">产地</label>
                 <div class="col-sm-8">
-                    <select ng-model="application.channel" ng-options="c.id as c.title for c in channelList">  
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.origin" value="{{application.origin}}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-channel" class="col-sm-3 control-label">商品分类</label>
+                <div class="col-sm-8">
+                    <select ng-model="application.goodsCategory" ng-options="c.id as c.title for c in goodsCategory">  
                     </select>
-                    <label ng-show="method=='编辑'">{{application.channel}}</label>
-                </div>
-            </div>
-
-            <div ng-show="application.channel=='FWweixin'" class="form-group application-property">
-                <label for="application-originId" class="col-sm-3 control-label">原始ID</label>
-                <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-originId" placeholder="原始ID" ng-model="application.originId" value="{{application.originId}}" maxlength="47">
-                </div>
-            </div>
-
-            <div ng-show="application.channel=='QYweixin'" class="form-group application-property">
-                <label for="application-token" class="col-sm-3 control-label">令牌</label>
-                <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-token" maxlength="127" placeholder="令牌" ng-model="application.token" value="{{application.token}}">
-                </div>
-            </div>
-
-            <div ng-show="application.channel=='QYweixin'" class="form-group application-property">
-                <label for="application-agentId" class="col-sm-3 control-label">代理ID</label>
-                <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-agentId" placeholder="代理ID" ng-model="application.agentId" value="{{application.agentId}}" maxlength="31">
-                </div>
-            </div>
-            <div ng-show="application.channel=='QYweixin' || application.channel=='FWweixin'" class="form-group application-property">
-                <label for="application-ESA" class="col-sm-3 control-label">加密AES钥</label>
-                <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-ESA" placeholder="加密AES钥" ng-model="application.encodingAesKey" value="{{application.encodingAesKey}}">
-                </div>
-            </div>
-            <div ng-show="application.channel=='Alipay'" class="form-group application-property">
-                <label for="application-publicKey" class="col-sm-3 control-label">公钥</label>
-                <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-publicKey" placeholder="公钥" ng-model="application.publicKey" value="{{application.publicKey}}">
-                </div>
-            </div>
-            <div ng-show="application.channel=='Alipay'" class="form-group application-property">
-                <label for="application-alipayPublicKey" class="col-sm-3 control-label">阿里公钥</label>
-                <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-alipayPublicKey" placeholder="阿里公钥" ng-model="application.alipayPublicKey" value="{{application.alipayPublicKey}}">
                 </div>
             </div>
             <div class="form-group application-property">
-                <label for="application-secretKey" class="col-sm-3 control-label">私钥</label>
+                <label for="application-name" class="col-sm-3 control-label">发货地区</label>
                 <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-secretKey" placeholder="(必填)" ng-model="application.secretKey" value="{{application.secretKey}}">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.goodsArea" value="{{application.goodsArea}}" maxlength="47">
+                </div>
+            </div><div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">所属商户</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchantId" value="{{application.merchantId}}" maxlength="47">
                 </div>
             </div>
             <div ng-show="application.channel=='FWweixin'" class="form-group application-property">
-                <label for="application-weixinNumber" class="col-sm-3 control-label">微信号</label>
+                <label for="application-goodsCode" class="col-sm-3 control-label">商品编号</label>
                 <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-weixinNumber" placeholder="微信号" ng-model="application.weixinNumber" value="{{application.weixinNumber}}" maxlength="255">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-goodsCode" placeholder="原始ID" ng-model="application.goodsCode" value="{{application.goodsCode}}" maxlength="47">
                 </div>
             </div>
-            <div ng-show="method=='编辑'" class="form-group application-property">
-                <label class="col-sm-3 control-label">创建时间</label>
-                <p class="col-sm-8 re-pos">
-                   {{application.createAt | date:'yyyy-MM-dd HH:mm:ss'}}
-                </p>
-            </div>
-            <div class="form-group isActive-switch">
-                <label for="isActive-switch" class="col-sm-3 control-label">是否有效</label>
+
+          
+            <div class="form-group isDeleted-switch">
+                <label for="isDeleted-switch" class="col-sm-3 control-label">是否删除</label>
                 <div class="application-switch col-sm-2">
-                    <switch class="wide" name="enabled" ng-model="application.isActive"></switch>
-                </div>
-                <label for="enableToken-switch" class="col-sm-3 control-label">授权管理Token</label>
-                <div class="application-switch col-sm-2">
-                    <switch class="wide" name="enabled" ng-model="application.enableToken"></switch>
+                    <switch class="wide" name="enabled" ng-model="application.isDeleted"></switch>
                 </div>
             </div>
         

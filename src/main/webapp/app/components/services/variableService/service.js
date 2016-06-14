@@ -9,6 +9,12 @@ module.exports = function($rootScope, $window) {
         {title: 'QQ', id: 'QQ'}
     ];
 
+    var goodsCategory = [
+        {title: '蔬菜', id: 'vegetables'},
+        {title: '大米', id: 'rice'},
+        {title: '水果', id: 'fruit'}
+    ]
+
     var userTypeList = [
         {title: '运营人员', id: '0'},
         {title: '管理员', id: '1'}
@@ -20,6 +26,10 @@ module.exports = function($rootScope, $window) {
 
     variableService.getUserTypeList = function() {
         return userTypeList || [];
+    };
+
+    variableService.getGoodsCategory = function() {
+        return goodsCategory || [];
     };
 
     return variableService;

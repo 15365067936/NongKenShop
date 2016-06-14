@@ -25,7 +25,6 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
             });
         }
     });
-    
     $scope.new = function() {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
@@ -45,14 +44,14 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         });
 
         modalInstance.result.then(function () {
-//            $resource('/user/sys/adduser').save(User.id).$promise.then(function (ack) {
-//                console.log(ack.respCode);
-//                if (ack.respCode != '1000') {
-//                    alert(ack.respMsg);
-//                }
-//                $scope.tableParams.page(1);
-//                $scope.tableParams.reload();
-//            });
+            $resource('/user/sys/adduser').save(User.id).$promise.then(function (ack) {
+                console.log(ack.respCode);
+                if (ack.respCode != '1000') {
+                    alert(ack.respMsg);
+                }
+                $scope.tableParams.page(1);
+                $scope.tableParams.reload();
+            });
 
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
@@ -77,14 +76,14 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         });
 
         modalInstance.result.then(function () {
-//            $resource('/user/sys/editUser').save(User.id).$promise.then(function (ack) {
-//                console.log(ack.respCode);
-//                if (ack.respCode != '1000') {
-//                    alert(ack.respMsg);
-//                }
-//                $scope.tableParams.page(1);
-//                $scope.tableParams.reload();
-//            });
+            $resource('/user/sys/editUser').save(User.id).$promise.then(function (ack) {
+                console.log(ack.respCode);
+                if (ack.respCode != '1000') {
+                    alert(ack.respMsg);
+                }
+                $scope.tableParams.page(1);
+                $scope.tableParams.reload();
+            });
 
         }, function () {
             console.log('Modal dismissed at: ' + new Date());

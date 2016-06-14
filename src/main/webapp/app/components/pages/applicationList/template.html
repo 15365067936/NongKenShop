@@ -1,0 +1,46 @@
+<div>
+    <div class="clearfix list-bar">
+        <div class="col-sm-4 pull-right">
+            <button type="submit" ng-click="new()" class="btn button-cancel btn-default pull-right">新建商品</button>
+        </div>
+    </div>
+
+    <div loading-container="tableParams.settings().$loading">
+        <table ng-table="tableParams" show-filter="true" class="table table-condensed table-striped">   
+            <tr ng-repeat="application in $data">
+                <td data-title="'商品ID'" filter="{'id': 'text'}" sortable="'id'">
+                    {{application.id}}
+                </td>
+                <td data-title="'名称'" filter="{'name': 'text'}" sortable="'name'">
+                    {{application.name}}
+                </td>
+                <td data-title="'所属商户'" filter="{'merchant_id': 'text'}"  sortable="'merchant_id'">
+                    {{application.merchantId}}
+                </td>
+                <td data-title="'产地'" sortable="'origin'">
+                    {{application.origin}}
+                </td>
+                <td data-title="'商品分类'" sortable="'goods_category'">
+                    {{application.goodsCategory}}
+                </td>
+                <!-- <td data-title="'图片列表'" sortable="'image_urls'">
+                    {{application.imageUrls}}
+                </td> -->
+                <td data-title="'发货地区'" sortable="'goods_area'">
+                    {{application.goodsArea}}
+                </td>
+                <td data-title="'商品编号'" sortable="'goods_code'">
+                    {{application.goodsCode}}
+                </td>
+                <td data-title="'是否删除'" sortable="'is_deleted'">
+                    {{application.isDeleted}}
+                </td>         
+                <td data-title="'操作'">
+                    <a type="button" ng-click="edit(application)" class="btn btn-default btn-operation" title = "详情/编辑">编辑</a>
+                    <a type="button" ng-click="editDetail(application)" class="btn btn-default btn-operation" title = "详情/编辑">管理商品</a>
+                    <a type="button" ng-click="delete(application)" class="btn btn-default btn-operation" title = "删除">删除</a>
+                </td> 
+            </tr>
+        </table> 
+    </div>
+</div>

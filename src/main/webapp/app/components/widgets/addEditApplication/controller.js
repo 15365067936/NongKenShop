@@ -2,9 +2,9 @@ module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, 
 
     $scope.application = currentApplication;
 
-    $scope.channelList = variableService.getChannelList();
+    $scope.goodsCategory = variableService.getGoodsCategory();
     $scope.method = method;
-    var url = '/application/sys/addapp';
+    var url = '/NongKenShop/goods/add.json';
 
     if (!isEditModel()) {
         $scope.application.channel = 'weixin';
@@ -14,11 +14,6 @@ module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, 
 
     $scope.submit = function (NgTableParams) {
 
-        if (!$scope.application.appName || !$scope.application.secretKey || !$scope.application.channel || !$scope.application.appId) {
-            $scope.errorMsg = '参数不能为空!';
-            return;
-        }
-        
         if (isEditModel()) {
             url = '/application/sys/updateapp';
         }
