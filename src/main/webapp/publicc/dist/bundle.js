@@ -75618,6 +75618,12 @@
 	        {title: 'QQ', id: 'QQ'}
 	    ];
 
+	    var goodsCategory = [
+	        {title: '蔬菜', id: 'vegetables'},
+	        {title: '大米', id: 'rice'},
+	        {title: '水果', id: 'fruit'}
+	    ]
+
 	    var userTypeList = [
 	        {title: '运营人员', id: '0'},
 	        {title: '管理员', id: '1'}
@@ -75629,6 +75635,10 @@
 
 	    variableService.getUserTypeList = function() {
 	        return userTypeList || [];
+	    };
+
+	    variableService.getGoodsCategory = function() {
+	        return goodsCategory || [];
 	    };
 
 	    return variableService;
@@ -75916,7 +75926,7 @@
 /* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "b66361cc64910be429efc9383c03c42a.html";
+	module.exports = __webpack_require__.p + "df7bb9f8055b10a686b06bb6df878caf.html";
 
 /***/ },
 /* 55 */
@@ -78480,14 +78490,160 @@
 	        $state.go('home');
 	    });
 	    $stateProvider
-	        .state('user-list', {
+	    .state('home', {
+	            url: "/home",
+	            templateUrl: __webpack_require__(69),
+	            controller: 'helloworldCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(1, function(require) {
+	                    var mod = __webpack_require__(81);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        })
+	        // .state('home', {
+	        //     url: "/home",
+	        //     templateUrl: require("file!../pages/helloworld/template.html"),
+	        //     controller: 'helloworldCtrl'
+	        //     resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	        //         var deferred = $q.defer();
+
+	        //         require.ensure([], function(require) {
+	        //             var mod = require('pages/helloworld');
+	        //             $ocLazyLoad.load({
+	        //                 name: mod.name,
+	        //             });
+
+	        //             deferred.resolve(mod.controller);
+	        //         });
+
+	        //         return deferred.promise;
+	        //     }]
+	        // })
+	        .state('menu-setting', {
+	            url: "/menu-setting",
+	            templateUrl: __webpack_require__(70),
+	            controller: 'menuSettingCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(2, function(require) {
+	                    var mod = __webpack_require__(85);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('weixin-menu-setting', {
+	            url: "/weixin-menu-setting",
+	            templateUrl: __webpack_require__(71),
+	            controller: 'weixinMenuSettingCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(3, function(require) {
+	                    var mod = __webpack_require__(100);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('tag-management', {
+	            url: "/tag-management",
+	            templateUrl: __webpack_require__(72),
+	            controller: 'tagManagementCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(4, function(require) {
+	                    var mod = __webpack_require__(109);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('application-list', {
+	            url: "/application-list:applicationId",
+	            templateUrl: __webpack_require__(73),
+	            controller: 'applicationListCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(5, function(require) {
+	                    var mod = __webpack_require__(124);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('access-application-list', {
+	            url: "/access-application-list",
+	            templateUrl: __webpack_require__(74),
+	            controller: 'accessApplicationListCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(6, function(require) {
+	                    var mod = __webpack_require__(133);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('oauth-application-list', {
+	            url: "/oauth-application-list",
+	            templateUrl: __webpack_require__(75),
+	            controller: 'oauthApplicationListCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(7, function(require) {
+	                    var mod = __webpack_require__(140);
+	                    console.log(mod)
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('user-list', {
 	            url: "/user-list",
 	            templateUrl: __webpack_require__(76),
 	            controller: 'userListCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(33, function(require) {
+	                __webpack_require__.e/* nsure */(8, function(require) {
 	                    var mod = __webpack_require__(147);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
@@ -78498,14 +78654,14 @@
 
 	                return deferred.promise;
 	            }]
-	        }).state('goods-list', {
-	            url: "/goods-list",
+	        }).state('contacts-management', {
+	            url: "/contacts-management",
 	            templateUrl: __webpack_require__(77),
 	            controller: 'contactsManagementCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(34, function(require) {
+	                __webpack_require__.e/* nsure */(9, function(require) {
 	                    var mod = __webpack_require__(156);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
@@ -78526,7 +78682,7 @@
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(35, function(require) {
+	                __webpack_require__.e/* nsure */(10, function(require) {
 	                    var mod = __webpack_require__(168);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
@@ -78547,7 +78703,7 @@
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(36, function(require) {
+	                __webpack_require__.e/* nsure */(11, function(require) {
 	                    var mod = __webpack_require__(177);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
@@ -78565,7 +78721,7 @@
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(37, function(require) {
+	                __webpack_require__.e/* nsure */(12, function(require) {
 	                    var mod = __webpack_require__(189);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
@@ -78581,17 +78737,52 @@
 
 
 /***/ },
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
+/* 69 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "6d516924a5dd27145613f3574204d09e.html";
+
+/***/ },
+/* 70 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "987a30954ba0accd44e206a882aa66d9.html";
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "aa16969adb4c093debd2558b1c4e064f.html";
+
+/***/ },
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "8eb3c682882359b8f0cd36e2e77ee296.html";
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "ff0106a6e4d3ca24a9cbceb5fb70bd4b.html";
+
+/***/ },
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "c48d3372f718942c4bec83db2715aacb.html";
+
+/***/ },
+/* 75 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "e4e7ca0332fe1f43b9f384fbca2c4269.html";
+
+/***/ },
 /* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "97447f2d15ecb076a79447e519720f93.html";
+	module.exports = __webpack_require__.p + "0c01e78210cb68e58dce627f60b4183d.html";
 
 /***/ },
 /* 77 */

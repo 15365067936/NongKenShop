@@ -130,7 +130,6 @@ webpackJsonp([8],{
 	            });
 	        }
 	    });
-	    
 	    $scope.new = function() {
 	        var modalInstance = $uibModal.open({
 	            animation: $scope.animationsEnabled,
@@ -150,14 +149,14 @@ webpackJsonp([8],{
 	        });
 
 	        modalInstance.result.then(function () {
-	//            $resource('/user/sys/adduser').save(User.id).$promise.then(function (ack) {
-	//                console.log(ack.respCode);
-	//                if (ack.respCode != '1000') {
-	//                    alert(ack.respMsg);
-	//                }
-	//                $scope.tableParams.page(1);
-	//                $scope.tableParams.reload();
-	//            });
+	            $resource('/user/sys/adduser').save(User.id).$promise.then(function (ack) {
+	                console.log(ack.respCode);
+	                if (ack.respCode != '1000') {
+	                    alert(ack.respMsg);
+	                }
+	                $scope.tableParams.page(1);
+	                $scope.tableParams.reload();
+	            });
 
 	        }, function () {
 	            console.log('Modal dismissed at: ' + new Date());
@@ -182,14 +181,14 @@ webpackJsonp([8],{
 	        });
 
 	        modalInstance.result.then(function () {
-	//            $resource('/user/sys/editUser').save(User.id).$promise.then(function (ack) {
-	//                console.log(ack.respCode);
-	//                if (ack.respCode != '1000') {
-	//                    alert(ack.respMsg);
-	//                }
-	//                $scope.tableParams.page(1);
-	//                $scope.tableParams.reload();
-	//            });
+	            $resource('/user/sys/editUser').save(User.id).$promise.then(function (ack) {
+	                console.log(ack.respCode);
+	                if (ack.respCode != '1000') {
+	                    alert(ack.respMsg);
+	                }
+	                $scope.tableParams.page(1);
+	                $scope.tableParams.reload();
+	            });
 
 	        }, function () {
 	            console.log('Modal dismissed at: ' + new Date());
@@ -232,7 +231,7 @@ webpackJsonp([8],{
 /***/ 149:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "432b7f27aca6ac77b7e57fb30172190e.html";
+	module.exports = __webpack_require__.p + "dafa2007c63990da660d078fc6041234.html";
 
 /***/ },
 
@@ -292,45 +291,51 @@ webpackJsonp([8],{
 /***/ 153:
 /***/ function(module, exports) {
 
-	module.exports = function($scope, $uibModalInstance, $resource, method,
-			currentUser) {
+	module.exports = function ($scope, $uibModalInstance, $resource, method, currentUser) {
 
-		$scope.user = currentUser;
+	    $scope.user = currentUser;
 
-		$scope.method = method;
-		var url = '/NongKenShop/merchant/save.json';
+	    $scope.method = method;
+	    var url = '/NongKenShop/merchant/save.json';
 
-		if (!isEditModel()) {
-			$scope.user.isForbidden = true;
-		}
+	    if (!isEditModel()) {
+	        $scope.user.isForbidden = true;
+	    }
 
-		$scope.submit = function() {  
-			console.log($scope.user);
-			$resource(url).save($scope.user).$promise.then(function(ack) {
-				console.log(ack);
-				if (ack.respCode != '1000') {
-					$scope.errorMsg = ack.respMsg;
-					return;
-				}
+	    $scope.submit = function () {
+	        $('#merchantForm').ajaxSubmit(function(message) {
 
-				$uibModalInstance.close();
-				$scope.tableParams.page(1);
-				$scope.tableParams.reload();
-			});
+	            alert(message);
+	        });
+	        return false; 
+	        // console.log($scope.user);
+	        // $resource(url).save($scope.user).$promise.then(
+	        //     function (ack) {
+	        //     console.log(ack);
 
-		};
+	        //     if (ack.respCode != '1000') {
+	        //         $scope.errorMsg = ack.respMsg;
+	        //         return;
+	        //     }
+	            
+	        //     $uibModalInstance.close();
+	        //     $scope.tableParams.page(1);
+	        //     $scope.tableParams.reload();
+	        // });
 
-		$scope.userInputClick = function() {
-			$scope.errorMsg = '';
-		};
+	    };
 
-		function isEditModel() {
-			return $scope.user.id ? true : false;
-		}
+	    $scope.userInputClick = function () {
+	        $scope.errorMsg = '';
+	    };
 
-		$scope.cancle = function() {
-			$uibModalInstance.close();
-		};
+	    function isEditModel() {
+	        return $scope.user.id ? true : false;
+	    }
+
+	    $scope.cancle = function () {
+	        $uibModalInstance.close();
+	    };
 
 	}
 

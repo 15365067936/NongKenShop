@@ -105,8 +105,7 @@ webpackJsonp([5],{
 
 	module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService) {
 
-	    var url = $resource('/merchant/get-merchants-page.json');
-	    $scope.filterField = {app_id: '', channel: '', id: ''};
+	    var url = $resource('/NongKenShop/goods/get-goods-page.json');
 	    $scope.channelList = variableService.getChannelList();
 	    
 	    if($stateParams.applicationId) {
@@ -114,11 +113,7 @@ webpackJsonp([5],{
 	    }
 	    $scope.tableParams = new NgTableParams({
 	        page: 1,           
-	        count: 5,
-	        filter: $scope.filterField,
-	        sorting: {
-	            create_at: 'desc'     
-	        }
+	        count: 5
 	    }, {
 	        counts: [5, 10, 15],
 	        paginationMaxBlocks: 9,
@@ -206,7 +201,7 @@ webpackJsonp([5],{
 /***/ 126:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "c9709a8dab6cb9dc31a436c8c6bb05b0.html";
+	module.exports = __webpack_require__.p + "4310fbc2a43ca4d5ae44e6bfefe9dedc.html";
 
 /***/ },
 
@@ -270,9 +265,9 @@ webpackJsonp([5],{
 
 	    $scope.application = currentApplication;
 
-	    $scope.channelList = variableService.getChannelList();
+	    $scope.goodsCategory = variableService.getGoodsCategory();
 	    $scope.method = method;
-	    var url = '/application/sys/addapp';
+	    var url = '/NongKenShop/goods/add.json';
 
 	    if (!isEditModel()) {
 	        $scope.application.channel = 'weixin';
@@ -282,11 +277,6 @@ webpackJsonp([5],{
 
 	    $scope.submit = function (NgTableParams) {
 
-	        if (!$scope.application.appName || !$scope.application.secretKey || !$scope.application.channel || !$scope.application.appId) {
-	            $scope.errorMsg = '参数不能为空!';
-	            return;
-	        }
-	        
 	        if (isEditModel()) {
 	            url = '/application/sys/updateapp';
 	        }

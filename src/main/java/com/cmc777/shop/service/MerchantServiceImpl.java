@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cmc777.shop.entity.Merchant;
 import com.cmc777.shop.repository.shop.MerchantRepository;
 import com.cmc777.shop.util.JsonUtil;
-import com.cmc777.shop.util.PageUtil;
 
 @Service
 public class MerchantServiceImpl implements MerchantService{
@@ -50,7 +49,7 @@ public class MerchantServiceImpl implements MerchantService{
 	@Override
 	public Page<Merchant> find(Merchant search, int page, int count) {
 		
-		Pageable pageable = PageUtil.getPageable(page - 1, count);
+		Pageable pageable = new PageRequest(page - 1, count);
 		Specification<Merchant> spec = getWhere(search);
 		Page<Merchant> merchants = merchantRepository.findAll(spec, pageable);
 		LOGGER.info(JsonUtil.objectToJson(merchants));

@@ -8,6 +8,8 @@ public enum RespInfo {
 	ERR_VALIDATE_CODE("3003", "验证码不正确"),
 	FORBIDDEN_ACCOUNT("3004", "用户账户被冻结"),
 	NO_LOGIN("3005", "用户未登录"),
+	NO_FILE("1100", "上传文件为空"),
+	FILE_UPLOAD_FAIL("1101", "文件上传失败"),
 	COMMON_ERROR("1001", "系统异常,请稍后再试");
 	
 	private String respCode;
