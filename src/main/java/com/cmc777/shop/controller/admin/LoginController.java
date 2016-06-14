@@ -63,5 +63,4 @@ public class LoginController {
 			return new RetMsg(RespInfo.NO_LOGIN.getRespCode(), RespInfo.NO_LOGIN.getRespMsg());
 		}
 	}
-	
 }

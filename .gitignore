@@ -1,5 +1,5 @@
 /src/main/webapp/node_modules/*
-/src/main/webapp/public/*
+/src/main/webapp/publicc/*
 *.class
 
 # Mobile Tools for Java (J2ME)

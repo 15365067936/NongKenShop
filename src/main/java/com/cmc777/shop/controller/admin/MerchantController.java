@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,7 +49,7 @@ public class MerchantController {
 	 */
 	@RequestMapping(value = "save.json", method = RequestMethod.POST)
 	@ResponseBody
-	public RetMsg saveMerchant(Merchant merchant) {
+	public RetMsg saveMerchant(@RequestBody Merchant merchant) {
 		String validateStr = BeanUtil.validateBean(merchant);
 		if (StringUtils.isNotBlank(validateStr)) {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), validateStr);
@@ -68,12 +69,12 @@ public class MerchantController {
 	
 	@RequestMapping("delete.json")
 	@ResponseBody
-	public RetMsg delete(@RequestParam(required = false) Integer id) {
+	public RetMsg delete(@RequestBody Merchant merchant) {
 		try {
-			merchantService.delete(id);
+			merchantService.delete(merchant.getId());
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
 		} catch (Exception e) {
-			LOGGER.error("删除ID = " + id + "失败", e);
+			LOGGER.error("删除ID = " + merchant.getId() + "失败", e);
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 	}
