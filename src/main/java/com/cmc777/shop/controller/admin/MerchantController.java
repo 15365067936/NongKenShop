@@ -1,7 +1,6 @@
 package com.cmc777.shop.controller.admin;
 
-import java.util.Map;
-
+import org.apache.avro.data.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmc777.shop.common.BaseException;
+import com.cmc777.shop.common.Global;
 import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Merchant;
@@ -23,7 +24,7 @@ import com.cmc777.shop.util.JsonUtil;
 import com.cmc777.shop.util.MD5;
 
 /**
- * 商户管理
+ * merchant管理
  * @author 张军
  *
  */
@@ -38,7 +39,7 @@ public class MerchantController {
 	@RequestMapping(value = "get-merchants-page.json", method = RequestMethod.GET)
 	@ResponseBody
 	public RetMsg getMerchantsPage(MerchantFilter searchFilter, Integer page, Integer count) {
-		LOGGER.info(JsonUtil.objectToJson(searchFilter.getMerchant()));
+		LOGGER.info("查询merchant" + JsonUtil.objectToJson(searchFilter.getMerchant()));
 		Page<Merchant> merchants = merchantService.find(searchFilter.getMerchant(), page, count);
 		
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), merchants);
@@ -48,9 +49,31 @@ public class MerchantController {
 	 * @param merchant
 	 * @return
 	 */
-	@RequestMapping(value = "save.json", method = RequestMethod.POST)
+	@RequestMapping(value = "update.json", method = RequestMethod.POST)
 	@ResponseBody
-	public RetMsg saveMerchant(@RequestBody Merchant merchant) {
+	public RetMsg updateMerchant(@RequestBody Merchant merchant) {
+		LOGGER.info("update merchant ====>" + JsonUtil.objectToJson(merchant));
+		String validateStr = BeanUtil.validateBean(merchant);
+		if (StringUtils.isNotBlank(validateStr)) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), validateStr);
+		}
+		
+		try {
+			merchantService.update(merchant);
+			
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} catch (Exception e) {
+			LOGGER.error("merchant" + merchant.getLoginName() + "update fail", e);
+			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
+		}
+		
+	}
+	
+	@RequestMapping(value = "add.json", method = RequestMethod.POST)
+	@ResponseBody
+	public RetMsg addMerchant(@RequestBody Merchant merchant) {
+		LOGGER.info("add merchant ====>" + JsonUtil.objectToJson(merchant));
+		merchant.setPassword(Global.PASSWORD);
 		String validateStr = BeanUtil.validateBean(merchant);
 		if (StringUtils.isNotBlank(validateStr)) {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), validateStr);
@@ -58,11 +81,14 @@ public class MerchantController {
 		
 		try {
 			merchant.setPassword(MD5.GetMD5Code(merchant.getPassword()));
-			merchantService.save(merchant);
+			merchantService.add(merchant);
 			
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} catch (BaseException b) {
+			LOGGER.error("merchant" + merchant.getLoginName() + "add fail", b);
+			return new RetMsg(b.getErrorCode(), b.getMessage());
 		} catch (Exception e) {
-			LOGGER.error("商户" + merchant.getLoginName() + "更新数据失败", e);
+			LOGGER.error("merchant" + merchant.getLoginName() + "add fail", e);
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 		
@@ -75,7 +101,7 @@ public class MerchantController {
 			merchantService.delete(merchant.getId());
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
 		} catch (Exception e) {
-			LOGGER.error("删除ID = " + merchant.getId() + "失败", e);
+			LOGGER.error("deleteID = " + merchant.getId() + "fail", e);
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 	}

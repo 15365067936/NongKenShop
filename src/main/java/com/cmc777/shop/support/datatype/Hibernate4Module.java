@@ -1,9 +1,10 @@
 package com.cmc777.shop.support.datatype;
 
-import com.fasterxml.jackson.core.Version;
-
-import com.fasterxml.jackson.databind.*;
 import org.hibernate.engine.spi.Mapping;
+
+import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.Module;
 
 public class Hibernate4Module extends Module
 {

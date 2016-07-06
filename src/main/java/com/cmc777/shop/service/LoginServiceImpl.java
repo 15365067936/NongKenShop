@@ -1,5 +1,7 @@
 package com.cmc777.shop.service;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +26,14 @@ public class LoginServiceImpl implements LoginService{
 
 	@Override
 	public Merchant login(Login login) throws BaseException{
-		Merchant merchant = merchantRepository.findByLoginName(login.getLoginName());
-		LOGGER.info(JsonUtil.objectToJson(merchant));
-		if (merchant == null) {
+		List<Merchant> merchants = merchantRepository.findByLoginName(login.getLoginName());
+		
+		LOGGER.info("用户" + login.getLoginName() + "查询结果===>" + JsonUtil.objectToJson(merchants));
+		if (merchants == null || merchants.size() <= 0) {
 			throw new BaseException(RespInfo.NO_USER.getRespCode(), RespInfo.NO_USER.getRespMsg());
 		}
-		
+		Merchant merchant = merchants.get(0);
+				
 		if(!checkPassword(login.getPassword(), merchant)) {
 			throw new BaseException(RespInfo.ERR_PASSWORD.getRespCode(), RespInfo.ERR_PASSWORD.getRespMsg());
 		}

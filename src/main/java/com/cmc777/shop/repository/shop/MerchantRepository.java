@@ -1,5 +1,7 @@
 package com.cmc777.shop.repository.shop;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -11,6 +13,6 @@ public interface MerchantRepository extends PagingAndSortingRepository<Merchant,
 	@SuppressWarnings("unchecked")
 	public Merchant save(Merchant merchant);
 	
-	public Merchant findByLoginName(String loginName);
+	public List<Merchant> findByLoginName(String loginName);
 
 }

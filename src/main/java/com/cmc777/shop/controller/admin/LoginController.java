@@ -29,7 +29,7 @@ public class LoginController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 	
-	@RequestMapping("login.json")
+	@RequestMapping(value = "login.json")
 	@ResponseBody
 	public RetMsg login(Login login, HttpServletRequest request) {
 		LOGGER.info("login is " + JsonUtil.objectToJson(login));

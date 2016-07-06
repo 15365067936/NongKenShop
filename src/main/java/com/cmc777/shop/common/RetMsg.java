@@ -18,8 +18,8 @@ public class RetMsg implements Serializable{
 
 	public RetMsg(String respCode, String respMsg) {
 		super();
-		this.respMsg = respMsg;
 		this.respCode = respCode;
+		this.respMsg = respMsg;
 	}
 
 	public RetMsg(String respCode, String respMsg, Object data) {

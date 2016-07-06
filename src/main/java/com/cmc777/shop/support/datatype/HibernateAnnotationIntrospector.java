@@ -3,9 +3,10 @@ package com.cmc777.shop.support.datatype;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.core.Version;
-
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
-import com.fasterxml.jackson.databind.introspect.*;
+import com.fasterxml.jackson.databind.introspect.AnnotatedConstructor;
+import com.fasterxml.jackson.databind.introspect.AnnotatedField;
+import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 
 /**
  * Simple {@link AnnotationIntrospector} that adds support for using

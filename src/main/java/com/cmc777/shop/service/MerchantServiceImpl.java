@@ -19,6 +19,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cmc777.shop.common.BaseException;
+import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.entity.Merchant;
 import com.cmc777.shop.repository.shop.MerchantRepository;
 import com.cmc777.shop.util.JsonUtil;
@@ -35,15 +37,13 @@ public class MerchantServiceImpl implements MerchantService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public Merchant save(Merchant merchant) {
+	public Merchant add(Merchant merchant) throws BaseException{
+		List<Merchant> merchants = merchantRepository.findByLoginName(merchant.getLoginName());
+		if (merchants != null && merchants.size() > 0) {
+			throw new BaseException(RespInfo.HAS_ACCOUNT.getRespCode(), RespInfo.HAS_ACCOUNT.getRespMsg());
+		}
 		
 		return merchantRepository.save(merchant);
-	}
-
-	@Override
-	public Merchant findByLoginName(String loginName) {
-		
-		return null;
 	}
 
 	@Override
@@ -90,5 +90,11 @@ public class MerchantServiceImpl implements MerchantService{
 		};
 		
 		return specification;
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public Merchant update(Merchant merchant) throws BaseException {
+		return merchantRepository.save(merchant);
 	}
 }

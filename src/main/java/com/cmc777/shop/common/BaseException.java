@@ -30,7 +30,7 @@ public class BaseException extends Exception
 		super(msg);
 	}
 	
-	public BaseException(String msg, String errorCode)
+	public BaseException(String errorCode, String msg)
 	{
 		super(msg);
 		setErrorCode(errorCode);

@@ -15,7 +15,6 @@ import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Goods;
 import com.cmc777.shop.service.GoodsService;
 import com.cmc777.shop.util.BeanUtil;
-import com.cmc777.shop.util.SearchFilter;
 
 @Controller
 @RequestMapping("goods")
