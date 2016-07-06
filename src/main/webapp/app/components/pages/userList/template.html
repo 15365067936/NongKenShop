@@ -8,10 +8,10 @@
     <div loading-container="tableParams.settings().$loading">
         <table ng-table="tableParams" show-filter="true" class="table table-striped">   
             <tr ng-repeat="user in $data">
-                <td data-title="'ID'" filter="{'id': 'text'}" sortable="'id'">
+                <td data-title="'ID'" sortable="'id'">
                     {{user.id}}
                 </td>
-                <td data-title="'用户名'" filter="{'login_name': 'text'}" sortable="'login_name'">
+                <td data-title="'用户名'" filter="{'loginName': 'text'}" sortable="'login_name'">
                     {{user.loginName}}
                 </td>
                 <!-- <td data-title="'用户类型'" filter="{'user_type': 'select'}" filter-data="userTypeList" sortable="'user_type'">
