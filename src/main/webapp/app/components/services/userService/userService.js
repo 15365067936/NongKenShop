@@ -46,8 +46,9 @@ module.exports = function($rootScope, $window, $location, localStorageService) {
     };
 
     user.initCheck = function() {
-    //     console.log(user);
-    //     getUserSession(user);
+        
+        console.log(user);
+        getUserSession(user);
 
     //     if ('operator' === user.userInfo.role) {
     //         if (0 === user.userInfo.data.length) {

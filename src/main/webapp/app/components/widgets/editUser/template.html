@@ -3,7 +3,7 @@
         <h2 class="popup-title text-center">{{method}}商户</h2>
     </div>
     <div class="popup-body">
-        <form id="merchantForm" onsubmit="submit()" name="merchant" class="form-horizontal" action="/NongKenShop/merchant/save.json" method="post">
+       <!--  <form id="merchantForm" onsubmit="submit()" name="merchant" class="form-horizontal" action="/NongKenShop/merchant/save.json" method="post"> -->
             <label class="expire-color error-label">{{errorMsg}}</label>
             <div ng-show="method=='编辑'" class="form-group user-property">
                 <label class="col-sm-3 control-label">ID</label>
@@ -57,8 +57,8 @@
         
             <div class="clearfix">
                 <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
-                <button type="submit"  class="btn btn-primary pull-right">提交</button>
+                <button type="submit"  ng-click="submit()" class="btn btn-primary pull-right">提交</button>
             </div>
-        </form>
+        <!-- </form> -->
     </div>  
 </div>

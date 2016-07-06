@@ -10,25 +10,25 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
     }
 
     $scope.submit = function () {
-        $('#merchantForm').ajaxSubmit(function(message) {
+        // $('#merchantForm').ajaxSubmit(function(message) {
 
-            alert(message);
-        });
-        return false; 
-        // console.log($scope.user);
-        // $resource(url).save($scope.user).$promise.then(
-        //     function (ack) {
-        //     console.log(ack);
-
-        //     if (ack.respCode != '1000') {
-        //         $scope.errorMsg = ack.respMsg;
-        //         return;
-        //     }
-            
-        //     $uibModalInstance.close();
-        //     $scope.tableParams.page(1);
-        //     $scope.tableParams.reload();
+        //     alert(message);
         // });
+        // return false; 
+        console.log($scope.user);
+        $resource(url).save($scope.user).$promise.then(
+            function (ack) {
+            console.log(ack);
+
+            if (ack.respCode != '1000') {
+                $scope.errorMsg = ack.respMsg;
+                return;
+            }
+            
+            $uibModalInstance.close();
+            $scope.tableParams.page(1);
+            $scope.tableParams.reload();
+        });
 
     };
 
