@@ -2,7 +2,7 @@
 <html lang="en-us" id="extr-page">
 	<head>
 		<meta charset="utf-8">
-		<title> Dextrys 电商平台</title>
+		<title>农垦电商平台</title>
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -58,7 +58,9 @@
 					  data:$("#login-form").serialize(),
 					  success:function(data) {
 						console.log(data);
-						window.location = '../views/index.html';
+						alert(data);
+						sessionStorage.setItem("key", "value"); 
+						// window.location = '../views/index.html';
 					  }
 					});
 				}
@@ -83,15 +85,14 @@
 			<div id="content" class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 col-lg-offset-4 hidden-xs hidden-sm">
-						<h1 class="txt-color-red login-header-big">农肯商城后台管理</h1>
+						<h1 class="txt-color-red login-header-big">农肯商城的后台管理</h1>
 					</div>
 					
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 col-lg-offset-4">
 						<div class="well no-padding">
-							<form action="../" id="login-form" class="smart-form client-form">
-							<!-- <form action="../admin/singIn" id="login-form" class="smart-form client-form"> -->
+							<form id="login-form" class="smart-form client-form">
 								<header>
 									登录
 								</header>
@@ -128,12 +129,12 @@
 											<i></i>保持登录状态</label>
 									</section>
 								</fieldset>
+							</form>
 								<footer>
 									<!-- <button type="submit" onclick="window.location.href('../views/index.html')" class="btn btn-primary">
 										登录
 									</button> -->
 								</footer>
-							</form>
 							<input class="btn btn-primary" onclick="onSave()" type="button" value="登录" name="B8">
 						</div>
 					</div>
@@ -233,16 +234,16 @@
 					}
 				});
 
-				function onSave() {
-					$.ajax({
-					  type:"post",
-					  url:"../admin/login.json",
-					  data:$("#login-form").serialize(),
-					  success:function(data) {
-					  	alert('come back!');
-					  }
-					});
-				}
+				// function onSave() {
+				// 	$.ajax({
+				// 	  type:"post",
+				// 	  url:"../admin/login.json",
+				// 	  data:$("#login-form").serialize(),
+				// 	  success:function(data) {
+				// 	  	alert('come back!');
+				// 	  }
+				// 	});
+				// }
 				
 			});
 

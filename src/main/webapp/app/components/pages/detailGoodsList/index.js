@@ -1,4 +1,4 @@
-var applicationListCtrl = require('./applicationListCtrl.js');
+var controller = require('./controller.js');
 require('./style.css');
 require('widgets/addEditApplication');
 require('widgets/confirmPopup');
