@@ -69,17 +69,17 @@ public class MerchantServiceImpl implements MerchantService{
 			@Override
 			public Predicate toPredicate(Root<Merchant> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<Predicate>();
-				if (search.getId() != null) {
+				if (search != null && search.getId() != null) {
 					Predicate idPredicate = cb.equal(root.get("id").as(Integer.class), search.getId());
 					predicates.add(idPredicate);
 				}
 				
-				if (StringUtils.isNotEmpty(search.getLoginName())) {
+				if (search != null && StringUtils.isNotEmpty(search.getLoginName())) {
 					Predicate idPredicate = cb.like(root.get("loginName").as(String.class), "%" + search.getLoginName() + "%");
 					predicates.add(idPredicate);
 				}
 				
-				if (StringUtils.isNotEmpty(search.getPhone())) {
+				if (search != null && StringUtils.isNotEmpty(search.getPhone())) {
 					Predicate idPredicate = cb.like(root.get("phone").as(String.class), "%" + search.getPhone() + "%");
 					predicates.add(idPredicate);
 				}

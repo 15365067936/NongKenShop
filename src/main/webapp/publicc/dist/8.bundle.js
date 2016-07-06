@@ -231,7 +231,7 @@ webpackJsonp([8],{
 /***/ 149:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "dafa2007c63990da660d078fc6041234.html";
+	module.exports = __webpack_require__.p + "922a7722e9cde7af78280c079eca8efc.html";
 
 /***/ },
 
@@ -303,25 +303,25 @@ webpackJsonp([8],{
 	    }
 
 	    $scope.submit = function () {
-	        $('#merchantForm').ajaxSubmit(function(message) {
+	        // $('#merchantForm').ajaxSubmit(function(message) {
 
-	            alert(message);
-	        });
-	        return false; 
-	        // console.log($scope.user);
-	        // $resource(url).save($scope.user).$promise.then(
-	        //     function (ack) {
-	        //     console.log(ack);
-
-	        //     if (ack.respCode != '1000') {
-	        //         $scope.errorMsg = ack.respMsg;
-	        //         return;
-	        //     }
-	            
-	        //     $uibModalInstance.close();
-	        //     $scope.tableParams.page(1);
-	        //     $scope.tableParams.reload();
+	        //     alert(message);
 	        // });
+	        // return false; 
+	        console.log($scope.user);
+	        $resource(url).save($scope.user).$promise.then(
+	            function (ack) {
+	            console.log(ack);
+
+	            if (ack.respCode != '1000') {
+	                $scope.errorMsg = ack.respMsg;
+	                return;
+	            }
+	            
+	            $uibModalInstance.close();
+	            $scope.tableParams.page(1);
+	            $scope.tableParams.reload();
+	        });
 
 	    };
 

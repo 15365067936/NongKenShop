@@ -75705,8 +75705,9 @@
 	    };
 
 	    user.initCheck = function() {
-	    //     console.log(user);
-	    //     getUserSession(user);
+	        
+	        console.log(user);
+	        getUserSession(user);
 
 	    //     if ('operator' === user.userInfo.role) {
 	    //         if (0 === user.userInfo.data.length) {
@@ -78782,7 +78783,7 @@
 /* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "0c01e78210cb68e58dce627f60b4183d.html";
+	module.exports = __webpack_require__.p + "b45c1341fe0fbfa6d7a232f0028093c7.html";
 
 /***/ },
 /* 77 */

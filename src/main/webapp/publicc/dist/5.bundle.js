@@ -267,7 +267,7 @@ webpackJsonp([5],{
 
 	    $scope.goodsCategory = variableService.getGoodsCategory();
 	    $scope.method = method;
-	    var url = '/NongKenShop/goods/add-goods.json';
+	    var url = '/NongKenShop/goods/add.json';
 
 	    if (!isEditModel()) {
 	        $scope.application.channel = 'weixin';
@@ -277,9 +277,9 @@ webpackJsonp([5],{
 
 	    $scope.submit = function (NgTableParams) {
 
-	//        if (isEditModel()) {
-	//            url = '/application/sys/updateapp';
-	//        }
+	        if (isEditModel()) {
+	            url = '/application/sys/updateapp';
+	        }
 
 	        $resource(url).save($scope.application).$promise.then(
 	            function (ack) {
