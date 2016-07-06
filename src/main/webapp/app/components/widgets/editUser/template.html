@@ -29,16 +29,16 @@
                     <input name="loginName" type="text" ng-click="userInputClick()" class="form-control user-input" id="user-loginName" ng-model="user.loginName" value="{{user.loginName}}" maxlength="47">
                 </div>
             </div>
-            <div class="form-group user-property">
+            <!-- <div class="form-group user-property">
                 <label for="user-password" class="col-sm-3 control-label">密码</label>
                 <div class="col-sm-8">
                     <input name="password" type="text" ng-click="userInputClick()" class="form-control user-input" id="user-password" ng-model="user.password" value="{{user.password}}" maxlength="47">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group user-property">
                 <label for="user-phone" class="col-sm-3 control-label">电话</label>
                 <div class="col-sm-8">
-                    <input name="phone" type="number" ng-click="userInputClick()" class="form-control user-input" id="user-phone" ng-model="user.phone" value="{{user.phone}}" maxlength="47">
+                    <input name="phone" type="text" ng-click="userInputClick()" class="form-control user-input" id="user-phone" ng-model="user.phone" value="{{user.phone}}" maxlength="47">
                 </div>
             </div>
             <div class="form-group user-property">
@@ -49,7 +49,7 @@
             </div>
             
             <div class="form-group isForbidden-switch">
-                <label for="isForbidden-switch" class="col-sm-3 control-label">是否有效</label>
+                <label for="isForbidden-switch" class="col-sm-3 control-label">是否冻结</label>
                 <div class="user-switch col-sm-2">
                     <switch name="isForbidden" class="wide" name="enabled" ng-model="user.isForbidden"></switch>
                 </div>

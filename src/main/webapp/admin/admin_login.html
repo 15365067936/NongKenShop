@@ -54,6 +54,7 @@
 			function onSave() {
 					$.ajax({
 					  type:"post",
+					  timeout : 20000, 
 					  url:"../admin/login.json",
 					  data:$("#login-form").serialize(),
 					  success:function(data) {

@@ -17,9 +17,9 @@
                 <!-- <td data-title="'用户类型'" filter="{'user_type': 'select'}" filter-data="userTypeList" sortable="'user_type'">
                     {{user.userType | userType}}
                 </td>   -->
-                <td data-title="'密码'" sortable="'password'">
+                <!-- <td data-title="'密码'" sortable="'password'">
                     {{user.password}}
-                </td>
+                </td> -->
                 <td data-title="'姓名'" sortable="'name'">
                     {{user.name}}
                 </td>  
@@ -29,8 +29,8 @@
                 <td data-title="'地址'" sortable="'address'">
                     {{user.address}}
                 </td>  
-                <td data-title="'是否有效'" sortable="'is_active'">
-                    {{user.isForbidden}}
+                <td data-title="'是否冻结'" sortable="'is_active'">
+                    {{user.isForbidden || userStatus}}
                 </td>     
                     
                 <td data-title="'操作'">

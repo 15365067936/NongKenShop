@@ -3,10 +3,10 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
     $scope.user = currentUser;
 
     $scope.method = method;
-    var url = '/NongKenShop/merchant/save.json';
+    var url = '/NongKenShop/merchant/add.json';
 
     if (!isEditModel()) {
-        $scope.user.isForbidden = true;
+        $scope.user.isForbidden = false;
     }
 
     $scope.submit = function () {
@@ -16,12 +16,15 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
         // });
         // return false; 
         console.log($scope.user);
+        if ($scope.method === '编辑') {
+            url = '/NongKenShop/merchant/update.json'
+        }
         $resource(url).save($scope.user).$promise.then(
             function (ack) {
             console.log(ack);
 
             if (ack.respCode != '1000') {
-                $scope.errorMsg = ack.respMsg;
+                alert(ack.respMsg);
                 return;
             }
             

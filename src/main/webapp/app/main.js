@@ -24,6 +24,7 @@ require('angular').module('app', [
         require('ng-table.js').name,
         require('filters/memberStatus').name,
         require('filters/userType').name,
+        require('filters/userStatus').name,
         'uiSwitch'
     ]).run(['$rootScope', '$location','$state' ,'$window' ,'userService', 
             function($rootScope, $location, $state, $window, userService) {
