@@ -17,12 +17,12 @@
                     <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-id" placeholder="(必填)" ng-model="application.name" value="{{application.name}}" maxlength="47">
                 </div>
             </div>
-            <div class="form-group application-property">
+            <!-- <div class="form-group application-property">
                 <label for="application-name" class="col-sm-3 control-label">所属商户</label>
                 <div class="col-sm-8">
                     <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchantId" value="{{application.merchantId}}" maxlength="47">
                 </div>
-            </div>
+            </div> -->
             <div class="form-group application-property">
                 <label for="application-name" class="col-sm-3 control-label">产地</label>
                 <div class="col-sm-8">
@@ -32,21 +32,22 @@
             <div class="form-group application-property">
                 <label for="application-channel" class="col-sm-3 control-label">商品分类</label>
                 <div class="col-sm-8">
-                    <select ng-model="application.goodsCategory" ng-options="c.id as c.title for c in goodsCategory">  
+                    <select ng-model="application.category.id" ng-options="c.id as c.title for c in goodsCategory">  
                     </select>
                 </div>
             </div>
-            <div class="form-group application-property">
+            <!-- <div class="form-group application-property">
                 <label for="application-name" class="col-sm-3 control-label">发货地区</label>
                 <div class="col-sm-8">
                     <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.goodsArea" value="{{application.goodsArea}}" maxlength="47">
                 </div>
-            </div><div class="form-group application-property">
+            </div> -->
+            <!-- <div class="form-group application-property">
                 <label for="application-name" class="col-sm-3 control-label">所属商户</label>
                 <div class="col-sm-8">
-                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchantId" value="{{application.merchantId}}" maxlength="47">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchant.id" value="{{application..merchant.id}" maxlength="47">
                 </div>
-            </div>
+            </div> -->
             <div ng-show="application.channel=='FWweixin'" class="form-group application-property">
                 <label for="application-goodsCode" class="col-sm-3 control-label">商品编号</label>
                 <div class="col-sm-8">

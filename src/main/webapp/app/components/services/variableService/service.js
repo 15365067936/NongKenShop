@@ -10,9 +10,9 @@ module.exports = function($rootScope, $window) {
     ];
 
     var goodsCategory = [
-        {title: '蔬菜', id: 'vegetables'},
-        {title: '大米', id: 'rice'},
-        {title: '水果', id: 'fruit'}
+        {title: '蔬菜', id: '1'},
+        {title: '大米', id: '2'},
+        {title: '水果', id: '3'}
     ]
 
     var userTypeList = [

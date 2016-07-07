@@ -1,21 +1,21 @@
-module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, method, currentApplication, variableService) {
+module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, method, currentApplication, variableService, userService) {
 
     $scope.application = currentApplication;
 
     $scope.goodsCategory = variableService.getGoodsCategory();
     $scope.method = method;
-    var url = '/NongKenShop/goods/add.json';
+    var url = '/NongKenShop/goods/add-goods.json';
 
     if (!isEditModel()) {
-        $scope.application.channel = 'weixin';
-        $scope.application.isActive = true;
-        $scope.application.enableToken = false;
+        $scope.application.merchant = {id: $scope.user.userInfo.id};
+        $scope.application.category = {id: ''};
+        $scope.application.isDeleted = false;
     }
 
     $scope.submit = function (NgTableParams) {
 
         if (isEditModel()) {
-            url = '/application/sys/updateapp';
+            url = '/NongKenShop/goods/update-goods.json';
         }
 
         $resource(url).save($scope.application).$promise.then(

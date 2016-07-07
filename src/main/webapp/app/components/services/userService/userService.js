@@ -1,6 +1,6 @@
 module.exports = function($rootScope, $window, $location, localStorageService) {
     var user = {
-        userInfo: {name: 'mock', role: 'admin'},
+        userInfo: {name: 'mock', role: 'admin', id: ''},
         currentApp: {}
     };
 
@@ -48,7 +48,15 @@ module.exports = function($rootScope, $window, $location, localStorageService) {
     user.initCheck = function() {
         
         console.log(user);
-        getUserSession(user);
+        if (!sessionStorage.getItem('role')) {
+            $window.location.href = '../admin/admin_login.html';
+        } else {
+            console.log(sessionStorage.getItem('role'))
+
+            user.userInfo.role = sessionStorage.getItem('role');
+            user.userInfo.id = sessionStorage.getItem('id');
+        }
+
 
     //     if ('operator' === user.userInfo.role) {
     //         if (0 === user.userInfo.data.length) {
@@ -102,6 +110,7 @@ module.exports = function($rootScope, $window, $location, localStorageService) {
 };
 
 function getUserSession(user) {
+
     $.ajax({
             url: "/user/sys/check",
             async: false,

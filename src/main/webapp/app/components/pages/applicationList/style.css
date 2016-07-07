@@ -1,0 +1,14 @@
+.hidden-input {
+    position: absolute;
+    width: 45px;
+    height:35px;
+    
+}
+.hidden-input input {
+	opacity: 0;
+}
+.hidden-input+a :hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}

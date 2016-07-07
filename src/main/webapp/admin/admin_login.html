@@ -59,10 +59,20 @@
 					  data:$("#login-form").serialize(),
 					  success:function(data) {
 						console.log(data);
-						alert(data);
-						sessionStorage.setItem("key", "value"); 
-						// window.location = '../views/index.html';
-					  }
+						if (data.respCode === '1000') {
+							sessionStorage.setItem("role", data.data.loginName); 
+							sessionStorage.setItem("id", data.data.id); 
+							window.location = '../views/index.html';
+
+						} else {
+							alert(data.respMsg);
+
+						}
+						
+					  },
+					   error: function () {
+		                    alert('系统维护中，请稍后重试！');
+		                }
 					});
 				}
 		</script>
