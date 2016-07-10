@@ -1,21 +1,20 @@
 module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService) {
 
-    var url = $resource('/NongKenShop/goods/get-goods-page.json');
+    console.log($stateParams);
     $scope.channelList = variableService.getChannelList();
     
-    if($stateParams.applicationId) {
-        $scope.filterField.id = $stateParams.applicationId;
+    if($stateParams.good) {
+        $scope.good = JSON.parse($stateParams.good);
     }
+
+    var url = $resource('/NongKenShop/goods-detail/get-detail.json?goodsId=' + $scope.good.id);
+    
     $scope.tableParams = new NgTableParams({
-        page: 1,           
-        count: 5
     }, {
-        counts: [5, 10, 15],
-        paginationMaxBlocks: 9,
         total: 0,          
         getData: function (params) {
             return url.get(params.url()).$promise.then(function (body) {
-                params.total(body.total);
+                console.log(body);
                 return body.data;
             });
         }
@@ -24,8 +23,8 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     $scope.edit = function (application) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: require('file!../../widgets/addEditApplication/template.html'),
-            controller: 'addEditApplicationCtrl',
+            templateUrl: require('file!../../widgets/addEditDetailGoods/template.html'),
+            controller: 'addEditDetailGoodsCtrl',
             scope: $scope,
             resolve: {
                 method: function () {
@@ -41,15 +40,15 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     $scope.new = function (application) {0
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: require('file!../../widgets/addEditApplication/template.html'),
-            controller: 'addEditApplicationCtrl',
+            templateUrl: require('file!../../widgets/addEditDetailGoods/template.html'),
+            controller: 'addEditDetailGoodsCtrl',
             scope: $scope,
             resolve: {
                 method: function () {
                     return '新建';
                 },
                 currentApplication: function () {
-                    var application = {};
+                    var application = {goods: {id: $scope.good.id}};
                     return angular.copy(application);
                 }
             }
@@ -64,13 +63,13 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
             scope: $scope,
             resolve: {
                 message: function () {
-                    return {body: '确认删除此应用？'};
+                    return {body: '确认删除此详细商品？'};
                 }
             }
         });
 
         modalInstance.result.then(function () {
-            $resource('/application/sys/deleteapp').save(application).$promise.then(function (ack) {
+            $resource('/NongKenShop/goods-detail/delete-detail.json').save({id: application.id}).$promise.then(function (ack) {
                 console.log(ack.respCode);
 
                 if (ack.respCode != '1000') {

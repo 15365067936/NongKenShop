@@ -119,6 +119,24 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'localStor
 
                 return deferred.promise;
             }]
+        }).state('detail-goods-list', {
+            url: "/detail-goods-list:good",
+            templateUrl: require("file!../pages/detailGoodsList/template.html"),
+            controller: 'detailGoodsListCtrl',
+            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+                var deferred = $q.defer();
+
+                require.ensure([], function(require) {
+                    var mod = require('pages/detailGoodsList');
+                    $ocLazyLoad.load({
+                        name: mod.name,
+                    });
+
+                    deferred.resolve(mod.controller);
+                });
+
+                return deferred.promise;
+            }]
         }).state('access-application-list', {
             url: "/access-application-list",
             templateUrl: require("file!../pages/accessApplicationList/template.html"),

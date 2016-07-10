@@ -4,18 +4,15 @@ module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, 
 
     $scope.goodsCategory = variableService.getGoodsCategory();
     $scope.method = method;
-    var url = '/NongKenShop/goods/add-goods.json';
+    var url = '/NongKenShop/goods-detail/add-detail.json';
 
     if (!isEditModel()) {
-        $scope.application.merchant = {id: $scope.user.userInfo.id};
-        $scope.application.category = {id: ''};
-        // $scope.application.isDeleted = false;
     }
 
     $scope.submit = function (NgTableParams) {
 
         if (isEditModel()) {
-            url = '/NongKenShop/goods/update-goods.json';
+            url = '/NongKenShop/goods-detail/update-detail.json';
         }
 
         $resource(url).save($scope.application).$promise.then(

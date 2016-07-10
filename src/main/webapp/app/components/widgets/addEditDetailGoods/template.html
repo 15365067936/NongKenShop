@@ -1,0 +1,69 @@
+<div class="popup">
+    <div class="popup-header">
+        <h2 class="popup-title text-center">{{method}}商品详情</h2>
+    </div>
+    <div class="popup-body">
+        <form class="form-horizontal">
+            <label class="expire-color error-label">{{errorMsg}}</label>
+            <div ng-show="method=='编辑'" class="form-group application-property">
+                <label class="col-sm-3 control-label">ID</label>
+                <p class="col-sm-8 re-pos">
+                   {{application.id}}
+                </p>
+            </div>
+             <div class="form-group application-property">
+                <label for="application-id" class="col-sm-3 control-label">规格</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-id" ng-model="application.specifications" value="{{application.specifications}}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">单位</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" ng-model="application.unit" value="{{application.unit}}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">单价</label>
+                <div class="col-sm-8">
+                    <input type="number" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" ng-model="application.price" value="{{application.price}}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-channel" class="col-sm-3 control-label">库存</label>
+                <div class="col-sm-8">
+                    <input type="number" ng-click="applicationInputClick()" class="form-control application-input" id="application-channel" ng-model="application.number" value="{{application.number}}" maxlength="47">
+                </div>
+            </div>
+          <!--   <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">发货地区</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.goodsArea" value="{{application.goodsArea}}" maxlength="47">
+                </div>
+            </div> -->
+            <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">打包方式</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" ng-model="application.wayOfPacking" value="{{application.wayOfPacking}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-goodsCode" class="col-sm-3 control-label">运输方式</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-goodsCode" ng-model="application.wayOfTransport" value="{{application.wayOfTransport}}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group isDeleted-switch">
+                <label for="isDeleted-switch" class="col-sm-3 control-label">物流公司</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-goodsCode" ng-model="application.logisticsCompany" value="{{application.logisticsCompany}}" maxlength="47">
+                </div>
+            </div>
+        
+            <div class="clearfix">
+                <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
+                <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">提交</button>
+            </div>
+        </form>
+    </div>  
+</div>

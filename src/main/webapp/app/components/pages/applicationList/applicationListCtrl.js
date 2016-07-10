@@ -101,13 +101,13 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
             scope: $scope,
             resolve: {
                 message: function () {
-                    return {body: '确认删除此应用？'};
+                    return {body: '确认删除此商品？'};
                 }
             }
         });
 
         modalInstance.result.then(function () {
-            $resource('/application/sys/deleteapp').save(application).$promise.then(function (ack) {
+            $resource('/NongKenShop/goods/delete-goods.json').save({id: application.id}).$promise.then(function (ack) {
                 console.log(ack.respCode);
 
                 if (ack.respCode != '1000') {
