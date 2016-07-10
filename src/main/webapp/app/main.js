@@ -13,6 +13,7 @@ require('angular').module('app', [
         require('angular-ui-bootstrap'),
         require('angular-resource'),
         require('angular-ui-tree'),
+        require('ng-file-upload'),
         require('angular-local-storage'),
         require('services/util').name,
         require('services/variableService').name,

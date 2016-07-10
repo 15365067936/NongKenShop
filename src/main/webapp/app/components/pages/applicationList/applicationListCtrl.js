@@ -1,7 +1,9 @@
-module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService) {
+module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService, userService) {
 
     var url = $resource('/NongKenShop/goods/get-goods-page.json');
     $scope.channelList = variableService.getChannelList();
+    $scope.user = userService;
+    console.log($scope.user);
     
     if($stateParams.applicationId) {
         $scope.filterField.id = $stateParams.applicationId;
@@ -15,8 +17,8 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         total: 0,          
         getData: function (params) {
             return url.get(params.url()).$promise.then(function (body) {
-                params.total(body.total);
-                return body.data;
+                // params.total(body.data.content.length);
+                return body.data.content;
             });
         }
     });
@@ -54,6 +56,41 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
                 }
             }
         });
+    };
+
+    $scope.upload = function(a, file, group) {
+        console.log(a);
+        $scope.showBtn = false;
+        console.log(file);
+        if (null == file) {
+            alert('文件为空！');
+            return;
+        }
+
+        file.upload = Upload.http({
+            url: '/NongKenShop/goods/get-goods-page.json' + '&to_groupid=' + group.id,
+            method: 'POST',
+            headers: {
+                'Content-Type': file.type
+            },
+            data: file
+        });
+
+        file.upload.then(function(response) {
+            console.log(response);
+
+            if (response.data && response.data.respCode != '1000') {
+                alert(response.data.respMsg + response.data.content);
+            } else {
+                alert('上传成功！' + response.data.respMsg);
+                $scope.tableParams.page(1);
+                $scope.tableParams.reload();
+            }
+
+        }, function(response) {
+            console.log(response);
+        });
+
     };
 
     $scope.delete = function (application) {
