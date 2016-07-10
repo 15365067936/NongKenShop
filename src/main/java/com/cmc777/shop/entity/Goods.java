@@ -1,6 +1,7 @@
 package com.cmc777.shop.entity;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -40,6 +42,7 @@ public class Goods {
 	
 	@ManyToOne
 	@JoinColumn(name = "merchant_id")
+	@NotNull(message = "所属商户不能为空")
 	private Merchant merchant;
 	
 	//产地
@@ -52,8 +55,10 @@ public class Goods {
 	@Column(length = 1000)
 	private String imageUrls;
 	
-	@Column(length = 5)
+	@Column(length = 15)
 	private String goodsCode;
+	
+	private Boolean isDeleted = false;
 	
 	@OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "goods", fetch= FetchType.LAZY)
 	private List<GoodsDetail> goodsDetail = Lists.newArrayList();
@@ -120,6 +125,21 @@ public class Goods {
 
 	public void setGoodsDetail(List<GoodsDetail> goodsDetail) {
 		this.goodsDetail = goodsDetail;
+	}
+	
+	public static String createGoodsCode() {
+		String code = UUID.randomUUID().toString().replace("-", "");
+		code = code.substring(code.length()-15);
+		
+		return StringUtils.lowerCase(code);
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 	
