@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -30,20 +31,29 @@ public class GoodsDetail {
 	private String specifications; 
 	
 	//单价
+	@NotNull(message = "单价不能为空")
 	private Double price;
-	private float number;
+	
+	private Float number;
+	
 	@Column(length = 10)
-	private String unit;
+	@NotNull(message = "单位不能为空")
+	private String unit = "斤";
 	
 	//打包方式
 	@Column(length = 300)
+	@NotNull(message = "打包方式不能为空")
 	private String wayOfPacking;
 	//运输方式
 	@Column(length = 300)
+	@NotNull(message = "运输方式不能为空")
 	private String wayOfTransport;
 	//物流
 	@Column(length = 300)
+	@NotNull(message = "物流不能为空")
 	private String logisticsCompany;
+	
+	private Boolean isDeleted = false;
 
 	public Integer getId() {
 		return id;
@@ -77,11 +87,11 @@ public class GoodsDetail {
 		this.price = price;
 	}
 
-	public float getNumber() {
+	public Float getNumber() {
 		return number;
 	}
 
-	public void setNumber(float number) {
+	public void setNumber(Float number) {
 		this.number = number;
 	}
 
@@ -116,5 +126,14 @@ public class GoodsDetail {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	
 }
 

@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,30 +28,32 @@ public class FileUploadController {
 	
 	@RequestMapping("upload.json")
 	@ResponseBody
-	public RetMsg uploadFile(@RequestParam("file") MultipartFile file) {
+	public RetMsg uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		if (file.isEmpty()) {
 			return new RetMsg(RespInfo.NO_FILE.getRespCode(), RespInfo.NO_FILE.getRespMsg());
 		}
-		
-		File uploadFile = new File(Global.FILE_UPLOAD_DIR);
+		String fileDir = request.getSession().getServletContext().getRealPath("/");
+		File uploadFile = new File(fileDir);
 		if (!uploadFile.exists()) {
 			uploadFile.mkdirs();
 		}
 		
-		String filePath = getFilePath(file.getOriginalFilename());
+		String filePath = getFilePath(file.getOriginalFilename(), request.getSession());
 		LOGGER.info("filePath = " + filePath);
-		uploadFile = new File(filePath);
+		
+		uploadFile = new File(fileDir + filePath);
 		try {
 			FileUtils.copyInputStreamToFile(file.getInputStream(), uploadFile);
-			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), Global.IMAGE_HOST + filePath);
 		} catch (IOException e) {
 			return new RetMsg(RespInfo.FILE_UPLOAD_FAIL.getRespCode(), RespInfo.FILE_UPLOAD_FAIL.getRespMsg());
 		}
 		
 	}
 	
-	private String getFilePath(String fileName) {
+	private String getFilePath(String fileName, HttpSession session) {
 		String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
-		return Global.FILE_UPLOAD_DIR + UUID.randomUUID().toString().replace("-", "") + fileSuffix;
+		
+		return "resources/images/" + UUID.randomUUID().toString().replace("-", "") + fileSuffix;
 	}
 }

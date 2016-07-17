@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cmc777.shop.common.Global;
 import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Goods;
-import com.cmc777.shop.entity.Merchant;
 import com.cmc777.shop.entity.vo.GoodsFilter;
 import com.cmc777.shop.service.GoodsService;
 import com.cmc777.shop.util.BeanUtil;

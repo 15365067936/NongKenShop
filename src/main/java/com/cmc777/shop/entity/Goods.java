@@ -60,7 +60,7 @@ public class Goods {
 	
 	private Boolean isDeleted = false;
 	
-	@OneToMany(cascade = {CascadeType.REMOVE}, mappedBy = "goods", fetch= FetchType.LAZY)
+	@OneToMany(mappedBy = "goods", fetch= FetchType.LAZY)
 	private List<GoodsDetail> goodsDetail = Lists.newArrayList();
 
 	public Integer getId() {
