@@ -66,6 +66,7 @@
             <div class="clearfix">
                 <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
                 <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">提交</button>
+                <a type="button" ngf-select="upload($scope, openIdFile, application)" ng-model="openIdFile" name="file" ngf-accept="'image/*'" class="btn btn-default btn-operation" title="上传">上传</a>
             </div>
         </form>
     </div>  

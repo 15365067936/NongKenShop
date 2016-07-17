@@ -23,9 +23,9 @@
                 <td data-title="'商品分类'" sortable="'goods_category'">
                     {{application.category.name}}
                 </td>
-                <!-- <td data-title="'图片列表'" sortable="'image_urls'">
-                    {{application.imageUrls}}
-                </td> -->
+                <td data-title="'图片数量'" sortable="'image_urls'">
+                    {{application.imageUrls.length}}
+                </td>
                 <td data-title="'发货地区'" sortable="'goods_area'">
                     {{application.goodsArea}}
                 </td>
@@ -39,11 +39,12 @@
                     <a type="button" ng-click="edit(application)" class="btn btn-default btn-operation" title = "详情/编辑">编辑</a>
                     <a type="button" ui-sref="detail-goods-list({good: '{{application}}'})" class="btn btn-default btn-operation" title = "详情/编辑">管理商品</a>
                     <a type="button" ng-click="delete(application)" class="btn btn-default btn-operation" title = "删除">删除</a>
+
                     <!-- <div class="hidden-input">
                         
                         <input type="file" ng-click="showBtn=true" class="height-width-100" ngf-select ng-model="openIdFile" name="file" ngf-accept="'text/plain'"><i class="sa fa fa-remove"></i></input>
                     </div> -->
-                    <a type="button" ng-show="showBtn" ng-click="showBtn = false || upload($scope, openIdFile, group)" class="btn btn-default btn-operation" title="上传">上传</a>
+                    <a type="button" ngf-select="upload($scope, openIdFile, application)" ng-model="openIdFile" name="file" ngf-accept="'image/*'" class="btn btn-default btn-operation" title="上传">上传</a>
                 </td> 
             </tr>
         </table> 

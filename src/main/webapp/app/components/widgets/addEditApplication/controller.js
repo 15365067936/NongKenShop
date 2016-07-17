@@ -1,4 +1,4 @@
-module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, method, currentApplication, variableService, userService) {
+module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTableParams, method, currentApplication, variableService, userService) {
 
     $scope.application = currentApplication;
 
@@ -18,6 +18,8 @@ module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, 
             url = '/NongKenShop/goods/update-goods.json';
         }
 
+        $scope.application.imageUrls = JSON.stringify($scope.application.imageUrls);
+
         $resource(url).save($scope.application).$promise.then(
             function (ack) {
 
@@ -29,6 +31,41 @@ module.exports = function ($scope, $uibModalInstance, $resource, NgTableParams, 
             $uibModalInstance.close();
             $scope.tableParams.page(1);
             $scope.tableParams.reload();
+        });
+
+    };
+
+    $scope.upload = function(a, file, group) {
+        console.log(a);
+        $scope.showBtn = false;
+        console.log(file);
+        if (null == file) {
+            alert('文件为空！');
+            return;
+        }
+
+        file.upload = Upload.http({
+            url: '/NongKenShop/file/upload.json',
+            method: 'POST',
+            headers: {
+                'Content-Type': file.type
+            },
+            data: file
+        });
+
+        file.upload.then(function(response) {
+            console.log(response);
+
+            if (response.data && response.data.respCode != '1000') {
+                alert(response.data.respMsg + response.data.content);
+            } else {
+                alert('上传成功！' + response.data.respMsg);
+                $scope.tableParams.page(1);
+                $scope.tableParams.reload();
+            }
+
+        }, function(response) {
+            console.log(response);
         });
 
     };

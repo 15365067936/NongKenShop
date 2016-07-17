@@ -1,4 +1,4 @@
-module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService, userService) {
+module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService, userService) {
 
     var url = $resource('/NongKenShop/goods/get-goods-page.json');
     $scope.channelList = variableService.getChannelList();
@@ -18,10 +18,64 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         getData: function (params) {
             return url.get(params.url()).$promise.then(function (body) {
                 // params.total(body.data.content.length);
-                return body.data.content;
+                var formatedData = [];
+                if (body.data.content.length > 0) {
+                    formatedData = formatData(body.data.content);
+
+                } else {
+                    alert('系统维护中。。。code：1');
+                }
+
+                return formatedData;
             });
         }
     });
+
+    function formatData(content) {
+        angular.forEach(content, function(item,index) {
+            console.log(item);
+            console.log(index);
+            content[index].imageUrls = JSON.parse(item.imageUrls);
+
+        });
+
+        return content;
+    }
+
+    $scope.upload = function(a, file, group) {
+        console.log(a);
+        $scope.showBtn = false;
+        console.log(file);
+        if (null == file) {
+            alert('文件为空！');
+            return;
+        }
+
+        file.upload = Upload.http({
+            url: '/weixin/sys/groups/upload?accessId=' + $scope.currentApp.userAccessId + '&to_groupid=' + group.id,
+            method: 'POST',
+            headers: {
+                'Content-Type': file.type
+            },
+            data: file
+        });
+
+        file.upload.then(function(response) {
+            console.log(response);
+
+            if (response.data && response.data.respCode != '1000') {
+                alert(response.data.respMsg + response.data.content);
+            } else {
+                alert('上传成功！' + response.data.respMsg);
+                $scope.tableParams.page(1);
+                $scope.tableParams.reload();
+            }
+
+        }, function(response) {
+            console.log(response);
+        });
+
+    };
 
     $scope.edit = function (application) {
         var modalInstance = $uibModal.open({
