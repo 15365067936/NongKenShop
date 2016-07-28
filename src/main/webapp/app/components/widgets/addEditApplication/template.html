@@ -36,6 +36,13 @@
                     </select>
                 </div>
             </div>
+            <div ng-repeat="img in application.imageUrls" class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">图片{{$index + 1}}</label>
+                <div class="col-sm-6">
+                    <img src="{{img}}">
+                </div>
+                <a class="col-sm-1 btn btn-default" type="button" ng-click="deleteImg($index)">删除</a>
+            </div>
             <!-- <div class="form-group application-property">
                 <label for="application-name" class="col-sm-3 control-label">发货地区</label>
                 <div class="col-sm-8">
@@ -64,9 +71,11 @@
             </div> -->
         
             <div class="clearfix">
+                <a type="button" ngf-select="upload($scope, openIdFile, application)" ng-model="openIdFile" name="file" class="pull-right btn btn-default btn-operation" title="上传">上传图片</a>
                 <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
                 <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">提交</button>
-                <a type="button" ngf-select="upload($scope, openIdFile, application)" ng-model="openIdFile" name="file" ngf-accept="'image/*'" class="btn btn-default btn-operation" title="上传">上传</a>
+                <!-- ngf-accept="'image/*'"  -->
+                
             </div>
         </form>
     </div>  

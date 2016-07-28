@@ -1,8 +1,16 @@
 module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams, variableService, userService) {
 
-    var url = $resource('/NongKenShop/goods/get-goods-page.json');
     $scope.channelList = variableService.getChannelList();
     $scope.user = userService;
+
+    if ($scope.user.userInfo.role !== 'admin') {
+        var url = $resource('/NongKenShop/goods/get-goods-page.json?name=' + $scope.user.userInfo.role);
+
+    } else {
+        var url = $resource('/NongKenShop/goods/get-goods-page.json');
+
+    }
+
     console.log($scope.user);
     
     if($stateParams.applicationId) {
@@ -32,7 +40,7 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
         angular.forEach(content, function(item,index) {
             console.log(item);
             console.log(index);
-            content[index].imageUrls = JSON.parse(item.imageUrls);
+            content[index].imageUrls = JSON.parse(item.imageUrls) || [];
 
         });
 

@@ -35,30 +35,42 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
 
     };
 
+    $scope.deleteImg = function(index) {
+        console.log(index);
+        $scope.application.imageUrls.splice(index, 1);
+
+    }
+
     $scope.upload = function(a, file, group) {
         console.log(a);
         $scope.showBtn = false;
         console.log(file);
         if (null == file) {
-            alert('文件为空！');
             return;
         }
+        var fd = new FormData();
+        fd.append('file', file);
 
         file.upload = Upload.http({
             url: '/NongKenShop/file/upload.json',
             method: 'POST',
             headers: {
-                'Content-Type': file.type
+                // 'Content-Type': file.type
+                'Content-Type': undefined
             },
-            data: file
+            data: fd
         });
 
         file.upload.then(function(response) {
             console.log(response);
 
             if (response.data && response.data.respCode != '1000') {
+
                 alert(response.data.respMsg + response.data.content);
             } else {
+                console.log(response.data.data);
+                $scope.application.imageUrls.push(response.data.data);
+                console.log( $scope.application.imageUrls)
                 alert('上传成功！' + response.data.respMsg);
                 $scope.tableParams.page(1);
                 $scope.tableParams.reload();
