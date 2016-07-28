@@ -1,0 +1,30 @@
+<div>
+    <h2>商品分类管理</h2>
+    <div class="clearfix list-bar">
+        <div class="col-sm-4 pull-right">
+            <button type="submit" ng-click="new()" class="btn button-cancel btn-default pull-right">新建应用</button>
+            <!-- <button type="submit" ng-click="tableParams.sorting({})" class="btn button-cancel btn-default pull-right">排序取消</button> -->
+        </div>
+    </div>
+
+    <div loading-container="tableParams.settings().$loading">
+
+        <table ng-table="tableParams" show-filter="true" class="table table-striped">        
+            <tr ng-repeat="category in $data">
+
+                <td data-title="'分类ID'">
+                    {{category.id}}
+                </td>
+                <td data-title="'分类名称'" filter="{'name': 'text'}">
+                    {{category.name}}
+                </td>
+                <td data-title="'操作'">
+                    <a type="button" ng-click="edit(category)" class="btn btn-default btn-operation" title = "编辑"><i class="sa fa fa-edit"></i></a>
+                    <a type="button" ui-sref="goods-category-type({category: '{{category}}'})" class="btn btn-default btn-operation" title = "详情/编辑">管理分类</a>
+                    <a type="button" ng-click="delete(category)" class="btn btn-default btn-operation" title = "删除"><i class="sa fa fa-remove"></i></a>
+                </td>
+            </tr>
+        </table> 
+    </div>
+
+</div>

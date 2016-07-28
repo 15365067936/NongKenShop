@@ -21,9 +21,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
                 var formatedData = [];
                 if (body.data.content.length > 0) {
                     formatedData = formatData(body.data.content);
-
-                } else {
-                    alert('系统维护中。。。code：1');
                 }
 
                 return formatedData;
