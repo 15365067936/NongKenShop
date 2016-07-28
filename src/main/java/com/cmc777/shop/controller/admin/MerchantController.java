@@ -105,4 +105,26 @@ public class MerchantController {
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 	}
+	
+	@RequestMapping(value = "reset-password.json", method = RequestMethod.POST)
+	@ResponseBody
+	public RetMsg resetPassword(@RequestBody Merchant merchant) {
+		if (merchant == null || merchant.getId() == null) {
+			return new RetMsg(RespInfo.NO_USER.getRespCode(), RespInfo.NO_USER.getRespMsg());
+		}
+		
+		Merchant inDb = merchantService.findOne(merchant);
+		String password = PasswordUtil.genRandomNum();
+		inDb.setPassword(password);
+		
+		try {
+			merchantService.update(inDb);
+			
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), password);
+		} catch (Exception e) {
+			LOGGER.error("merchant" + merchant.getLoginName() + "reset password  fail", e);
+			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
+		}
+		
+	}
 }

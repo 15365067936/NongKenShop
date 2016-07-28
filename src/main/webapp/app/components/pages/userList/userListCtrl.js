@@ -62,17 +62,22 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     };
     
     $scope.resetPassword = function(user) {
-    	var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: require('file!../../widgets/editUser/template.html'),
-            controller: 'editUserCtrl',
-            scope: $scope,
-            resolve: {
-                currentUser: function () {
-                    return angular.copy(user);
-                }
-            }
-        });
+    	 console.log($scope.categoryType);
+         var url = '/NongKenShop/merchant/reset-password.json'
+         $resource(url).save(user).$promise.then(
+             function (ack) {
+ 	            console.log(ack);
+ 	            if (ack.respCode != '1000') {
+ 	                alert(ack.respMsg);
+ 	                return;
+             } else {
+            	 alert(ack.data);
+             }
+             
+             $uibModalInstance.close();
+             $scope.tableParams.page(1);
+             $scope.tableParams.reload();
+         });
     }
 
     $scope.delete = function (User) {

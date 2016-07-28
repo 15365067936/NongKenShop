@@ -97,4 +97,9 @@ public class MerchantServiceImpl implements MerchantService{
 	public Merchant update(Merchant merchant) throws BaseException {
 		return merchantRepository.save(merchant);
 	}
+
+	@Override
+	public Merchant findOne(Merchant merchant) {
+		return merchantRepository.findOne(merchant.getId());
+	}
 }

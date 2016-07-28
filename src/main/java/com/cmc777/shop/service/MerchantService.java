@@ -13,4 +13,6 @@ public interface MerchantService {
 	Page<Merchant> find(Merchant merchant, int pageNo, int size);
 	
 	void delete(Integer id);
+
+	Merchant findOne(Merchant merchant);
 }
