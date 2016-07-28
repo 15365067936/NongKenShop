@@ -19,6 +19,10 @@ module.exports = function($rootScope, $scope, $resource, $state, userService, lo
             //         }
             //     });
             }
+            
+            $rootScope.resetPassword = function() {
+            	
+            }
 
             $scope.changedValue = function(selected) {
                 console.log(selected);

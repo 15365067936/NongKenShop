@@ -78685,6 +78685,10 @@
 	            //         }
 	            //     });
 	            }
+	            
+	            $rootScope.resetPassword = function() {
+	            	
+	            }
 
 	            $scope.changedValue = function(selected) {
 	                console.log(selected);
@@ -78702,7 +78706,7 @@
 /* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "e717fb851232603d960f13a1e238c890.html";
+	module.exports = __webpack_require__.p + "6e42f7166cd508e0232eca1573883771.html";
 
 /***/ },
 /* 54 */
@@ -81481,7 +81485,7 @@
 /* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "293d775dfd60ec134b9df88a67a73935.html";
+	module.exports = __webpack_require__.p + "b0af79c8d3397591dcd278e44ab50a90.html";
 
 /***/ },
 /* 76 */
@@ -81493,7 +81497,7 @@
 /* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "b79c33bf17b4da0b0f6e9fe28f110a15.html";
+	module.exports = __webpack_require__.p + "3af109919fe07f6253e3fd82fe45c40c.html";
 
 /***/ },
 /* 78 */
