@@ -2,6 +2,7 @@ package com.cmc777.shop.service;
 
 import java.util.List;
 
+import com.cmc777.shop.common.BaseException;
 import com.cmc777.shop.entity.GoodsDetail;
 
 public interface GoodsDetailService {
@@ -15,5 +16,7 @@ public interface GoodsDetailService {
 	void update(GoodsDetail detail);
 
 	void deleteDetail(GoodsDetail detail);
+
+	void adjustNumber(GoodsDetail goodsDetail, String operation, Float goodsCount) throws BaseException;
 
 }

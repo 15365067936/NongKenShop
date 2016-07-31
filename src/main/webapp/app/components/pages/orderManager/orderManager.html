@@ -1,0 +1,41 @@
+<div>
+    <div loading-container="tableParams.settings().$loading">
+        <table ng-table="tableParams" show-filter="true" class="table table-condensed table-striped">   
+            <tr ng-repeat="order in $data">
+                <td data-title="'订单ID'" sortable="'id'">
+                    {{order.id}}
+                </td>
+                <td data-title="'订单编号'" filter="{'orderCode': 'text'}">
+                    {{order.orderCode}}
+                </td>
+                <td data-title="'物流编号'" filter="{'logisticsCode': 'text'}">
+                    {{order.logisticsCode}}
+                </td>
+                <td data-title="'发货地址'">
+                    {{order.address}}
+                </td>
+                <td data-title="'订单状态'">
+                    {{order.status}}
+                </td>
+                <td data-title="'订单金额'">
+                    {{order.totalPrice}}
+                </td>
+                <td ng-show="role=='admin'" data-title="'所属商户'">
+                	{{order.merchant.name}}
+                </td>
+                <td data-title="'创建时间'">
+                    {{order.createTime}}
+                </td>
+                <td data-title="'修改时间'" sortable="'goods_category'">
+                    {{order.updateTime}}
+                </td>
+                 
+                <td data-title="'操作'">
+                    <a type="button" ng-click="edit(order)" class="btn btn-default btn-operation" title = "详情/编辑">编辑</a>
+                    <a type="button" ui-sref="detail-goods-list({good: '{{application}}'})" class="btn btn-default btn-operation" title = "详情/编辑">管理商品</a>
+                    <a type="button" ng-click="delete(order)" class="btn btn-default btn-operation" title = "删除">删除</a>
+                </td> 
+            </tr>
+        </table> 
+    </div>
+</div>

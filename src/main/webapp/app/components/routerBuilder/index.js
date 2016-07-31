@@ -117,5 +117,23 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'localStor
 
                 return deferred.promise;
             }]
+        }).state('order-manager', {
+            url: "/order-manager",
+            templateUrl: require("file!../pages/orderManager/orderManager.html"),
+            controller: 'orderManegerCtrl',
+            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+                var deferred = $q.defer();
+
+                require.ensure([], function(require) {
+                    var mod = require('pages/orderManager');
+                    $ocLazyLoad.load({
+                        name: mod.name,
+                    });
+
+                    deferred.resolve(mod.controller);
+                });
+
+                return deferred.promise;
+            }]
         });
 }]);

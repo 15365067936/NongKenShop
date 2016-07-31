@@ -27,7 +27,7 @@ import com.google.common.collect.Lists;
  * @author 张军
  */
 @Entity
-@Table(name = "cms_goods")
+@Table(name = "cmc_goods")
 @DynamicInsert
 @DynamicUpdate
 public class Goods {

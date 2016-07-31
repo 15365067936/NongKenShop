@@ -11,7 +11,10 @@ public enum RespInfo {
 	HAS_ACCOUNT("3006", "用户名已经存在"),
 	NO_FILE("1100", "上传文件为空"),
 	FILE_UPLOAD_FAIL("1101", "文件上传失败"),
-	COMMON_ERROR("1001", "系统异常,请稍后再试");
+	COMMON_ERROR("1001", "系统异常,请稍后再试"),
+	
+	ERR_TOTAL_PRICE("4001", "用户总价格异常"),
+	GOODS_IS_NOT_AVAILABLE("4002", "库存不够");
 	
 	private String respCode;
 	private String respMsg;

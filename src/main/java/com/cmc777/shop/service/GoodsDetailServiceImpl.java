@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cmc777.shop.common.BaseException;
+import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.entity.Goods;
 import com.cmc777.shop.entity.GoodsDetail;
 import com.cmc777.shop.repository.shop.GoodsDetailRepository;
@@ -47,6 +49,23 @@ public class GoodsDetailServiceImpl implements GoodsDetailService{
 		detail = goodsDetailRepository.findByIdAndIsDeleted(detail.getId(), false);
 		detail.setIsDeleted(true);
 		goodsDetailRepository.save(detail);
+	}
+
+	@Override
+	@Transactional
+	public synchronized void adjustNumber(GoodsDetail goodsDetail, String operation, Float goodsCount) throws BaseException {
+		goodsDetail = goodsDetailRepository.findOne(goodsDetail.getId());
+		if (operation.equals("add")) {
+			goodsDetail.setNumber(goodsDetail.getNumber() + goodsCount);
+		} else {
+			if (goodsDetail.getNumber() < goodsCount) {
+				throw new BaseException(RespInfo.GOODS_IS_NOT_AVAILABLE.getRespCode(), RespInfo.GOODS_IS_NOT_AVAILABLE.getRespMsg()); 
+			} else {
+				goodsDetail.setNumber(goodsDetail.getNumber() - goodsCount);
+			}
+		}
+		
+		goodsDetailRepository.save(goodsDetail);
 	}
 
 }
