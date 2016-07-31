@@ -12,6 +12,8 @@ public class GoodsFilter {
 	private Map<String, String> filter = new HashMap<String, String>();
 	
 	private Goods goods;
+	
+	private String loginName;
 
 	public Map<String, String> getFilter() {
 		return filter;
@@ -36,12 +38,28 @@ public class GoodsFilter {
 			goods.setMerchant(merchant);
 		}
 		
+		if (StringUtils.isNotBlank(loginName)) {
+			Merchant merchant = new Merchant();
+			merchant.setLoginName(loginName);
+			goods.setMerchant(merchant);
+		}
+		
 		return goods;
 	}
 
 	public void setGoods(Goods goods) {
 		this.goods = goods;
 	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+	
+	
 	
 	
 }

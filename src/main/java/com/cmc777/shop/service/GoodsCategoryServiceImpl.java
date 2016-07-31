@@ -23,7 +23,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService{
 		
 		return (List<GoodsCategory>) goodsCategoryRepository.findAll();
 	}
-
+	
 	@Override
 	public void addCategory(GoodsCategory category) {
 		goodsCategoryRepository.save(category);

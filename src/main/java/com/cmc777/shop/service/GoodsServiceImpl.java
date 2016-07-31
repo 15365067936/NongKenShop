@@ -57,7 +57,7 @@ public class GoodsServiceImpl implements GoodsService{
 				}
 				
 				if (search != null && search.getMerchant() != null && StringUtils.isNotBlank(search.getMerchant().getLoginName())) {
-					Predicate merchantPredicate = cb.equal(root.get("merchant.loginName").as(String.class), search.getMerchant().getLoginName());
+					Predicate merchantPredicate = cb.equal(root.join("merchant").get("loginName").as(String.class), search.getMerchant().getLoginName());
 					predicates.add(merchantPredicate);
 				}
 				
