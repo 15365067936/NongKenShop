@@ -1,6 +1,9 @@
 module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTableParams, method, currentApplication, variableService, userService) {
 
+    getCategorys();
+    getCategoryTypes();
     $scope.application = currentApplication;
+
 
     $scope.goodsCategory = variableService.getGoodsCategory();
     $scope.method = method;
@@ -92,6 +95,21 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
 
     $scope.cancle = function () {
         $uibModalInstance.close();
+    };
+    
+    
+    function getCategorys() {
+    	var categoryUrl = $resource('/NongKenShop/goods-category/get-categorys.json');
+        categoryUrl.get(null).$promise.then(function (body) {
+        	$scope.goodsCategorys = body.data;
+        });
+    };
+    
+    function getCategoryTypes() {
+    	var categoryUrl = $resource('/NongKenShop/goods-category-type/get-category-types.json');
+        categoryUrl.get(null).$promise.then(function (body) {
+        	$scope.categoryTypes = body.data;
+        });
     };
 
 }

@@ -1,0 +1,51 @@
+<div class="popup">
+    <div class="popup-header">
+        <h2 class="popup-title text-center">我的信息</h2>
+    </div>
+    <div class="popup-body">
+       <!--  <form id="merchantForm" onsubmit="submit()" name="merchant" class="form-horizontal" action="/NongKenShop/merchant/save.json" method="post"> -->
+       <form class="form-horizontal">
+            <div class="form-group user-property">
+                <label class="col-sm-3 control-label">ID</label>
+                <p name="id" class="col-sm-8 re-pos">
+                   {{user.id}}
+                </p>
+            </div>
+             <div class="form-group user-property">
+                <label for="user-id" class="col-sm-3 control-label">投诉次数</label>
+                <p name="complaintTimes" class="col-sm-8 re-pos">
+                   {{user.complaintTimes}}
+                </p>
+                
+            </div>
+            <div class="form-group user-property">
+                <label for="user-name" class="col-sm-3 control-label">姓名</label>
+                <p name="complaintTimes" class="col-sm-8 re-pos">
+                   {{user.name}}
+                </p>
+            </div>
+            <div class="form-group user-property">
+                <label for="user-loginName" class="col-sm-3 control-label">登录名</label>
+                <p name="loginName" class="col-sm-8 re-pos">
+                   {{user.loginName}}
+                </p>
+            </div>
+            <div class="form-group user-property">
+                <label for="user-phone" class="col-sm-3 control-label">电话</label>
+                <p name="phone" class="col-sm-8 re-pos">
+                   {{user.phone}}
+                </p>
+            </div>
+            <div class="form-group user-property">
+                <label for="user-address" class="col-sm-3 control-label">地址</label>
+                <p name="address" class="col-sm-8 re-pos">
+                   {{user.address}}
+                </p>
+            </div>
+        
+            <div class="form-group user-property">
+            	<button type="submit" ng-click="changePassword(user)" class="btn btn-default">修改密码</button>
+            </div>
+        </form>
+    </div>  
+</div>

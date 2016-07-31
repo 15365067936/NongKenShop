@@ -30,9 +30,9 @@ public class GoodsFilter {
 			goods.setName(filter.get("name"));
 		}
 		
-		if (StringUtils.isNotBlank(filter.get("merchant"))) {
+		if (StringUtils.isNotBlank(filter.get("loginName"))) {
 			Merchant merchant = new Merchant();
-			merchant.setId(Integer.valueOf(filter.get("merchant")));
+			merchant.setLoginName(filter.get("loginName"));
 			goods.setMerchant(merchant);
 		}
 		

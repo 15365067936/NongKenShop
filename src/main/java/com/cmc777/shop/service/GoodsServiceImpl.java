@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmc777.shop.entity.Goods;
+import com.cmc777.shop.repository.shop.GoodsCategoryRepository;
+import com.cmc777.shop.repository.shop.GoodsCategoryTypeRepository;
 import com.cmc777.shop.repository.shop.GoodsRepository;
 
 @Service
@@ -25,13 +27,22 @@ public class GoodsServiceImpl implements GoodsService{
 	
 	@Autowired
 	private GoodsRepository goodsRepository;
+	@Autowired
+	private GoodsCategoryRepository goodsCategoryRepository;
+	@Autowired
+	private GoodsCategoryTypeRepository goodsCategoryTypeRepository;
 	
 	@Override
 	public Page<Goods> find(Goods goods, int page, int count) {
 		Pageable pageable = new PageRequest(page - 1, count);
 		Specification<Goods> spec = getWhere(goods);
+		Page<Goods> goodsPage = goodsRepository.findAll(spec, pageable);
+		for (Goods goods2 : goodsPage.getContent()) {
+			goods2.setCategory(goodsCategoryRepository.findOne(goods2.getCategoryId()));
+			goods2.setCategoryType(goodsCategoryTypeRepository.findOne(goods2.getCategoryTypeId()));
+		}
 		
-		return goodsRepository.findAll(spec, pageable);
+		return goodsPage;
 	}
 	
 	private Specification<Goods> getWhere(final Goods search) {
@@ -45,8 +56,8 @@ public class GoodsServiceImpl implements GoodsService{
 					predicates.add(namePredicate);
 				}
 				
-				if (search != null && search.getMerchant() != null && search.getMerchant().getId() != null) {
-					Predicate merchantPredicate = cb.equal(root.get("merchant.id").as(Integer.class), search.getId());
+				if (search != null && search.getMerchant() != null && StringUtils.isNotBlank(search.getMerchant().getLoginName())) {
+					Predicate merchantPredicate = cb.equal(root.get("merchant.loginName").as(String.class), search.getMerchant().getLoginName());
 					predicates.add(merchantPredicate);
 				}
 				
@@ -82,7 +93,4 @@ public class GoodsServiceImpl implements GoodsService{
 		
 		goodsRepository.save(goods);
 	}
-	
-	
-
 }

@@ -102,4 +102,9 @@ public class MerchantServiceImpl implements MerchantService{
 	public Merchant findOne(Merchant merchant) {
 		return merchantRepository.findOne(merchant.getId());
 	}
+
+	@Override
+	public List<Merchant> findByLoginName(String loginName) {
+		return merchantRepository.findByLoginName(loginName);
+	}
 }

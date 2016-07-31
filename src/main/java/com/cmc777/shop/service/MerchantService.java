@@ -1,5 +1,7 @@
 package com.cmc777.shop.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.cmc777.shop.common.BaseException;
@@ -15,4 +17,6 @@ public interface MerchantService {
 	void delete(Integer id);
 
 	Merchant findOne(Merchant merchant);
+
+	List<Merchant> findByLoginName(String loginName);
 }

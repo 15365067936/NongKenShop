@@ -1,5 +1,9 @@
 package com.cmc777.shop.controller.admin;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,7 @@ import com.cmc777.shop.util.BeanUtil;
 import com.cmc777.shop.util.JsonUtil;
 import com.cmc777.shop.util.MD5;
 import com.cmc777.shop.util.PasswordUtil;
+import com.google.gson.JsonObject;
 
 /**
  * merchant管理
@@ -115,7 +120,7 @@ public class MerchantController {
 		
 		Merchant inDb = merchantService.findOne(merchant);
 		String password = PasswordUtil.genRandomNum();
-		inDb.setPassword(password);
+		inDb.setPassword(MD5.GetMD5Code(password));
 		
 		try {
 			merchantService.update(inDb);
@@ -123,6 +128,56 @@ public class MerchantController {
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), password);
 		} catch (Exception e) {
 			LOGGER.error("merchant" + merchant.getLoginName() + "reset password  fail", e);
+			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
+		}
+		
+	}
+	
+	@RequestMapping(value = "myinfo.json", method = RequestMethod.POST)
+	@ResponseBody
+	public RetMsg getMyInfo(@RequestBody Merchant merchant) {
+		if (merchant == null || merchant.getId() == null) {
+			return new RetMsg(RespInfo.NO_USER.getRespCode(), RespInfo.NO_USER.getRespMsg());
+		}
+		
+		Merchant inDb = merchantService.findOne(merchant);
+		
+		if (inDb == null) {
+			return new RetMsg(RespInfo.NO_USER.getRespCode(), RespInfo.NO_USER.getRespMsg());
+		}
+		
+		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), inDb);
+	}
+	
+	@RequestMapping(value = "change-password.json", method = RequestMethod.POST)
+	@ResponseBody
+	public RetMsg changePassword(String loginName, String oldPassword, String newPassword) {
+		if (StringUtils.isBlank(loginName) || 
+				StringUtils.isBlank(oldPassword) || 
+				StringUtils.isBlank(newPassword)) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		List<Merchant> merchants = merchantService.findByLoginName(loginName);
+		
+		if (merchants == null || merchants.size() > 1) {
+			return new RetMsg(RespInfo.NO_USER.getRespCode(), RespInfo.NO_USER.getRespMsg());
+		}
+		
+		Merchant merchant = merchants.get(0);
+		
+		if (!MD5.GetMD5Code(oldPassword).equals(merchant.getPassword())) {
+			return new RetMsg(RespInfo.ERR_PASSWORD.getRespCode(), RespInfo.ERR_PASSWORD.getRespMsg());
+		}
+		
+		merchant.setPassword(MD5.GetMD5Code(newPassword));
+		
+		try {
+			merchantService.update(merchant);
+			
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} catch (Exception e) {
+			LOGGER.error("merchant" + merchant.getLoginName() + "change password  fail", e);
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 		

@@ -30,9 +30,16 @@
                 </div>
             </div>
             <div class="form-group application-property">
-                <label for="application-channel" class="col-sm-3 control-label">商品分类</label>
+                <label for="application-channel" class="col-sm-3 control-label">商品一级分类</label>
                 <div class="col-sm-8">
-                    <select ng-model="application.category.id" ng-options="c.id as c.title for c in goodsCategory">  
+                    <select ng-model="application.categoryId" ng-options="c.id as c.name for c in goodsCategorys">  
+                    </select>
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-channel" class="col-sm-3 control-label">商品二级分类</label>
+                <div class="col-sm-8">
+                    <select ng-model="application.categoryTypeId" ng-options="c.id as c.name for c in categoryTypes">  
                     </select>
                 </div>
             </div>

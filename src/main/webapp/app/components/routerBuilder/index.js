@@ -99,5 +99,23 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'localStor
 
                 return deferred.promise;
             }]
+        }).state('myinfo', {
+            url: "/myinfo",
+            templateUrl: require("file!../pages/myinfo/myinfo.html"),
+            controller: 'myInfoCtrl',
+            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+                var deferred = $q.defer();
+
+                require.ensure([], function(require) {
+                    var mod = require('pages/myinfo');
+                    $ocLazyLoad.load({
+                        name: mod.name,
+                    });
+
+                    deferred.resolve(mod.controller);
+                });
+
+                return deferred.promise;
+            }]
         });
 }]);
