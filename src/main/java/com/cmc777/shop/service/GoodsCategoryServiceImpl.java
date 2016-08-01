@@ -42,4 +42,10 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService{
 		
 	}
 
+	@Override
+	public GoodsCategory findOne(GoodsCategory goodsCategory) {
+		// TODO Auto-generated method stub
+		return goodsCategoryRepository.findOne(goodsCategory.getId());
+	}
+
 }

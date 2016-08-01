@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
+import com.cmc777.shop.entity.GoodsCategory;
 import com.cmc777.shop.entity.GoodsCategoryType;
+import com.cmc777.shop.service.GoodsCategoryService;
 import com.cmc777.shop.service.GoodsCategoryTypeService;
 import com.cmc777.shop.util.BeanUtil;
 
@@ -25,6 +27,8 @@ import com.cmc777.shop.util.BeanUtil;
 public class GoodsCategoryTypeController {
 	@Autowired
 	private GoodsCategoryTypeService goodsCategoryTypeService;
+	@Autowired
+	private GoodsCategoryService categoryService;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GoodsCategoryTypeController.class);
 	

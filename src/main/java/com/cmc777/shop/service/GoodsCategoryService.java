@@ -14,4 +14,6 @@ public interface GoodsCategoryService {
 
 	void deleteCategory(GoodsCategory category);
 
+	GoodsCategory findOne(GoodsCategory goodsCategory);
+
 }
