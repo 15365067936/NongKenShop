@@ -478,22 +478,22 @@ console.log(curgood);
 						<div class="right">
 							<div class="top">
 								销 售 价：<span class="price">￥${curgood.price}</span>
-								市 场 价：<span class="marketPrice">product.marketPrice,priceCurrencyFormat}</span>
+								市 场 价：<span class="marketPrice">￥21</span>
 							</div>
 							<div class="bottom">
 								
-									重 量：<span class="weight">product.weight} i18n("WeightUnit." + product.weightUnit)}</span>
+									重 量：<span class="weight">1kg</span>
 								
 								
-									积 分：<span>roduct.point}</span>
+									
 								
 							</div>
 						</div>
 					</div>
 					<div class="blank"></div>
 					<div class="productNumber">
-						货号: <span>product.productSn}</span>
-                        品牌: <span>" + product.brand.name! + "</span>"
+						货号: <span>2323232323232</span>
+                        品牌: <span>农肯菜园子</span>"
 					</div>
 					<div class="blank"></div>
 					<div class="productBuy">
@@ -519,20 +519,12 @@ console.log(curgood);
 					</li>
 				</ul>
 				<div class="tabContent productDescription">
-					product.description}
+					上海农肯农业科技有限公司，致力于为广大上海市民提供安全健康的新鲜蔬菜和农副产品，努力打造成为崇明县
+生态蔬菜农副产品直配暨生态旅游平台，为上海市民的身体健康保驾护航。
 				</div>
 				<div class="tabContent productAttribute">
 					<table class="productAttributeTable">
-						<%for(list in product.productType.enabledProductAttributeList!){%>
-							<%if (product.productAttributeMap != null){%>
-								<tr>
-									<th>list.name}</th>
-									<td>
-										product.productAttributeMap[list.id]}&nbsp;
-									</td>
-								</tr>
-							<%}%>
-						<%}%>
+						
 					</table>
 				</div>
 			</div>
