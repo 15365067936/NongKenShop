@@ -258,6 +258,7 @@ $(document).ready(function() {
 <link href="./template/shop/css/friend_link.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="./template/shop/js/friend_link.js"></script>
 <script type="text/javascript">
+var customerId;
 function getQueryString(name) {
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
     var r = window.location.search.substr(1).match(reg);
@@ -268,6 +269,7 @@ function getQueryString(name) {
 }
 // 这样调用：
 var id = getQueryString("id");
+customerId = id;
 console.log(id);
 if (null === getQueryString("id")) {
 	window.location = 'http://www.cmc777.com/System/Login.aspx?isurl=http%3a%2f%2fwww.cmc777.com%2fdefault.aspx';//go login
@@ -358,6 +360,54 @@ var url = `filter[categoryId]=${id}`
 	});
 }
 
+function order() {
+	var amount = $('#quantity').val();
+	console.log(amount);
+	var postObj = {
+    customerId: customerId,
+    orderDetails: [
+        {
+            goodsCount: amount,
+            goodsName: curgoods.name,
+            singlPrice: curgood.price,
+            goodsDetail: {
+                id: curgood.id
+            }
+        }
+    ],
+    logisticsCode:"",
+    merchant: {
+        id: 1
+    },
+    address: "mock的地址",
+    totalPrice: amount*curgood.price
+}
+
+	$.ajax({
+	  type:"post",
+	  url:`./order/add.json`,
+
+	  dataType: "json",
+	  data: JSON.stringify(postObj),
+	  contentType: "application/json", 
+	  
+	  success:function(data) {
+		console.log(data);
+		if (data.respCode === '1000') {
+			alert('下单成功')
+
+		} else {
+			alert(data.respMsg);
+
+		}
+		
+	  },
+	   error: function () {
+            alert('系统维护中，请稍后重试！');
+        }
+	});
+
+}
 
 			function showGoodsDetail() {
 
@@ -453,7 +503,7 @@ console.log(curgood);
 						
 							
 						
-							<input type="button" class="addCartItemButton addCartItem {id: 'product.id}'}" value="" hidefocus="true" />
+							<input type="button" onclick="order()" class="addCartItemButton addCartItem {id: 'product.id}'}" value="" hidefocus="true" />
 						
                         <input type="button" class="addFavoriteButton addFavorite {id: 'product.id}'}" value="" hidefocus="true" />
 					</div>
