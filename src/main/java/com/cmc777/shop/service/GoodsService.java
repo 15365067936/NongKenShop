@@ -12,4 +12,6 @@ public interface GoodsService {
 	void update(Goods goods);
 	
 	void delete(Goods goods);
+
+	Page<Goods> findFrontGoods(Goods goods, Integer page, Integer count);
 }

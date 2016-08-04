@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmc777.shop.entity.Goods;
+import com.cmc777.shop.entity.GoodsDetail;
 import com.cmc777.shop.repository.shop.GoodsCategoryRepository;
 import com.cmc777.shop.repository.shop.GoodsCategoryTypeRepository;
 import com.cmc777.shop.repository.shop.GoodsRepository;
@@ -56,6 +57,16 @@ public class GoodsServiceImpl implements GoodsService{
 					predicates.add(namePredicate);
 				}
 				
+				if (search != null && search.getCategoryId() != null) {
+					Predicate categoryPredicate = cb.equal(root.get("categoryId").as(Integer.class), search.getCategoryId());
+					predicates.add(categoryPredicate);
+				}
+				
+				if (search != null && search.getCategoryTypeId() != null) {
+					Predicate categoryTypePredicate = cb.equal(root.get("categoryTypeId").as(Integer.class), search.getCategoryTypeId());
+					predicates.add(categoryTypePredicate);
+				}
+				
 				if (search != null && search.getMerchant() != null && StringUtils.isNotBlank(search.getMerchant().getLoginName())) {
 					Predicate merchantPredicate = cb.equal(root.join("merchant").get("loginName").as(String.class), search.getMerchant().getLoginName());
 					predicates.add(merchantPredicate);
@@ -92,5 +103,22 @@ public class GoodsServiceImpl implements GoodsService{
 	public void update(Goods goods) {
 		
 		goodsRepository.save(goods);
+	}
+
+	@Override
+	public Page<Goods> findFrontGoods(Goods goods, Integer page, Integer count) {
+		Pageable pageable = new PageRequest(page - 1, count);
+		Specification<Goods> spec = getWhere(goods);
+		Page<Goods> goodsPage = goodsRepository.findAll(spec, pageable);
+		for (Goods goods2 : goodsPage.getContent()) {
+			goods2.setMerchant(null);
+			goods2.setCategory(goodsCategoryRepository.findOne(goods2.getCategoryId()));
+			goods2.setCategoryType(goodsCategoryTypeRepository.findOne(goods2.getCategoryTypeId()));
+			for (GoodsDetail detail : goods2.getGoodsDetail()) {
+				detail.setGoods(null);
+			}
+		}
+		
+		return goodsPage;
 	}
 }

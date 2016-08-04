@@ -240,7 +240,7 @@ webpackJsonp([5],{
 	var editCategoryType = __webpack_require__(130);
 	__webpack_require__(131);
 	var mod = angular.module('app.editCategoryType', []);
-	mod.controller('editCategoryType', ['$scope', '$uibModalInstance', '$resource', 'method', 'currentCategoryType', editCategoryType]);
+	mod.controller('editCategoryType', ['$scope', '$uibModalInstance', '$resource', 'method', 'currentCategory' ,editCategoryType]);
 	module.exports = mod;
 
 /***/ },

@@ -44,6 +44,14 @@ public class GoodsFilter {
 			goods.setMerchant(merchant);
 		}
 		
+		if (StringUtils.isNotBlank(filter.get("categoryId"))) {
+			goods.setCategoryId(Integer.parseInt(filter.get("categoryId")));
+		}
+		
+		if (StringUtils.isNotBlank(filter.get("categoryTypeId"))) {
+			goods.setCategoryTypeId(Integer.parseInt(filter.get("categoryTypeId")));
+		}
+		
 		return goods;
 	}
 

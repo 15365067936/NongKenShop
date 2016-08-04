@@ -67,7 +67,7 @@ public class Goods {
 	
 	private Boolean isDeleted = false;
 	
-	@OneToMany(mappedBy = "goods", fetch= FetchType.LAZY)
+	@OneToMany(mappedBy = "goods")
 	private List<GoodsDetail> goodsDetail = Lists.newArrayList();
 
 	public Integer getId() {

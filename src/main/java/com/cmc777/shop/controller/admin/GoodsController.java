@@ -19,6 +19,7 @@ import com.cmc777.shop.entity.Goods;
 import com.cmc777.shop.entity.vo.GoodsFilter;
 import com.cmc777.shop.service.GoodsService;
 import com.cmc777.shop.util.BeanUtil;
+import com.cmc777.shop.util.JsonUtil;
 
 @Controller
 @RequestMapping("goods")
@@ -31,11 +32,23 @@ public class GoodsController {
 	@RequestMapping("get-goods-page.json")
 	@ResponseBody
 	public RetMsg getGoodsPage(GoodsFilter goodsFilter, Integer page, Integer count) {
+		LOGGER.info(JsonUtil.objectToJson(goodsFilter));
 		Goods goods = goodsFilter.getGoods();
 		Page<Goods> goodsPage = goodsService.find(goods, page, count);
 		
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goodsPage);
 	}
+	
+	@RequestMapping("front/get-goods-page.json")
+	@ResponseBody
+	public RetMsg getFrontGoodsPage(GoodsFilter goodsFilter, Integer page, Integer count) {
+		LOGGER.info(JsonUtil.objectToJson(goodsFilter));
+		Goods goods = goodsFilter.getGoods();
+		Page<Goods> goodsPage = goodsService.findFrontGoods(goods, page, count);
+		
+		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goodsPage);
+	}
+	
 	
 	@RequestMapping(value = "add-goods.json", method = RequestMethod.POST)
 	@ResponseBody
