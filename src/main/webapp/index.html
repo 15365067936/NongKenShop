@@ -38,11 +38,14 @@
 <link href="./template/shop/css/index.css" rel="stylesheet" type="text/css" />
 <link href="./template/shop/css/product.css" rel="stylesheet" type="text/css" />
 <link href="./template/shop/css/article.css" rel="stylesheet" type="text/css" />
+<link href="./template/shop/css/product_content.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="./template/shop/js/login.js"></script>
 <script type="text/javascript" src="./template/shop/js/register.js"></script>
 <!-- <script type="text/javascript" src="./template/shop/js/index.js"></script> -->
 <script type="text/javascript" src="./template/shop/js/product.js"></script>
 <script type="text/javascript">
+
+
 $(document).ready(function() {
 
 	$(".slider .scrollable").scrollable({
@@ -67,7 +70,7 @@ $(document).ready(function() {
 })
 </script>
 </head>
-<body class="index">
+<body class="index productContent">
 <script type="text/javascript" src="./template/shop/js/header.js"></script>
 <link href="./template/shop/css/header.css" rel="stylesheet" type="text/css" />
 <div class="header png">
@@ -127,33 +130,7 @@ $(document).ready(function() {
             	<div class="top">商品分类</div>
             	<div class="middle clearfix">
             		<ul class="menu">
-            				<!-- <li class="mainCategory">
-								<a href="/shop/product/list?id=c5910cfe886244c9b23bd0234d946c3e">厨房电器</a>
-							</li>
-									<li>
-										<a href="/shop/product/list?id=2505aa1eda674d78a3325db74b0bfd72"><span class="icon"> </span>电水壶</a>
-									</li>
-									<li>
-										<a href="/shop/product/list?id=3693519d7a81423082a8639f6cfb31ef"><span class="icon"> </span>榨汁机</a>
-									</li>
-									<li>
-										<a href="/shop/product/list?id=a2a54141e9c04a20ac81d9b18b6e96ab"><span class="icon"> </span>电陶炉</a>
-									</li>
-									<li>
-										<a href="/shop/product/list?id=28663da185934da0a4cf52784f771157"><span class="icon"> </span>111</a>
-									</li>
-            				<li class="mainCategory">
-								<a href="/shop/product/list?id=0e3d1018956045ea8588796d321f7317">3C数码配件市场</a>
-							</li>
-									<li>
-										<a href="/shop/product/list?id=340f3673c9f340529a89398228a0cc87"><span class="icon"> </span>移动电源</a>
-									</li>
-            				<li class="mainCategory">
-								<a href="/shop/product/list?id=2dcf75f487de4c7ea62bc181a0c28662">个人护理清洁</a>
-							</li>
-									<li>
-										<a href="/shop/product/list?id=a0060df8778447a2b2c636b04555f43b"><span class="icon"> </span>电子美容仪</a>
-									</li> -->
+            			
 					</ul>
             	</div>
                 <div class="bottom"></div>
@@ -181,7 +158,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 			<div class="blank"></div>
-			<div class="hotProduct">
+			<!-- <div class="hotProduct">
 				<div class="title">
 					<strong>热卖商品</strong>HOT
 				</div>
@@ -206,11 +183,11 @@ $(document).ready(function() {
 				</div>
 				<a class="next browse"></a>
 			</div>
-		</div>
+		</div> -->
+		<!-- <div class="blank"></div>
+		<img src="./upload/image/banner4.jpg" /> -->
 		<div class="blank"></div>
-		<img src="./upload/image/banner4.jpg" />
-		<div class="blank"></div>
-		<div class="newProduct">
+		<!-- <div class="newProduct">
 			<div class="left">
 				<ul class="newProductTab">
 						<li>
@@ -244,7 +221,7 @@ $(document).ready(function() {
 					<ul class="newProductTabContent">
 					</ul>
 			</div>
-		</div>
+		</div> -->
 		<div class="blank"></div>
 		<div class="bodyLeft">
 			
@@ -257,8 +234,8 @@ $(document).ready(function() {
 					<strong>精品推荐</strong>BEST
 				</div>
 				<div class="middle">
-					<ul>
-							<li>
+					<ul class="goodsList">
+							<!-- <li>
 								<a href="/html/product_content/201501/7bb5a5692a164d6d93af2ff318808185.html">
 									<img src="./upload/image/201501/877e84f41e07437c9e3756a3ac32c2e7_thumbnail.jpg" alt="SKG 1638 家用静音电陶炉 不锈钢 包邮特价 无辐射黑晶炉" />
 										<p title="SKG 1638 家用静音电陶炉 不锈钢 包邮特价 无辐射黑晶炉">SKG 1638...</p>
@@ -271,14 +248,13 @@ $(document).ready(function() {
 										<p title="新款SKG GW3315榨汁机 不锈钢 婴儿榨汁机 出汁率高 特价ZZ1318">新款SKG GW...</p>
 									<p class="red">￥299.00</p>
 								</a>
-							</li>
+							</li> -->
 					</ul>
 					<div class="clearfix"></div>
 				</div>
 				<div class="bottom"></div>
 			</div>
 		</div>
-		<div class="blank"></div>
 <link href="./template/shop/css/friend_link.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="./template/shop/js/friend_link.js"></script>
 <script type="text/javascript">
@@ -291,32 +267,33 @@ function getQueryString(name) {
     return null;
 }
 // 这样调用：
-alert(getQueryString("id"));
+var id = getQueryString("id");
+console.log(id);
 if (null === getQueryString("id")) {
-	window.location = '../views/index.html';//go login
+	window.location = 'http://www.cmc777.com/System/Login.aspx?isurl=http%3a%2f%2fwww.cmc777.com%2fdefault.aspx';//go login
 } else {
 	$.ajax({
 	  type:"get",
 	  timeout : 20000, 
-	  url:"./customer/info.json",
+	  url:`./customer/info.json?id=${id}`,
 	  dataType: "json",
 	  success:function(data) {
 		console.log(data);
 		if (data.respCode === '1000') {
-			for ( var menu of data.data) {
-				$('.menu').append(`<li class="mainCategory" id="mainCategory${menu.id}">
-				<a href="/shop/product/list?id=c5910cfe886244c9b23bd0234d946c3e">${menu.name}</a>
-			</li>
+			// for ( var menu of data.data) {
+			// 	$('.menu').append(`<li class="mainCategory" id="mainCategory${menu.id}">
+			// 	<a href="/shop/product/list?id=c5910cfe886244c9b23bd0234d946c3e">${menu.name}</a>
+			// </li>
 					
-					`)
-				for (var sub of menu.goodsCategoryTypes) {
-					$('.menu').append(`
-						<li>
-						<a href="/shop/product/list?id=28663da185934da0a4cf52784f771157"><span class="icon"> </span>${sub.name}</a>
-					</li>`)
-				}
-			} 
-			// sessionStorage.setItem("role", data.data.loginName); 
+			// 		`)
+			// 	for (var sub of menu.goodsCategoryTypes) {
+			// 		$('.menu').append(`
+			// 			<li>
+			// 			<a href="/shop/product/list?id=28663da185934da0a4cf52784f771157"><span class="icon"> </span>${sub.name}</a>
+			// 		</li>`)
+			// 	}
+			// } 
+			sessionStorage.setItem("user", JSON.stringify(data.data)); 
 			// sessionStorage.setItem("id", data.data.id); 
 			// window.location = '../views/index.html';
 
@@ -332,6 +309,187 @@ if (null === getQueryString("id")) {
 	});
 }
 
+var curgoods,curgood;
+function getgoods(id, ...ids) {
+console.log(ids)
+id = id || 2;
+var url = `filter[categoryId]=${id}`
+	if (ids[0]){
+		var subId = ids[0];
+		url = `filter[categoryId]=${id}&filter[categoryTypeId]=${subId}`
+	}
+	$.ajax({
+	  type:"get",
+	  timeout : 20000, 
+	  url:`./goods/front/get-goods-page.json?page=1&count=100&${url}`,
+	  dataType: "json",
+	  success:function(data) {
+		console.log(data);
+		if (data.respCode === '1000') {
+			$('.goodsList').empty();
+			for(var goods of data.data.content) {
+				var imageUrls = JSON.parse(goods.imageUrls);
+				for(var good of goods.goodsDetail) {
+					var goodsString = JSON.stringify(goods);
+					var goodString = JSON.stringify(good);
+					curgood = good;
+					curgoods = goods;
+
+					$('.goodsList').append(`
+						<li>
+								<a href="#" onclick="showGoodsDetail()">
+									<img src="${imageUrls[0]}" />
+										<p title="${good.name}">${goods.name}</p>
+									<p class="red">￥${good.price}</p>
+								</a>
+							</li>`)
+				}
+			}
+
+		} else {
+			alert(data.respMsg);
+
+		}
+		
+	  },
+	   error: function () {
+            alert('系统维护中，请稍后重试！');
+        }
+	});
+}
+
+
+			function showGoodsDetail() {
+
+console.log(curgoods);
+var imageUrls = JSON.parse(curgoods.imageUrls);
+console.log(curgood);
+	$('.bodyRight').remove();
+	// $('.productImage').append(`
+	// 	<a href="ist.bigProductImagePath}" class="tabContent zoom<%if (listLP.index > 0){%> nonFirst<%}%>">
+	// 							<img src="{list.smallProductImagePath}" />
+	// 						</a>`)
+	$('.body').append(`
+
+		
+		<div class="bodyRight">
+			<div class="listBar">
+				<div class="left"></div>
+				<div class="middle">
+					<div class="path">
+						<a href="#" class="home"><span class="icon">&nbsp;</span>首页</a>>
+						
+						 	<a href="/shop/product/list?id=list.id}">${curgoods.name}</a>>
+						
+					</div>
+				</div>
+				<div class="right"></div>
+			</div>
+			<div class="productTop">
+				<div class="productTopLeft">
+					<div class="productImage">
+	     
+	               		<a href="ist.bigProductImagePath}" class="tabContent zoom>">
+								<img src="${imageUrls[0]}" />
+							</a>
+                	</div>
+					<div class="thumbnailProductImage">
+						<a class="prev browse" href="javascript:void(0);" hidefocus="true"></a>
+						<div class="scrollable">
+							<ul class="items productImageTab">
+								
+									<li>
+										<img src="${imageUrls[0]}" />
+									</li>
+								
+							</ul>
+						</div>
+						<a class="next browse" href="javascript:void(0);" hidefocus="true"></a>
+					</div>
+				</div>
+				<div class="productTopRight">
+					<h1>
+						${curgoods.name}
+					</h1>
+					<ul class="productAttribute">
+						
+	                    		<li>
+	                    			<strong>产地:</strong>
+	                    			${curgoods.origin}&nbsp;
+	                            </li>
+	                           
+                        
+                        	<li><a href="#productAttribute" id="moreProductAttribute">更多参数>></a></li>
+                        
+					</ul>
+					<div class="blank"></div>
+					<div class="productInfo">
+						<div class="left"></div>
+						<div class="right">
+							<div class="top">
+								销 售 价：<span class="price">￥${curgood.price}</span>
+								市 场 价：<span class="marketPrice">product.marketPrice,priceCurrencyFormat}</span>
+							</div>
+							<div class="bottom">
+								
+									重 量：<span class="weight">product.weight} i18n("WeightUnit." + product.weightUnit)}</span>
+								
+								
+									积 分：<span>roduct.point}</span>
+								
+							</div>
+						</div>
+					</div>
+					<div class="blank"></div>
+					<div class="productNumber">
+						货号: <span>product.productSn}</span>
+                        品牌: <span>" + product.brand.name! + "</span>"
+					</div>
+					<div class="blank"></div>
+					<div class="productBuy">
+						<div class="buyCount">
+							我要购买: <input type="text" id="quantity" value="1" /> 件
+						</div>
+						
+							
+						
+							<input type="button" class="addCartItemButton addCartItem {id: 'product.id}'}" value="" hidefocus="true" />
+						
+                        <input type="button" class="addFavoriteButton addFavorite {id: 'product.id}'}" value="" hidefocus="true" />
+					</div>
+				</div>
+			</div>
+			<div class="productBottom">
+				<ul class="productAttributeTab">
+					<li>
+						<a href="javascript:void(0);" class="current" hidefocus="true">商品介绍</a>
+					</li>
+					<li>
+						<a href="javascript:void(0);" name="productAttribute" hidefocus="true">规格参数</a>
+					</li>
+				</ul>
+				<div class="tabContent productDescription">
+					product.description}
+				</div>
+				<div class="tabContent productAttribute">
+					<table class="productAttributeTable">
+						<%for(list in product.productType.enabledProductAttributeList!){%>
+							<%if (product.productAttributeMap != null){%>
+								<tr>
+									<th>list.name}</th>
+									<td>
+										product.productAttributeMap[list.id]}&nbsp;
+									</td>
+								</tr>
+							<%}%>
+						<%}%>
+					</table>
+				</div>
+			</div>
+		</div>
+	`);
+}
+
 	$.ajax({
 	  type:"get",
 	  timeout : 20000, 
@@ -342,14 +500,14 @@ if (null === getQueryString("id")) {
 		if (data.respCode === '1000') {
 			for ( var menu of data.data) {
 				$('.menu').append(`<li class="mainCategory" id="mainCategory${menu.id}">
-				<a href="/shop/product/list?id=c5910cfe886244c9b23bd0234d946c3e">${menu.name}</a>
+				<a href="#" onclick="getgoods(${menu.id})">${menu.name}</a>
 			</li>
 					
 					`)
 				for (var sub of menu.goodsCategoryTypes) {
 					$('.menu').append(`
 						<li>
-						<a href="/shop/product/list?id=28663da185934da0a4cf52784f771157"><span class="icon"> </span>${sub.name}</a>
+						<a href="#" onclick="getgoods(${menu.id},${sub.id})""><span class="icon"> </span>${sub.name}</a>
 					</li>`)
 				}
 			} 
@@ -368,20 +526,10 @@ if (null === getQueryString("id")) {
         }
 	});
 
-
+getgoods();
 </script>
-<div class="friendLink">
-	
-	<div class="textFriendLink">
-		<div class="left"></div>
-		<div class="middle">
-			<ul>
-			</ul>
-		</div>
-		<div class="right"></div>
 	</div>
-</div>	</div>
-	<div class="blank"></div>
+	
 <link href="./template/shop/css/footer.css" type="text/css" rel="stylesheet" />
 <div class="footer">
 	<div class="bottomNavigation">
@@ -461,4 +609,5 @@ if (null === getQueryString("id")) {
 </ul>
 	</div>
 </div></body>
+
 </html>
