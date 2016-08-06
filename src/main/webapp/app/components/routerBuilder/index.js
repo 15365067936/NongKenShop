@@ -135,5 +135,23 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'localStor
 
                 return deferred.promise;
             }]
+        }).state('order-detail', {
+            url: "/order-detail:order",
+            templateUrl: require("file!../pages/orderDetail/orderDetail.html"),
+            controller: 'orderDetailCtrl',
+            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+                var deferred = $q.defer();
+
+                require.ensure([], function(require) {
+                    var mod = require('pages/orderDetail');
+                    $ocLazyLoad.load({
+                        name: mod.name,
+                    });
+
+                    deferred.resolve(mod.controller);
+                });
+
+                return deferred.promise;
+            }]
         });
 }]);

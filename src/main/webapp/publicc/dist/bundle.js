@@ -81395,7 +81395,7 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(1, function(require) {
-	                    var mod = __webpack_require__(82);
+	                    var mod = __webpack_require__(83);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81413,7 +81413,7 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(2, function(require) {
-	                    var mod = __webpack_require__(97);
+	                    var mod = __webpack_require__(98);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81431,7 +81431,7 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(3, function(require) {
-	                    var mod = __webpack_require__(106);
+	                    var mod = __webpack_require__(107);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81449,7 +81449,7 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(4, function(require) {
-	                    var mod = __webpack_require__(115);
+	                    var mod = __webpack_require__(116);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81467,7 +81467,7 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(5, function(require) {
-	                    var mod = __webpack_require__(124);
+	                    var mod = __webpack_require__(125);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81485,7 +81485,7 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(6, function(require) {
-	                    var mod = __webpack_require__(133);
+	                    var mod = __webpack_require__(134);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81503,7 +81503,25 @@
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(7, function(require) {
-	                    var mod = __webpack_require__(138);
+	                    var mod = __webpack_require__(139);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('order-detail', {
+	            url: "/order-detail:order",
+	            templateUrl: __webpack_require__(82),
+	            controller: 'orderDetailCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(8, function(require) {
+	                    var mod = __webpack_require__(148);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81557,7 +81575,13 @@
 /* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "f1f60caacee831420087850bf010ef04.html";
+	module.exports = __webpack_require__.p + "79dcd7b2c0653d358b027bdb01469cca.html";
+
+/***/ },
+/* 82 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "69fd22e24e6ca8552f9cf3c1d686dd64.html";
 
 /***/ }
 /******/ ]);
