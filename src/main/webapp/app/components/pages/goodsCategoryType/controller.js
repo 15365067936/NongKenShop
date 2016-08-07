@@ -1,7 +1,13 @@
 module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams) {
 
-    var url = $resource('/NongKenShop/goods-category-type/get-category-types.json');
-   
+    
+    if($stateParams.category) {
+        $scope.category = JSON.parse($stateParams.category);
+        
+    }
+    
+    var url = $resource('/NongKenShop/goods-category-type/get-category-types.json?goodsCategory.id=' + $scope.category.id);
+    
     $scope.tableParams = new NgTableParams({}, {
         total: 0,         
         getData: function (params) {
@@ -12,6 +18,11 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     });
 
     $scope.edit = function (categoryType) {
+        	categoryType = {
+        		id:categoryType.id,
+        		name:categoryType.name,
+            	goodsCategory:$scope.category
+            };
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: require('file!../../widgets/addEditCategoryType/template.html'),
@@ -40,7 +51,9 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
                     return '新建';
                 },
                 currentCategoryType: function () {
-                    var categoryType = {};
+                	var categoryType = {
+                        	goodsCategory:$scope.category
+                        };
                     return angular.copy(categoryType);
                 }
             }

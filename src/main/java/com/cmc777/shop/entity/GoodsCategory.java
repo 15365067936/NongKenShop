@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * 商品类别
  * @author 张军
@@ -33,6 +35,7 @@ public class GoodsCategory {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "goodsCategory", fetch = FetchType.EAGER)
+	@JsonManagedReference
 	private List<GoodsCategoryType> goodsCategoryTypes;
 	
 	public Integer getId() {

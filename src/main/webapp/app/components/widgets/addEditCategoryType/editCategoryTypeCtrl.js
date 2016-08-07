@@ -1,6 +1,7 @@
 module.exports = function ($scope, $uibModalInstance, $resource, method, currentCategoryType) {
 
     $scope.categoryType = currentCategoryType;
+    console.log($scope.categoryType);
 
     $scope.method = method;
     var url = '/NongKenShop/goods-category-type/add.json';
@@ -10,9 +11,10 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
     }
 
     $scope.submit = function () {
+        $scope.categoryType.goodsCategory = {id:$scope.categoryType.goodsCategory.id};
         console.log($scope.categoryType);
         if ($scope.method === '编辑') {
-            url = '/NongKenShop/goods-category-type/update.json'
+            url = '/NongKenShop/goods-category-type/update.json';
         }
         $resource(url).save($scope.categoryType).$promise.then(
             function (ack) {

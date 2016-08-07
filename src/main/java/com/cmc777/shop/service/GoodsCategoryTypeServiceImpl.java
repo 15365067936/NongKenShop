@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cmc777.shop.entity.GoodsCategory;
 import com.cmc777.shop.entity.GoodsCategoryType;
 import com.cmc777.shop.repository.shop.GoodsCategoryTypeRepository;
 
@@ -36,6 +37,11 @@ public class GoodsCategoryTypeServiceImpl implements GoodsCategoryTypeService {
 	@Override
 	public void delete(GoodsCategoryType categoryType) {
 		goodsCategoryTypeRepository.delete(categoryType);
+	}
+
+	@Override
+	public List<GoodsCategoryType> findByCategory(GoodsCategory goodsCategory) {
+		return goodsCategoryTypeRepository.findByGoodsCategory(goodsCategory);
 	}
 
 

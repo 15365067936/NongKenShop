@@ -20,6 +20,7 @@ public class AlipayConfig {
 
             //交易安全检验码，由数字和字母组成的32位字符串
             key = "7xq77seedbi9vz044vv0jk79hwzvt5mr";
+                   7xq77seedbi9vz044vv0jk79hwzvt5mr
 
             //获取或设置卖家账号
             seller_email = "nkny2013@163.com";

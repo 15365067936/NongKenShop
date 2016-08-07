@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "cmc_goods_category_type")
 @DynamicUpdate
@@ -28,6 +30,8 @@ public class GoodsCategoryType {
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
+	@NotNull(message = "商品一级类别不能为空")
+	@JsonBackReference
 	private GoodsCategory goodsCategory;
 	
 	public Integer getId() {
@@ -42,6 +46,11 @@ public class GoodsCategoryType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public GoodsCategory getGoodsCategory() {
+		return goodsCategory;
+	}
+	public void setGoodsCategory(GoodsCategory goodsCategory) {
+		this.goodsCategory = goodsCategory;
+	}
 }

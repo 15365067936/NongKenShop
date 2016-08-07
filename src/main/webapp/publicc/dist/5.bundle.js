@@ -105,8 +105,14 @@ webpackJsonp([5],{
 
 	module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource, $filter, NgTableParams) {
 
-	    var url = $resource('/NongKenShop/goods-category-type/get-category-types.json');
-	   
+	    
+	    if($stateParams.category) {
+	        $scope.category = JSON.parse($stateParams.category);
+	        
+	    }
+	    
+	    var url = $resource('/NongKenShop/goods-category-type/get-category-types.json?goodsCategory.id=' + $scope.category.id);
+	    
 	    $scope.tableParams = new NgTableParams({}, {
 	        total: 0,         
 	        getData: function (params) {
@@ -117,6 +123,11 @@ webpackJsonp([5],{
 	    });
 
 	    $scope.edit = function (categoryType) {
+	        	categoryType = {
+	        		id:categoryType.id,
+	        		name:categoryType.name,
+	            	goodsCategory:$scope.category
+	            };
 	        var modalInstance = $uibModal.open({
 	            animation: $scope.animationsEnabled,
 	            templateUrl: __webpack_require__(127),
@@ -145,7 +156,9 @@ webpackJsonp([5],{
 	                    return '新建';
 	                },
 	                currentCategoryType: function () {
-	                    var categoryType = {};
+	                	var categoryType = {
+	                        	goodsCategory:$scope.category
+	                        };
 	                    return angular.copy(categoryType);
 	                }
 	            }
@@ -240,7 +253,7 @@ webpackJsonp([5],{
 	var editCategoryType = __webpack_require__(131);
 	__webpack_require__(132);
 	var mod = angular.module('app.editCategoryType', []);
-	mod.controller('editCategoryType', ['$scope', '$uibModalInstance', '$resource', 'method', 'currentCategory' ,editCategoryType]);
+	mod.controller('editCategoryType', ['$scope', '$uibModalInstance', '$resource', 'method', 'currentCategoryType' ,editCategoryType]);
 	module.exports = mod;
 
 /***/ },
@@ -251,6 +264,7 @@ webpackJsonp([5],{
 	module.exports = function ($scope, $uibModalInstance, $resource, method, currentCategoryType) {
 
 	    $scope.categoryType = currentCategoryType;
+	    console.log($scope.categoryType);
 
 	    $scope.method = method;
 	    var url = '/NongKenShop/goods-category-type/add.json';
@@ -260,9 +274,10 @@ webpackJsonp([5],{
 	    }
 
 	    $scope.submit = function () {
+	        $scope.categoryType.goodsCategory = {id:$scope.categoryType.goodsCategory.id};
 	        console.log($scope.categoryType);
 	        if ($scope.method === '编辑') {
-	            url = '/NongKenShop/goods-category-type/update.json'
+	            url = '/NongKenShop/goods-category-type/update.json';
 	        }
 	        $resource(url).save($scope.categoryType).$promise.then(
 	            function (ack) {

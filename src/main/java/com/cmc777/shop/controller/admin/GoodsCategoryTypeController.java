@@ -18,33 +18,22 @@ import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.GoodsCategory;
 import com.cmc777.shop.entity.GoodsCategoryType;
-import com.cmc777.shop.service.GoodsCategoryService;
 import com.cmc777.shop.service.GoodsCategoryTypeService;
 import com.cmc777.shop.util.BeanUtil;
+import com.cmc777.shop.util.JsonUtil;
 
 @Controller
 @RequestMapping("goods-category-type")
 public class GoodsCategoryTypeController {
 	@Autowired
 	private GoodsCategoryTypeService goodsCategoryTypeService;
-	@Autowired
-	private GoodsCategoryService categoryService;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GoodsCategoryTypeController.class);
-	
-	@ModelAttribute
-	public GoodsCategoryType get(@RequestParam(required=false) Integer id) {
-		if (id != null){
-			return goodsCategoryTypeService.get(id);
-		}else{
-			return new GoodsCategoryType();
-		}
-	}
 	
 	@RequestMapping(value = "get-category-types.json", method = RequestMethod.GET)
 	@ResponseBody
 	public RetMsg getCategoryTypes(GoodsCategoryType goodsCategoryType) {
-		List<GoodsCategoryType> categoryTypes = goodsCategoryTypeService.findAll();
+		List<GoodsCategoryType> categoryTypes = goodsCategoryTypeService.findByCategory(goodsCategoryType.getGoodsCategory());
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), categoryTypes);
 	}
 	
@@ -55,7 +44,7 @@ public class GoodsCategoryTypeController {
 		if (StringUtils.isNotBlank(validate)) {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), validate);
 		}
-		
+		LOGGER.info(JsonUtil.objectToJson(categoryType));
 		try {
 			goodsCategoryTypeService.add(categoryType);
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
@@ -68,7 +57,7 @@ public class GoodsCategoryTypeController {
 	@RequestMapping(value = "update.json", method = RequestMethod.POST)
 	@ResponseBody
 	public RetMsg update(@RequestBody GoodsCategoryType categoryType) {
-		if (categoryType.getId() == null) {
+		if (categoryType.getId() == null || categoryType.getGoodsCategory() == null) {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
 		}
 		
