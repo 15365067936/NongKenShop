@@ -42,7 +42,7 @@
 		</div>
 		<div class="w3l_search">
 			<form action="#" method="post">
-				<input type="text" name="Product" value="Search a product..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search a product...';}" required="">
+				<input type="text" name="Product" value="查询商品..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '查询商品...';}" required="">
 				<input type="submit" value=" ">
 			</form>
 		</div>
@@ -310,23 +310,65 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-3 pull-right">
-					<ul class="pager">
-					  <li><a href="#">Previous</a></li>
-					  <li><a href="#">Next</a></li>
-					</ul>
+					
+					
 				</div>
 				
 				<div class="clearfix"> </div>
 			</div>
+			<div class="clearfix"></div>
+			<div class="col-md-3 pull-right">
+				<ul class="pager">
+				  <li><a href="#">前一页</a></li>
+				  <li><a href="#">后一页</a></li>
+				</ul>
+			</div> 
 		</div>
 	</div>
 	
 	<script>
 		$(document).ready(function(){
-			$.get("../goods/front/get-goods-page.json?page=1&count=10", function(result){
-				console.log(result);
+			$(".agile_top_brands_grids").empty();
+			var categoryId = $.getUrlParam("categoryId");
+			var categoryTypeId = $.getUrlParam("categoryTypeId");
+			console.log(categoryId);
+			console.log(categoryTypeId);
+		    var url = "../goods/front/get-goods-page.json?page=1&count=10";
+			if (categoryId) {
+				url += "&filter[categoryId]=" + categoryId;
+			}
+			if (categoryTypeId) {
+				url += "&filter[categoryTypeId]=" + categoryTypeId;
+			}
+			
+			console.log(url);
+			
+			$.get(url, function(result){
+				console.log();
+				var goodsArray = result.data.content;
+				for(var i = 0;i < goodsArray.length;i++) {
+					var goods = goodsArray[i];
+					var image = $.parseJSON(goodsArray[i].imageUrls);
+					var div = '<div class="col-md-3 top_brand_left">' + 
+								   '<div class="hover14 column">' + 
+					          			'<div class="agile_top_brand_left_grid">' + 
+					          				'<div class="agile_top_brand_left_grid1">' + 
+					          					'<figure>' + 
+					          						'<div class="snipcart-item block" >' +
+					          							'<div class="snipcart-thumb">' + 
+					          								'<a href="single.html"><img title=" " alt=" " src="' + image[0] + '" /></a>' + 
+					          								'<p><h4>商品编号:</h4>' + goods.goodsCode + '</p>' +
+					          								'<p>' + goods.discription + '</p>' +  
+					          							'</div>' + 
+					          						'</div>' + 
+					          					'</figure>' +
+					          				'</div>' + 
+					          			'</div>' +
+					          		'</div>' +
+					          	'</div>';
+		          	
+		          	$(".agile_top_brands_grids").append(div);
+				}
 			});
 		});
 	</script>

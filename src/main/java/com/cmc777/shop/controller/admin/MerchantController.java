@@ -1,8 +1,6 @@
 package com.cmc777.shop.controller.admin;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,7 +23,6 @@ import com.cmc777.shop.util.BeanUtil;
 import com.cmc777.shop.util.JsonUtil;
 import com.cmc777.shop.util.MD5;
 import com.cmc777.shop.util.PasswordUtil;
-import com.google.gson.JsonObject;
 
 /**
  * merchant管理

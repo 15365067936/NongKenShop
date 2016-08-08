@@ -65,6 +65,8 @@ public class Goods {
 	private String goodsCode;
 	
 	private Boolean isDeleted = false;
+	@Column(length = 100)
+	private String discription = "";
 	
 	@OneToMany(mappedBy = "goods")
 	private List<GoodsDetail> goodsDetail = Lists.newArrayList();
@@ -171,4 +173,14 @@ public class Goods {
 	public void setCategoryType(GoodsCategoryType categoryType) {
 		this.categoryType = categoryType;
 	}
+
+	public String getDiscription() {
+		return discription;
+	}
+
+	public void setDiscription(String discription) {
+		this.discription = discription;
+	}
+	
+	
 }

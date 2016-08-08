@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmc777.shop.util.alipay.AlipayConfig;
 import com.cmc777.shop.util.alipay.AlipayNotify;
-import com.cmc777.shop.util.alipay.AlipaySubmit;
 
 @Controller
 @RequestMapping("test")

@@ -1,9 +1,12 @@
 module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTableParams, method, currentApplication, variableService, userService) {
-
+	$scope.application = currentApplication;
     getCategorys();
-    getCategoryTypes();
-    $scope.application = currentApplication;
-
+    if ($scope.application.categoryId) {
+    	$scope.categoryTypes = [{
+    			id:$scope.application.categoryType.id,
+    			name:$scope.application.categoryType.name
+    	}]
+    }
 
     $scope.goodsCategory = variableService.getGoodsCategory();
     $scope.method = method;
@@ -39,15 +42,12 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
     };
 
     $scope.deleteImg = function(index) {
-        console.log(index);
         $scope.application.imageUrls.splice(index, 1);
 
     }
 
     $scope.upload = function(a, file, group) {
-        console.log(a);
         $scope.showBtn = false;
-        console.log(file);
         if (null == file) {
             return;
         }
@@ -65,15 +65,12 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
         });
 
         file.upload.then(function(response) {
-            console.log(response);
 
             if (response.data && response.data.respCode != '1000') {
 
                 alert(response.data.respMsg + response.data.content);
             } else {
-                console.log(response.data.data);
                 $scope.application.imageUrls.push(response.data.data);
-                console.log( $scope.application.imageUrls)
                 alert('上传成功！' + response.data.respMsg);
                 $scope.tableParams.page(1);
                 $scope.tableParams.reload();
@@ -98,18 +95,20 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
     };
     
     
+    $scope.getCategoryTypes = function() {
+    	var categoryUrl = $resource('/NongKenShop/goods-category-type/get-category-types.json?goodsCategory.id=' + $scope.application.categoryId);
+        categoryUrl.get(null).$promise.then(function (body) {
+        	$scope.categoryTypes = body.data;
+        });
+    };
+    
+    
     function getCategorys() {
     	var categoryUrl = $resource('/NongKenShop/goods-category/get-categorys.json');
         categoryUrl.get(null).$promise.then(function (body) {
         	$scope.goodsCategorys = body.data;
         });
     };
-    
-    function getCategoryTypes() {
-    	var categoryUrl = $resource('/NongKenShop/goods-category-type/get-category-types.json');
-        categoryUrl.get(null).$promise.then(function (body) {
-        	$scope.categoryTypes = body.data;
-        });
-    };
+
 
 }
