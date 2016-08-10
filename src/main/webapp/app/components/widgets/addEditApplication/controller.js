@@ -7,6 +7,11 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
     			name:$scope.application.categoryType.name
     	}]
     }
+    
+    if (!$scope.application.imageUrls) {
+		$scope.application.imageUrls = [];
+	}
+	
 
     $scope.goodsCategory = variableService.getGoodsCategory();
     $scope.method = method;
@@ -70,6 +75,8 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
 
                 alert(response.data.respMsg + response.data.content);
             } else {
+            	
+            	console.log($scope.application.imageUrls);
                 $scope.application.imageUrls.push(response.data.data);
                 alert('上传成功！' + response.data.respMsg);
                 $scope.tableParams.page(1);

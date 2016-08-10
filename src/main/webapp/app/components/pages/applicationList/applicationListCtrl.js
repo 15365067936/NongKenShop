@@ -118,7 +118,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
     };
 
     $scope.upload = function(a, file, group) {
-        console.log(a);
         $scope.showBtn = false;
         console.log(file);
         if (null == file) {
@@ -136,7 +135,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
         });
 
         file.upload.then(function(response) {
-            console.log(response);
 
             if (response.data && response.data.respCode != '1000') {
                 alert(response.data.respMsg + response.data.content);
