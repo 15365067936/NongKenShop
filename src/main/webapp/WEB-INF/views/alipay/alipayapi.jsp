@@ -30,19 +30,15 @@
 		////////////////////////////////////请求参数//////////////////////////////////////
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        //String out_trade_no = new String(request.getParameter("WIDout_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
+        String out_trade_no = request.getAttribute("orderCode").toString();
         //订单名称，必填
-        //String subject = new String(request.getParameter("WIDsubject").getBytes("ISO-8859-1"),"UTF-8");
-
+        String subject = request.getAttribute("orderName").toString();
         //付款金额，必填
-        //String total_fee = new String(request.getParameter("WIDtotal_fee").getBytes("ISO-8859-1"),"UTF-8");
+        String total_fee = request.getAttribute("price").toString();
 
         //商品描述，可空
-        // String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");
+        String body = request.getAttribute("description").toString();
 
-		
-		
 		//////////////////////////////////////////////////////////////////////////////////
 		
 		//把请求参数打包成数组
@@ -56,10 +52,10 @@
 		sParaTemp.put("return_url", AlipayConfig.return_url);
 		//sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
 		//sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
-		sParaTemp.put("out_trade_no", "201608041110001s");
-		sParaTemp.put("subject", "农垦支付测试");
-		sParaTemp.put("total_fee", "0.01");
-		//sParaTemp.put("body", "这是一个测试支付");
+		sParaTemp.put("out_trade_no", out_trade_no);
+		sParaTemp.put("subject", subject);
+		sParaTemp.put("total_fee", total_fee);
+		sParaTemp.put("body", body);
 		sParaTemp.put("seller_email", AlipayConfig.seller_email);
 		//其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
         //如sParaTemp.put("参数名","参数值");

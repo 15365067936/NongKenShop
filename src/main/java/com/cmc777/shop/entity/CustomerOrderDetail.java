@@ -12,10 +12,10 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "cmc_order_detail")
+@Table(name = "cmc_customer_order_detail")
 @DynamicInsert
 @DynamicUpdate
-public class OrderDetail {
+public class CustomerOrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -30,8 +30,8 @@ public class OrderDetail {
 	private GoodsDetail goodsDetail;
 	
 	@ManyToOne
-	@JoinColumn(name = "order_id")
-	private Order order;
+	@JoinColumn(name = "customer_order_id")
+	private CustomerOrder customerOrder;
 
 	public Long getId() {
 		return id;
@@ -89,13 +89,22 @@ public class OrderDetail {
 		this.goodsCode = goodsCode;
 	}
 
-	public Order getOrder() {
-		return order;
+	public CustomerOrder getCustomerOrder() {
+		return customerOrder;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setCustomerOrder(CustomerOrder customerOrder) {
+		this.customerOrder = customerOrder;
 	}
 
-	
+	public OrderDetail generateOrderDetail() {
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setGoodsCode(this.goodsCode);
+		orderDetail.setGoodsCount(this.goodsCount);
+		orderDetail.setGoodsDetail(this.goodsDetail);
+		orderDetail.setGoodsName(this.goodsName);
+		orderDetail.setSinglPrice(this.singlPrice);
+		orderDetail.setSpecifications(this.specifications);
+		return orderDetail;
+	}
 }

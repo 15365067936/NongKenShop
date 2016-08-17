@@ -9,6 +9,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
 	private GoodsDetailService goodsDetailService;
 	@Autowired
 	private OrderDetailService orderDetailService;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
 	@Override
 	public Page<Order> find(Order order, Integer page, Integer count) {
@@ -75,15 +79,26 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	@Transactional
-	public void addOrderService(Order order) throws BaseException {
-		order = orderRepository.save(order);
-
-		for (OrderDetail orderDetail : order.getOrderDetails()) {
-			goodsDetailService.adjustNumber(orderDetail.getGoodsDetail(), "minus", orderDetail.getGoodsCount());
-			orderDetail.setOrder(order);
-			orderDetailService.addDetail(orderDetail);
-			
+	public void addOrder(Order order) throws BaseException {
+		try {
+			order = orderRepository.save(order);
+		} catch (Exception e) {
+			LOGGER.error("保存订单出错", e);
+			throw new BaseException();
 		}
+		
+		try {
+			for (OrderDetail orderDetail : order.getOrderDetails()) {
+				goodsDetailService.adjustNumber(orderDetail.getGoodsDetail(), "minus", orderDetail.getGoodsCount());
+				orderDetail.setOrder(order);
+				orderDetailService.addDetail(orderDetail);
+				
+			}
+		} catch (Exception e) {
+			LOGGER.error("保存订单详情出错", e);
+			throw new BaseException();
+		}
+		
 	}
 
 	@Override

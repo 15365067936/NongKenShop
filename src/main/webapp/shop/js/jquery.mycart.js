@@ -96,11 +96,11 @@
     }
     var setProduct = function(id, name, summary, price, quantity, image) {
       if(typeof id === "undefined"){
-        console.error("id required")
+        console.error("id不能为空")
         return false;
       }
       if(typeof name === "undefined"){
-        console.error("name required")
+        console.error("商品名称不能为空")
         return false;
       }
       if(typeof image === "undefined"){
@@ -108,11 +108,11 @@
         return false;
       }
       if(!$.isNumeric(price)){
-        console.error("price is not a number")
+        console.error("单价必须为数字")
         return false;
       }
       if(!$.isNumeric(quantity)) {
-        console.error("quantity is not a number");
+        console.error("数量必须是数字");
         return false;
       }
       summary = typeof summary === "undefined" ? "" : summary;
@@ -158,7 +158,6 @@
     return objToReturn;
   }());
 
-
   var loadMyCartEvent = function(userOptions){
 
     var options = OptionManager.getOptions(userOptions);
@@ -185,13 +184,18 @@
         '<div class="modal-content">' +
         '<div class="modal-header">' +
         '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
-        '<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-shopping-cart"></span> My Cart</h4>' +
+        '<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-shopping-cart"></span> 购物车</h4>' +
         '</div>' +
         '<div class="modal-body">' +
-        '<table class="table table-hover table-responsive" id="' + idCartTable + '"></table>' +
+        	'<table class="table table-hover table-responsive" id="' + idCartTable + '"></table>' +
+        	'<div>' + 
+        		'<span class="col-md-2">收货地址:</span><input id="address" class="col-md-4" type="text" /><br><br>' + 
+        		'<span class="col-md-2">电话号码:</span><input id="phone" class="col-md-4" type="text" /></div>' +
+        	'<br>' + 
         '</div>' +
         '<div class="modal-footer">' +
-        '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
+        '<button id="submitOrder" type="button" class="btn btn-default" data-dismiss="modal">提交</button>' +
+        '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>' +
 
         '</div>' +
         '</div>' +
@@ -200,6 +204,76 @@
       );
     }
 
+    $("#submitOrder").click(function() {
+    	if (!$("#address").val()) {
+    		alert("收货地址不能为空");
+    		return false;
+    	}
+    	if (!$("#phone").val()) {
+    		alert("电话号码不能为空");
+    		return false;
+    	}
+    	var customer = JSON.parse(sessionStorage.getItem("currCustomer"));
+    	
+    	var table = $("#my-cart-table");
+    	
+    	var tr = table.children().children();
+    	if (tr.length > 0) {
+    		var customerOrderDetails = [];
+    		for (var i = 0;i < tr.length -2;i++) {
+    			var goodsDetailId = tr.attr("data-id");
+    			var goodsCount = $(tr.children()[3]).children(":first").val();
+    			var singlPrice = tr.attr("data-price");
+    			var goodsName = tr.attr("title");
+    			var detail = {
+    				goodsCount: Number(goodsCount),
+    				goodsName: goodsName,
+    				singlPrice: Number(singlPrice),
+    				goodsDetail: {id:goodsDetailId}
+    			};
+    			customerOrderDetails.push(detail);
+    			
+    		}
+    		var totalPrice = $($(tr[tr.length - 2]).children()[4]).children(":first").html();
+    		totalPrice = totalPrice.substring(1);
+    		var customerOrder = {
+    				customerId: customer.id,
+    				customerOrderDetails: customerOrderDetails,
+    				address:$("#address").val(),
+    				phone:$("#phone").val(),
+    				totalPrice:Number(totalPrice)
+    		}
+    		
+        	localStorage.products = JSON.stringify([]);
+        	$("#phone").val("");
+        	$("#address").val("");
+        	$cartBadge.text(ProductManager.getTotalQuantity());
+    		
+    		$.ajax({
+    			type:"post",
+    			url:"../customer-order/add.json",
+    			contentType: "application/json;charset=utf-8",
+    			data:JSON.stringify(customerOrder),
+    			success:function(respData) {
+    				console.log(respData);
+    				if (respData.respCode == "1000") {
+    					window.location.href = "../alipay/pay.json?orderCode=" + respData.data;
+    				} else {
+    					alert("下单失败");
+    				}
+    				
+    			},error:function() {
+    				
+    			}
+    			
+    		});
+    		
+    	} 
+
+
+    	//return false;
+    });
+    
     var drawTable = function(){
       var $cartTable = $("#" + idCartTable);
       $cartTable.empty();
@@ -211,9 +285,9 @@
           '<tr title="' + this.summary + '" data-id="' + this.id + '" data-price="' + this.price + '">' +
           '<td class="text-center" style="width: 30px;"><img width="30px" height="30px" src="' + this.image + '"/></td>' +
           '<td>' + this.name + '</td>' +
-          '<td title="Unit Price">$' + this.price + '</td>' +
-          '<td title="Quantity"><input type="number" min="1" style="width: 70px;" class="' + classProductQuantity + '" value="' + this.quantity + '"/></td>' +
-          '<td title="Total" class="' + classProductTotal + '">$' + total + '</td>' +
+          '<td title="单价">￥' + this.price + '</td>' +
+          '<td title="份数"><input type="number" min="1" style="width: 70px;" class="' + classProductQuantity + '" value="' + this.quantity + '"/></td>' +
+          '<td title="总价" class="' + classProductTotal + '">￥' + total + '</td>' +
           '<td title="Remove from Cart" class="text-center" style="width: 30px;"><a href="javascript:void(0);" class="btn btn-xs btn-danger ' + classProductRemove + '">X</a></td>' +
           '</tr>'
         );
@@ -222,13 +296,13 @@
       $cartTable.append(products.length ?
         '<tr>' +
         '<td></td>' +
-        '<td><strong>Total</strong></td>' +
+        '<td><strong>总价</strong></td>' +
         '<td></td>' +
         '<td></td>' +
-        '<td><strong id="' + idGrandTotal + '">$</strong></td>' +
+        '<td><strong id="' + idGrandTotal + '">￥</strong></td>' +
         '<td></td>' +
         '</tr>'
-        : '<div class="alert alert-danger" role="alert" id="' + idEmptyCartMessage + '">Your cart is empty</div>'
+        : '<div class="alert alert-danger" role="alert" id="' + idEmptyCartMessage + '">购物车是空的哦，快去选购吧！</div>'
       );
 
       var discountPrice = options.getDiscountPrice(products, ProductManager.getTotalPrice(), ProductManager.getTotalQuantity());
@@ -236,10 +310,10 @@
         $cartTable.append(
           '<tr style="color: red">' +
           '<td></td>' +
-          '<td><strong>Total (including discount)</strong></td>' +
+          '<td><strong>折扣价</strong></td>' +
           '<td></td>' +
           '<td></td>' +
-          '<td><strong id="' + idDiscountPrice + '">$</strong></td>' +
+          '<td><strong id="' + idDiscountPrice + '">￥</strong></td>' +
           '<td></td>' +
           '</tr>'
         );
@@ -259,10 +333,10 @@
       });
     }
     var showGrandTotal = function(){
-      $("#" + idGrandTotal).text("$" + ProductManager.getTotalPrice());
+      $("#" + idGrandTotal).text("￥" + ProductManager.getTotalPrice());
     }
     var showDiscountPrice = function(){
-      $("#" + idDiscountPrice).text("$" + options.getDiscountPrice(ProductManager.getAllProducts(), ProductManager.getTotalPrice(), ProductManager.getTotalQuantity()));
+      $("#" + idDiscountPrice).text("￥" + options.getDiscountPrice(ProductManager.getAllProducts(), ProductManager.getTotalPrice(), ProductManager.getTotalQuantity()));
     }
 
     /*
@@ -289,7 +363,7 @@
       var id = $(this).closest("tr").data("id");
       var quantity = $(this).val();
 
-      $(this).parent("td").next("." + classProductTotal).text("$" + price * quantity);
+      $(this).parent("td").next("." + classProductTotal).text("￥" + price * quantity);
       ProductManager.updatePoduct(id, quantity);
 
       $cartBadge.text(ProductManager.getTotalQuantity());

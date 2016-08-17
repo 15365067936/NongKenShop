@@ -11,7 +11,7 @@ public interface OrderService {
 
 	boolean checkTotalPrice(Order order);
 
-	void addOrderService(Order order) throws BaseException;
+	void addOrder(Order order) throws BaseException;
 
 	void deleteOrder(Order order);
 

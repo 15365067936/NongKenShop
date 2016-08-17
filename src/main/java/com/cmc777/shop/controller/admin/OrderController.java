@@ -50,7 +50,7 @@ public class OrderController {
 		}
 
 		try {
-			orderService.addOrderService(order);
+			orderService.addOrder(order);
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
 		} catch (BaseException e1) {
 			LOGGER.warn("goods number is not available, order code is " + order.getOrderCode());

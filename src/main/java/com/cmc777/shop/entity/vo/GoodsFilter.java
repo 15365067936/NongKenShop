@@ -1,5 +1,7 @@
 package com.cmc777.shop.entity.vo;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +31,13 @@ public class GoodsFilter {
 		}
 		
 		if (StringUtils.isNotBlank(filter.get("name"))) {
-			goods.setName(filter.get("name"));
+			try {
+				goods.setName(URLDecoder.decode(filter.get("name"), "utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		if (StringUtils.isNotBlank(filter.get("loginName"))) {

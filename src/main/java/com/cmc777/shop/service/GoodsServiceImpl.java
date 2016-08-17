@@ -53,7 +53,7 @@ public class GoodsServiceImpl implements GoodsService{
 			public Predicate toPredicate(Root<Goods> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<Predicate>();
 				if (search != null && StringUtils.isNotBlank(search.getName())) {
-					Predicate namePredicate = cb.equal(root.get("name").as(String.class), search.getName());
+					Predicate namePredicate = cb.like(root.get("name").as(String.class), "%" + search.getName() + "%");
 					predicates.add(namePredicate);
 				}
 				

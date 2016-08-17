@@ -9,35 +9,31 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cmc777.shop.util.alipay.AlipayConfig;
+import com.cmc777.shop.entity.CustomerOrder;
+import com.cmc777.shop.service.CustomerOrderService;
 import com.cmc777.shop.util.alipay.AlipayNotify;
 
 @Controller
-@RequestMapping("test")
-public class TestController {
+@RequestMapping("alipay")
+public class AlipayPayController {
+	@Autowired
+	private CustomerOrderService customerOrderService;
 
 	@RequestMapping("pay.json")
-	public String test(HttpServletResponse response) throws IOException {
-		System.out.println("=============>");
-		//把请求参数打包成数组
-		Map<String, String> sParaTemp = new HashMap<String, String>();
-		sParaTemp.put("service", AlipayConfig.service);
-        sParaTemp.put("partner", AlipayConfig.partner);
-        sParaTemp.put("seller_id", AlipayConfig.seller_id);
-        sParaTemp.put("_input_charset", AlipayConfig.input_charset);
-		sParaTemp.put("payment_type", AlipayConfig.payment_type);
-		sParaTemp.put("notify_url", AlipayConfig.notify_url);
-		sParaTemp.put("return_url", AlipayConfig.return_url);
-		sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
-		sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
-		sParaTemp.put("out_trade_no", "201608041110001s");
-		sParaTemp.put("subject", "农垦支付测试");
-		sParaTemp.put("total_fee", "0.01");
-		sParaTemp.put("body", "这是一个测试支付");
+	public String test(String orderCode, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		CustomerOrder customerOrder = customerOrderService.findByOrderCode(orderCode);
+		
+		request.setAttribute("orderCode", orderCode);
+		System.out.println(orderCode);
+		request.setAttribute("orderName", "农垦商城订单");
+		request.setAttribute("price", customerOrder.getTotalPrice().toString());
+		request.setAttribute("description", "农垦商城订单");
 		return "alipay/alipayapi";
 	}
 	

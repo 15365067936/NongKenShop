@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -22,10 +21,10 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.cmc777.shop.common.OrderStatus;
 
 @Entity
-@Table(name = "cmc_order")
+@Table(name = "cmc_customer_order")
 @DynamicInsert
 @DynamicUpdate
-public class Order {
+public class CustomerOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,18 +34,16 @@ public class Order {
 	@Column(length = 40)
 	@NotNull(message = "客户Id不能为空")
 	private String customerId;
-	@OneToMany(mappedBy = "order")
-	private List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+	@OneToMany(mappedBy = "customerOrder")
+	private List<CustomerOrderDetail> customerOrderDetails = new ArrayList<CustomerOrderDetail>();
 	@Column(length = 30)
-	private String status = OrderStatus.NOT_DELIVER.name();
-	@Column(length = 40)
-	private String logisticsCode;
-	@NotNull(message = "商户不能为空")
-	@ManyToOne
-	private Merchant merchant;
+	private String status = OrderStatus.NOT_PAY.name();
 	@Column(length = 500)
 	@NotNull(message = "发货地址不能为空")
 	private String address;
+	@Column(length = 20)
+	@NotNull(message = "电话号码不能为空")
+	private String phone;
 	private Boolean isDeleted = false;
 	@NotNull(message = "订单总价不能为空")
 	private Double totalPrice;
@@ -85,28 +82,20 @@ public class Order {
 		this.status = status;
 	}
 
-	public String getLogisticsCode() {
-		return logisticsCode;
-	}
-
-	public void setLogisticsCode(String logisticsCode) {
-		this.logisticsCode = logisticsCode;
-	}
-
-	public Merchant getMerchant() {
-		return merchant;
-	}
-
-	public void setMerchant(Merchant merchant) {
-		this.merchant = merchant;
-	}
-
 	public String getAddress() {
 		return address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public Boolean getIsDeleted() {
@@ -141,12 +130,12 @@ public class Order {
 		this.updateTime = updateTime;
 	}
 
-	public List<OrderDetail> getOrderDetails() {
-		return orderDetails;
+	public List<CustomerOrderDetail> getCustomerOrderDetails() {
+		return customerOrderDetails;
 	}
 
-	public void setOrderDetails(List<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
+	public void setCustomerOrderDetails(List<CustomerOrderDetail> customerOrderDetails) {
+		this.customerOrderDetails = customerOrderDetails;
 	}
 
 	public int getSeq() {
@@ -171,5 +160,14 @@ public class Order {
 		return date + seqStr;
 	}
 	
-	
+	public Order generateOrder(Merchant merchant) {
+		Order order = new Order();
+		order.setMerchant(merchant);
+		order.setAddress(this.address);
+		order.setCustomerId(this.customerId);
+		order.setOrderCode(this.orderCode);
+		order.setStatus(this.status);
+		order.setTotalPrice(this.totalPrice);
+		return order;
+	}
 }
