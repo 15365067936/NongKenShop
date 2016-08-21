@@ -15,13 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cmc777.shop.common.BaseException;
+import com.cmc777.shop.common.OrderStatus;
 import com.cmc777.shop.entity.Order;
 import com.cmc777.shop.entity.OrderDetail;
+import com.cmc777.shop.repository.shop.CustomerOrderRepository;
 import com.cmc777.shop.repository.shop.OrderRepository;
 
 @Service
@@ -32,13 +36,17 @@ public class OrderServiceImpl implements OrderService {
 	private GoodsDetailService goodsDetailService;
 	@Autowired
 	private OrderDetailService orderDetailService;
+	@Autowired
+	private CustomerOrderRepository customerOrderRepository;
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
 	@Override
 	public Page<Order> find(Order order, Integer page, Integer count) {
-		Pageable pageable = new PageRequest(page - 1, count);
+		Sort sort = new Sort(Direction.DESC, "id");
+		Pageable pageable = new PageRequest(page - 1, count, sort);
 		Specification<Order> spec = getWhere(order);
+		
 		Page<Order> ordersPage = orderRepository.findAll(spec, pageable);
 
 		return ordersPage;
@@ -51,8 +59,13 @@ public class OrderServiceImpl implements OrderService {
 			public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				List<Predicate> predicates = new ArrayList<Predicate>();
 				if (order != null && StringUtils.isNotBlank(order.getOrderCode())) {
-					Predicate orderCode = cb.like(root.get("orderCode").as(String.class), order.getOrderCode());
+					Predicate orderCode = cb.like(root.get("orderCode").as(String.class), "%" + order.getOrderCode() + "%");
 					predicates.add(orderCode);
+				}
+				
+				if (order != null && order.getMerchant() != null && StringUtils.isNotBlank(order.getMerchant().getLoginName())) {
+					Predicate merchantPredicate = cb.equal(root.join("merchant").get("loginName").as(String.class), order.getMerchant().getLoginName());
+					predicates.add(merchantPredicate);
 				}
 				
 				Predicate deletedPredicate = cb.equal(root.get("isDeleted").as(Boolean.class), false);
@@ -110,8 +123,37 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Transactional
 	public void update(Order order) {
 		orderRepository.save(order);
+		if (order.getStatus().equals(OrderStatus.HAS_DELIVER.name())) {
+			List<Order> orders = orderRepository.findByOrderCode(order.getOrderCode());
+			boolean flag = false;
+			for (Order oneOrder : orders) {
+				if (oneOrder.getStatus().equals(OrderStatus.NOT_DELIVER.name())) {
+					flag = true;
+					break;
+				}
+			}
+			
+			if (flag) {
+				return;
+			}
+		}
+		
+		customerOrderRepository.updateStatus(order.getOrderCode(), order.getStatus());
+	}
+
+	@Override
+	@Transactional
+	public void updateOrderHasPay(String orderCode, String alipayTradeCode) {
+		orderRepository.updateOrderHasPay(OrderStatus.NOT_DELIVER.name(), orderCode, alipayTradeCode);
+	}
+
+	@Override
+	@Transactional
+	public void updateStatus(String orderCode, String status) {
+		orderRepository.updateStatus(orderCode, status);
 	}
 
 }

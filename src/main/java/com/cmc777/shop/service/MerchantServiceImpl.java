@@ -84,6 +84,9 @@ public class MerchantServiceImpl implements MerchantService{
 					predicates.add(idPredicate);
 				}
 				
+				Predicate deletedPredicate = cb.equal(root.get("isDeleted").as(Boolean.class), false);
+				predicates.add(deletedPredicate);
+				
 				Predicate[] pre = new Predicate[predicates.size()];
 	            return cq.where(predicates.toArray(pre)).getRestriction();
 			}

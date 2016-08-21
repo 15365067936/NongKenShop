@@ -9,11 +9,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmc777.shop.entity.CustomerOrder;
 import com.cmc777.shop.service.CustomerOrderService;
@@ -24,10 +25,18 @@ import com.cmc777.shop.util.alipay.AlipayNotify;
 public class AlipayPayController {
 	@Autowired
 	private CustomerOrderService customerOrderService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(AlipayPayController.class);
 
 	@RequestMapping("pay.json")
 	public String test(String orderCode, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		if (StringUtils.isEmpty(orderCode)) {
+			LOGGER.warn("orderCode 为空");
+			return "redirect:/shop/index.html";
+		}
 		CustomerOrder customerOrder = customerOrderService.findByOrderCode(orderCode);
+		if (customerOrder == null) {
+			return "redirect:/shop/index.html";
+		}
 		
 		request.setAttribute("orderCode", orderCode);
 		System.out.println(orderCode);
@@ -38,7 +47,6 @@ public class AlipayPayController {
 	}
 	
 	@RequestMapping("notify.json")
-	@ResponseBody
 	public String notify(HttpServletRequest request) throws UnsupportedEncodingException {
 		//获取支付宝POST过来反馈信息
 		Map<String,String> params = new HashMap<String, String>();
@@ -52,25 +60,19 @@ public class AlipayPayController {
 						: valueStr + values[i] + ",";
 			}
 			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
+			valueStr = new String(valueStr.getBytes("ISO-8859-1"), "UTF-8");
+			
 			params.put(name, valueStr);
 		}
 		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
 		//商户订单号
-
-		String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		System.out.println(out_trade_no);
-
+		String orderCode = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 		//支付宝交易号
-
+		
 		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-		System.out.println(trade_no);
-
 		//交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-		System.out.println(trade_status);
-
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 
 		if(AlipayNotify.verify(params)){//验证成功
@@ -95,17 +97,19 @@ public class AlipayPayController {
 					
 				//注意：
 				//付款完成后，支付宝系统发送该交易状态通知
+				
+				customerOrderService.updateCustomerOrderHasPay(orderCode, trade_no);
 			}
 
 			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 				
 //			out.print("success");	//请不要修改或删除
-			return "success";
+			return "redirect:/shop/index.html";
 
 			//////////////////////////////////////////////////////////////////////////////////////////
 		}else{//验证失败
 //			out.print("fail");
-			return "fail";
+			return "redirect:/shop/error.html";
 		}
 	}
 }

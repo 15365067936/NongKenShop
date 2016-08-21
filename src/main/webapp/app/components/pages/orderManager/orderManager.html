@@ -11,11 +11,14 @@
                 <td data-title="'物流编号'" filter="{'logisticsCode': 'text'}">
                     {{order.logisticsCode}}
                 </td>
+                <td data-title="'收货电话'">
+                    {{order.phone}}
+                </td>
                 <td data-title="'发货地址'">
                     {{order.address}}
                 </td>
                 <td data-title="'订单状态'">
-                    {{order.status}}
+                    {{order.statusName}}
                 </td>
                 <td data-title="'订单金额'">
                     {{order.totalPrice}}
@@ -24,10 +27,10 @@
                 	{{order.merchant.name}}
                 </td>
                 <td data-title="'创建时间'">
-                    {{order.createTime}}
+                    {{order.createDateStr}}
                 </td>
                 <td data-title="'修改时间'" sortable="'goods_category'">
-                    {{order.updateTime}}
+                    {{order.updateDateStr}}
                 </td>
                  
                 <td data-title="'操作'">

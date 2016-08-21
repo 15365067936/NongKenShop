@@ -49,6 +49,8 @@ public class Merchant {
 	@Column(length = 500)
 	private String address;
 	
+	private Boolean isDeleted = false;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -112,8 +114,12 @@ public class Merchant {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
-	
-	
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 }

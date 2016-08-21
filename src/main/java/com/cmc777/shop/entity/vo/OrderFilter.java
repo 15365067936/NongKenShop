@@ -3,6 +3,9 @@ package com.cmc777.shop.entity.vo;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.cmc777.shop.entity.Merchant;
 import com.cmc777.shop.entity.Order;
 
 public class OrderFilter {
@@ -16,6 +19,22 @@ public class OrderFilter {
 		this.filter = filter;
 	}
 	public Order getOrder() {
+		if (order == null) {
+			order = new Order();
+		}
+		
+		if (StringUtils.isNotBlank(filter.get("orderCode"))) {
+			order.setOrderCode(filter.get("orderCode"));
+		} else {
+			order.setOrderCode(null);
+		}
+		
+		if (StringUtils.isNotBlank(filter.get("loginName"))) {
+			Merchant merchant = new Merchant();
+			merchant.setLoginName(filter.get("loginName"));
+			order.setMerchant(merchant);
+		}
+		
 		return order;
 	}
 	public void setOrder(Order order) {

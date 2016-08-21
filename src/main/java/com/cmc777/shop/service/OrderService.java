@@ -16,5 +16,9 @@ public interface OrderService {
 	void deleteOrder(Order order);
 
 	void update(Order order);
+	
+	void updateOrderHasPay(String orderCode, String alipayTradeCode);
+
+	void updateStatus(String orderCode, String name);
 
 }

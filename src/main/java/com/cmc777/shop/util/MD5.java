@@ -58,5 +58,8 @@ public class MD5 {
         return resultString;
     }
     
+    public static void main(String[] args) {
+		System.out.println(GetMD5Code("12345678"));
+	}
     
 }

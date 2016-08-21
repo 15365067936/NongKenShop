@@ -205,6 +205,10 @@
     }
 
     $("#submitOrder").click(function() {
+    	if(!confirm('是否提交订单?')) {
+    		return false;
+		}
+    	
     	if (!$("#address").val()) {
     		alert("收货地址不能为空");
     		return false;
@@ -214,6 +218,10 @@
     		return false;
     	}
     	var customer = JSON.parse(sessionStorage.getItem("currCustomer"));
+    	if (!customer) {
+    		alert("请重新登录");
+    		return false;
+    	}
     	
     	var table = $("#my-cart-table");
     	

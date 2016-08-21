@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -50,8 +51,16 @@ public class Order {
 	private Boolean isDeleted = false;
 	@NotNull(message = "订单总价不能为空")
 	private Double totalPrice;
+	private String phone;
+	private String alipayTradeCode;
 	private Date createTime = new Date();
 	private Date updateTime = createTime;
+	@Transient
+	private String statusName;
+	@Transient
+	private String createDateStr;
+	@Transient
+	private String updateDateStr;
 	
 	public Long getId() {
 		return id;
@@ -156,6 +165,24 @@ public class Order {
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
+	
+	
+	public String getAlipayTradeCode() {
+		return alipayTradeCode;
+	}
+
+	public void setAlipayTradeCode(String alipayTradeCode) {
+		this.alipayTradeCode = alipayTradeCode;
+	}
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 
 	@Transient
 	private int seq = 0;
@@ -169,6 +196,30 @@ public class Order {
 		seqStr = seqStr.substring(seqStr.length() - 5);
 		
 		return date + seqStr;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public String getCreateDateStr() {
+		return DateFormatUtils.format(createTime, "yyyy-MM-dd HH:mm:ss");
+	}
+
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
+	}
+
+	public String getUpdateDateStr() {
+		return DateFormatUtils.format(updateTime, "yyyy-MM-dd HH:mm:ss");
+	}
+
+	public void setUpdateDateStr(String updateDateStr) {
+		this.updateDateStr = updateDateStr;
+	}
+
+	public String getStatusName() {
+		return OrderStatus.getStatusName(status);
 	}
 	
 	

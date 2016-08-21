@@ -2,6 +2,7 @@ package com.cmc777.shop.util.alipay;
 
 import java.io.UnsupportedEncodingException;
 import java.security.SignatureException;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 /** 
@@ -14,8 +15,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 * */
 
 public class AlipayMD5 {
-
-    /**
+	    /**
      * 签名字符串
      * @param text 需要签名的字符串
      * @param key 密钥

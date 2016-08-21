@@ -4,7 +4,7 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     $scope.user = userService;
 
     if ($scope.user.userInfo.role !== 'admin') {
-        var url = $resource('/NongKenShop/order/get-orders-page.json?loginName=' + $scope.user.userInfo.role);
+        var url = $resource('/NongKenShop/order/get-orders-page.json?filter[loginName]=' + $scope.user.userInfo.role);
 
     } else {
         var url = $resource('/NongKenShop/order/get-orders-page.json');
@@ -54,17 +54,16 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
             scope: $scope,
             resolve: {
                 message: function () {
-                    return {body: '确认删除此商品？'};
+                    return {body: '确认删除此订单？'};
                 }
             }
         });
 
         modalInstance.result.then(function () {
             $resource('/NongKenShop/order/delete.json').save({id: order.id}).$promise.then(function (ack) {
-                console.log(ack.respCode);
-
                 if (ack.respCode != '1000') {
-                    console.log(ack.respMsg);
+                    alert(ack.respMsg);
+                    return;
                 }
 
                 $scope.tableParams.page(1);

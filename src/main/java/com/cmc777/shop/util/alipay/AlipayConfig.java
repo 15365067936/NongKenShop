@@ -14,24 +14,6 @@ package com.cmc777.shop.util.alipay;
 public class AlipayConfig {
 	
 //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-	/*
-	 * //合作身份者ID，以2088开头由16位纯数字组成的字符串
-            partner = "2088011030538942";
-
-            //交易安全检验码，由数字和字母组成的32位字符串
-            key = "7xq77seedbi9vz044vv0jk79hwzvt5mr";
-                   7xq77seedbi9vz044vv0jk79hwzvt5mr
-
-            //获取或设置卖家账号
-            seller_email = "nkny2013@163.com";
-
-            //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-
-
-            //字符编码格式 目前支持 gbk 或 utf-8
-            input_charset = "utf-8";
-	 */
-
 	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
 	public static String partner = "2088011030538942";
 	
@@ -47,7 +29,8 @@ public class AlipayConfig {
 	public static String notify_url = "http://116.228.50.26:11500/test/notify.json";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://116.228.50.26:11500/NongKenShop/shop/index.html";
+	public static String return_url = "http://116.228.50.26:11500/NongKenShop/alipay/notify.json";
+			//"http://116.228.50.26:11500/NongKenShop/shop/index.html";
 			//"http://116.228.50.26:11500/test/notify.json";
 			//"http://商户网址/create_direct_pay_by_user-JAVA-UTF-8/return_url.jsp";
 

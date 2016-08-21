@@ -53,6 +53,9 @@ public class GoodsDetail {
 	@NotNull(message = "物流不能为空")
 	private String logisticsCompany;
 	
+	@Column(length = 2000)
+	private String description;
+	
 	private Boolean isDeleted = false;
 
 	public Integer getId() {
@@ -134,6 +137,13 @@ public class GoodsDetail {
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
 

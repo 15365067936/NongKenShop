@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,5 +50,34 @@ public class CustomerOrderController {
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		} 
 		
+	}
+	
+	@RequestMapping(value = "get-my-orders.json", method = RequestMethod.GET)
+	@ResponseBody
+	public RetMsg getMyCustomerOrders(CustomerOrder customerOrder, Integer page, Integer count) {
+		if (customerOrder == null || StringUtils.isBlank(customerOrder.getCustomerId())) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		
+		Page<CustomerOrder> orders = customerOrderService.find(customerOrder, page, count);
+		
+		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), orders);
+	}
+	
+	@RequestMapping(value = "receive-order.json", method = RequestMethod.POST)
+	@ResponseBody
+	public RetMsg receiveOrder(String orderCode) {
+		if (StringUtils.isBlank(orderCode)) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		try {
+			customerOrderService.receiveOrder(orderCode);
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} catch (Exception e) {
+			LOGGER.error("receive order error, orderCode = " + orderCode, e);
+			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
+		}
 	}
 }

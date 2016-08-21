@@ -47,6 +47,7 @@ public class CustomerOrder {
 	private Boolean isDeleted = false;
 	@NotNull(message = "订单总价不能为空")
 	private Double totalPrice;
+	private String alipayTradeCode;
 	private Date createTime = new Date();
 	private Date updateTime = createTime;
 	
@@ -138,19 +139,24 @@ public class CustomerOrder {
 		this.customerOrderDetails = customerOrderDetails;
 	}
 
-	public int getSeq() {
-		return seq;
+	public String getAlipayTradeCode() {
+		return alipayTradeCode;
 	}
 
-	public void setSeq(int seq) {
-		this.seq = seq;
+	public void setAlipayTradeCode(String alipayTradeCode) {
+		this.alipayTradeCode = alipayTradeCode;
 	}
+
 
 	@Transient
-	private int seq = 0;
+	private static int seq = 0;
 	
 	private synchronized String createCode() {
 		seq ++;
+		if (seq > 99999) {
+			seq = 1;
+		}
+		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = simpleDateFormat.format(new Date());
 		
@@ -168,6 +174,7 @@ public class CustomerOrder {
 		order.setOrderCode(this.orderCode);
 		order.setStatus(this.status);
 		order.setTotalPrice(this.totalPrice);
+		order.setPhone(this.phone);
 		return order;
 	}
 }

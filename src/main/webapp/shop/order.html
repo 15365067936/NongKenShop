@@ -74,7 +74,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" aria-hidden="true"></i><span class="caret"></span></a>
 					<div class="mega-dropdown-menu">
 						<div class="w3ls_vegetables">
-						
+							
 						</div>                  
 					</div>	
 				</li>
@@ -118,7 +118,7 @@
 		<div class="container">
 			<ul>
 				<li><i class="fa fa-home" aria-hidden="true"></i><a href="index.html">首页</a><span>|</span></li>
-				<li>商品详情页</li>
+				<li>我的订单</li>
 			</ul>
 		</div>
 	</div>
@@ -178,134 +178,153 @@
 			});
 		</script>
 		<div class="w3l_banner_nav_right">
-			<div class="w3l_banner_nav_right_banner3">
-				<h3>Best Deals For New Products<span class="blink_me"></span></h3>
-			</div>
-			<div class="agileinfo_single">
-				<h5 name="goods-detail-name">商品详情</h5>
-				<div class="col-md-4 agileinfo_single_left">
-					<section class="slider">
-						<div class="flexslider">
-							<ul id="goodsImages" class="slides">
-								<li>
-									<img name="example" src="images/76.png" alt=" " class="img-responsive" />
-								</li>
-							</ul>
-						</div>
-					</section>
-					
-				</div>
-				<!-- flexSlider -->
-				<link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" />
-				<script defer src="js/jquery.flexslider.js"></script>
-				<script type="text/javascript">
-					$(window).load(function(){
-					  $('.flexslider').flexslider({
-						animation: "slide",
-						start: function(slider){
-						  $('body').removeClass('loading');
-						}
-					  });
-					});
-			  </script>
-			<!-- //flexSlider -->
-				<div class="col-md-8 agileinfo_single_right">
-					<div class="rating1">
-						<span class="starRating">
-							<input id="rating5" type="radio" name="rating" value="5" checked>
-							<label for="rating5">5</label>
-							<input id="rating4" type="radio" name="rating" value="4">
-							<label for="rating4">4</label>
-							<input id="rating3" type="radio" name="rating" value="3">
-							<label for="rating3">3</label>
-							<input id="rating2" type="radio" name="rating" value="2">
-							<label for="rating2">2</label>
-							<input id="rating1" type="radio" name="rating" value="1">
-							<label for="rating1">1</label>
-						</span>
-					</div>
-					<div class="w3agile_description">
-						<h4>描述 :</h4>
-						<p id="description">商品描述</p>
-					</div>
-					<div class="w3agile_description">
-						<h4>配送范围 :</h4>
-						<p id="areas">配送范围</p>
-					</div>
-					<div id="specifications">
-						<a name="spec-info" class="btn btn-info" data="">商品规格</a>
-					</div><br>
-					<div class="snipcart-item block">
-						<div class="snipcart-thumb agileinfo_single_right_snipcart">
-							<h4 id="sinPrice">￥21.00</h4>
-						</div>
-						<div class="snipcart-details agileinfo_single_right_details">
-							<button class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="76" data-name="Pulao basmati rice" data-summary="summary 76" data-price="21.00" data-quantity="1" data-image="images/76.png">添加购物车</button>
-						</div>
-					</div>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
+			
+			<table class="table table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>订单编号</th>
+						<th>订单状态</th>
+						<th>送货地址</th>
+						<th>送货电话</th>
+						<th>订单总价</th>
+						<th>下单时间</th>
+						<th>查看详情</th>
+					</tr>
+				</thead>
+				<tbody id="orders"></tbody>
+			</table>
+			
+			<div class="col-md-3 pull-right">
+				<ul class="pager">
+				  <li><a id="pre" href="#">前一页</a></li>
+				  <li><a id="next" href="#">后一页</a></li>
+				</ul>
+			</div> 
 		</div>
 		<div class="clearfix"></div>
 	</div>
 	<script type="text/javascript" src="js/getUrlParam.js"></script>
-	<script type="text/javascript">
+	<script>
 		$(document).ready(function() {
-			var goods = $.getUrlParam("goods");
-			if (goods == null) {
-				return;
-			}
-			goods = JSON.parse(decodeURI(goods));
-			$("#goodsImages").empty();
-			var imageUrls = JSON.parse(goods.imageUrls);
-			console.log(imageUrls);
-			for (var i = 0;i < imageUrls.length;i++) {
-				var image = '<li>' + 
-								'<img name="example" src="' + imageUrls[i] + '" alt=" " class="img-responsive" />' + 
-							'</li>';
-				
-				$("#goodsImages").append(image);
-			}
-			console.log(goods);
-			if (goods.goodsDetail != null && goods.goodsDetail.length > 0) {
-				$("h5[name='goods-detail-name']").html(goods.goodsDetail[0].specifications);
-				$("#areas").html(goods.goodsDetail[0].specifications);
-				$("#description").html(goods.goodsDetail[0].specifications);
-				$("#sinPrice").html("￥" + goods.goodsDetail[0].price);
-				$(".my-cart-btn").attr("data-id", goods.goodsDetail[0].id);
-				$(".my-cart-btn").attr("data-name", goods.name + "-" + goods.goodsDetail[0].specifications);
-				$(".my-cart-btn").attr("data-summary", goods.name + "-" + goods.goodsDetail[0].specifications);
-				$(".my-cart-btn").attr("data-price", goods.goodsDetail[0].price);
-				$(".my-cart-btn").attr("data-quantity", "1");
-				$(".my-cart-btn").attr("data-image", imageUrls[0]);
-				$("#specifications").empty();
-				for (var s = 0;s < goods.goodsDetail.length;s++) {
-					var specInfo = '<a name="spec-info" class="btn btn-info" data="' + encodeURI(JSON.stringify(goods.goodsDetail[s])) + '">' + goods.goodsDetail[s].specifications + '</a> ';
-					$("#specifications").append(specInfo);
-					$(".my-cart-btn").attr("data-id", goods.goodsDetail[s].id);
-					$(".my-cart-btn").attr("data-name", goods.name + "-" + goods.goodsDetail[s].specifications);
-					$(".my-cart-btn").attr("data-summary", goods.name + "-" + goods.goodsDetail[s].specifications);
-					$(".my-cart-btn").attr("data-price", goods.goodsDetail[s].price);
-					$(".my-cart-btn").attr("data-quantity", "1");
-					$(".my-cart-btn").attr("data-image", imageUrls[0]);
-					/*
-					<button
-					data-id="76" data-name="Pulao basmati rice" data-summary="summary 76" 
-					data-price="21.00" data-quantity="1" data-image="images/76.png">添加购物车</button>*/
+			var status = {
+					NOT_PAY:"未支付",
+					NOT_DELIVER:"未发货",
+					HAS_DELIVER:"已发货",
+					HAS_RECEIVED:"已收货",
+					HAS_CLOSED:"已关闭" 
+			};
+			var page = 1;
+			var count = 12;
+			var isFirstPage = true;
+			var isLastPage = true;
+			var getOrders = function() {
+				var customerStr = sessionStorage.getItem("currCustomer");
+				var customer = JSON.parse(customerStr);
+				if (!customer) {
+					window.location.href = "http://cmc777.com";
+					return false;
 				}
+				$("#orders").empty();
+				$.get("../customer-order/get-my-orders.json?customerId=" + customer.id + "&page=" + page + "&count=" + count, function(respData) {
+					if (!respData.respCode == "1000") {
+						return false;
+					}
+					
+					isFirstPage = respData.data.firstPage;
+					isLastPage = respData.data.lastPage;
+					
+					if (respData.data.content.length > 0) {
+						var orders = respData.data.content;
+						for (var i = 0;i < orders.length;i++) {
+							var order = orders[i];
+							var tr = createTr(order);
+							var receiveId = "#receiveOrder" + order.id;
+							var detail = "#orderDetail" + order.id;
+							
+							$("#orders").append(tr);
+							$(receiveId).bind('click', receiveOneOrder);
+							$(detail).bind("click", getOrderDetail);
+						}
+					}
+				});
 			}
 			
-			$("a[name='spec-info']").bind('click', function() {
-				var goodsDetail = JSON.parse(decodeURI($(this).attr("data")));
-				$("h5[name='goods-detail-name']").html(goodsDetail.specifications);
-				$("#areas").html(goodsDetail.specifications);
-				$("#description").html(goodsDetail.specifications);
-				$("#sinPrice").html("￥" + goodsDetail.price);
+			getOrders();
+			$("#pre").click(function(){
+				if (!isFirstPage) {
+					page = page -1
+				}
+				getOrders();
 			});
 			
+			$("#next").click(function(){
+				if (!isLastPage) {
+					page = page + 1
+				}
+				getOrders();
+			});
+			
+			
+			var showStype = {
+					NOT_PAY:"danger",
+					NOT_DELIVER:"warning",
+					HAS_DELIVER:"info",
+					HAS_RECEIVED:"success",
+					HAS_CLOSED:"success" 
+			};
+			
+			function receiveOneOrder() {
+				var orderCode = $(this).attr("orderCode");
+				if(confirm('是否确认收货?')) {
+				 	$.ajax({
+				 		type:"post",
+				 		url:"../customer-order/receive-order.json",
+				 		data:{
+				 			orderCode:orderCode
+				 		},
+				 		success:function(data){
+				 			if (data.respCode == "1000") {
+				 				getOrders();
+				 			} else {
+				 				alert("系统异常，请稍后再试");
+				 			}
+				 		},error:function() {
+				 			alert("系统异常，请稍后再试");
+				 		}
+				 	});
+				} 
+			}
+			
+			function getOrderDetail() {
+				var orderId = $(this).attr("orderId");
+				sessionStorage.setItem("currentOrderId", orderId);
+				window.location.href = "../shop/orderDetail.html";
+			}
+			
+			var createTr = function (order) {
+				var receiveButton = '<button id="receiveOrder' + order.id + '" orderCode="' + order.orderCode + '">确认收货</button>';
+				
+				var buttonStr = (order.status == "HAS_DELIVER" ? receiveButton : "");
+				var tr = '<tr class="' + showStype[order.status] + '">' + 
+							'<td>' + order.orderCode + '</td>' + 
+							'<td>' + status[order.status] + '</td>' + 
+							'<td>' + order.address + '</td>' +
+							'<td>' + order.phone + '</td>' +
+							'<td>' + order.totalPrice + '</td>' +
+							'<td>' + $.getLocalTime(order.createTime) + '</td>' +
+							'<td><button id="orderDetail' + order.id + '" orderId="' + order.id + '">查看详情</button> ' + 
+									buttonStr + '</td>' +
+				 		 '</tr>';
+		 		
+				return tr;
+			}
+			
+			
+			
 		});
+			
 	</script>
+	
 <!-- //banner -->
 
 <!-- Bootstrap Core JavaScript -->
