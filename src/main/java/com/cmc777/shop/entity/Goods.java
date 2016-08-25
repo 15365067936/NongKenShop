@@ -48,11 +48,13 @@ public class Goods {
 	@Column(length = 200)
 	private String origin;
 	
+	@NotNull(message = "商品一级分类不能为空")
 	private Integer categoryId;
 	
 	@Transient
 	private GoodsCategory category;
 	
+	@NotNull(message = "商品二级分类不能为空")
 	private Integer categoryTypeId;
 	
 	@Transient
@@ -67,6 +69,9 @@ public class Goods {
 	private Boolean isDeleted = false;
 	@Column(length = 100)
 	private String discription = "";
+
+	//是否上架
+	private Boolean isShelves = false;
 	
 	@OneToMany(mappedBy = "goods")
 	private List<GoodsDetail> goodsDetail = Lists.newArrayList();
@@ -143,7 +148,7 @@ public class Goods {
 		this.goodsDetail = goodsDetail;
 	}
 	
-	public static String createGoodsCode() {
+	public synchronized static String createGoodsCode() {
 		String code = UUID.randomUUID().toString().replace("-", "");
 		code = code.substring(code.length()-15);
 		
@@ -181,6 +186,13 @@ public class Goods {
 	public void setDiscription(String discription) {
 		this.discription = discription;
 	}
-	
+
+	public Boolean getIsShelves() {
+		return isShelves;
+	}
+
+	public void setIsShelves(Boolean isShelves) {
+		this.isShelves = isShelves;
+	}
 	
 }

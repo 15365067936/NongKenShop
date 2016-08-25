@@ -14,13 +14,14 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
         if ($scope.method === '编辑') {
             url = '/NongKenShop/merchant/update.json'
         }
+        
         $resource(url).save($scope.user).$promise.then(function (ack) {
-            console.log(ack);
-
             if (ack.respCode != '1000') {
                 alert(ack.respMsg);
                 return;
-            } else {
+            } 
+            
+            if ($scope.method === "添加") {
             	alert(ack.data);
             }
             

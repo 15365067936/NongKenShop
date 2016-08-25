@@ -17,10 +17,11 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         paginationMaxBlocks: 9,
         total: 0,          
         getData: function (params) {
-            console.log('in api');
+            
             return Api.get(params.url()).$promise.then(function (data) {
-                console.log(data);
-                params.total(data.data.content.length);
+            	var totalPage = Number(data.data.totalPages);
+            	var size = Number(data.data.size);
+                params.total(totalPage * size);
                 return data.data.content;
             });
         }
@@ -74,7 +75,6 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
             	 alert(ack.data);
              }
              
-             $uibModalInstance.close();
              $scope.tableParams.page(1);
              $scope.tableParams.reload();
          });

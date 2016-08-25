@@ -3,7 +3,7 @@ package com.cmc777.shop.common;
 public enum OrderStatus {
 	NOT_PAY("未支付"),
 	NOT_DELIVER("未发货"),
-	HAS_DELIVER("未已发货"),
+	HAS_DELIVER("已发货"),
 	HAS_RECEIVED("已收货"),
 	HAS_CLOSED("已关闭");
 	

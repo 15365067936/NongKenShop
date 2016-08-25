@@ -43,10 +43,10 @@
                     </select>
                 </div>
             </div>
-            <div ng-repeat="img in application.imageUrls" class="form-group application-property">
+            <div ng-repeat="img in application.imageUrls track by $index" class="form-group application-property">
                 <label for="application-name" class="col-sm-3 control-label">图片{{$index + 1}}</label>
                 <div class="col-sm-6">
-                    <img src="{{img}}">
+                    <img src="{{img}}" width="220" height="220">
                 </div>
                 <a class="col-sm-1 btn btn-default" type="button" ng-click="deleteImg($index)">删除</a>
             </div>

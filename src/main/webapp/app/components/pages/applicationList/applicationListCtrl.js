@@ -11,8 +11,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
 
     }
 
-    console.log($scope.user);
-    
     if($stateParams.applicationId) {
         $scope.filterField.id = $stateParams.applicationId;
     }
@@ -25,7 +23,9 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
         total: 0,          
         getData: function (params) {
             return url.get(params.url()).$promise.then(function (body) {
-                // params.total(body.data.content.length);
+            	var totalPage = Number(body.data.totalPages);
+            	var size = Number(body.data.size);
+                params.total(totalPage * size);
                 var formatedData = [];
                 if (body.data.content.length > 0) {
                     formatedData = formatData(body.data.content);
@@ -38,8 +38,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
 
     function formatData(content) {
         angular.forEach(content, function(item,index) {
-            console.log(item);
-            console.log(index);
             content[index].imageUrls = JSON.parse(item.imageUrls) || [];
 
         });
@@ -48,9 +46,7 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
     }
 
     $scope.upload = function(a, file, group) {
-        console.log(a);
         $scope.showBtn = false;
-        console.log(file);
         if (null == file) {
             alert('文件为空！');
             return;
@@ -66,7 +62,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
         });
 
         file.upload.then(function(response) {
-            console.log(response);
 
             if (response.data && response.data.respCode != '1000') {
                 alert(response.data.respMsg + response.data.content);
@@ -119,7 +114,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
 
     $scope.upload = function(a, file, group) {
         $scope.showBtn = false;
-        console.log(file);
         if (null == file) {
             alert('文件为空！');
             return;
@@ -165,7 +159,6 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
 
         modalInstance.result.then(function () {
             $resource('/NongKenShop/goods/delete-goods.json').save({id: application.id}).$promise.then(function (ack) {
-                console.log(ack.respCode);
 
                 if (ack.respCode != '1000') {
                     console.log(ack.respMsg);
@@ -179,6 +172,24 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
             console.log('Modal dismissed at: ' + new Date());
         });
     };
+    
+    $scope.isShelves = function(application) {
+    	console.log(application);
+    	var params = {
+    			id: application.id,
+    			isShelves: application.isShelves
+    	};
+    	
+    	$resource('/NongKenShop/goods/shelves-goods.json').save(params).$promise.then(function (ack) {
+    		console.log(ack);
+            if (ack.respCode != '1000') {
+                alert(ack.respMsg);
+            }
+
+            $scope.tableParams.page(1);
+            $scope.tableParams.reload();
+        });
+    }
 
 }
 

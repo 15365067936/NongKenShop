@@ -56,6 +56,9 @@ public class GoodsDetail {
 	@Column(length = 2000)
 	private String description;
 	
+	@Column(length = 2000)
+	private String areas;
+	
 	private Boolean isDeleted = false;
 
 	public Integer getId() {
@@ -145,5 +148,14 @@ public class GoodsDetail {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getAreas() {
+		return areas;
+	}
+
+	public void setAreas(String areas) {
+		this.areas = areas;
+	}
+	
 }
 

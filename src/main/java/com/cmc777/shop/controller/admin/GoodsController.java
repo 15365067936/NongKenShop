@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cmc777.shop.common.BaseException;
 import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Goods;
+import com.cmc777.shop.entity.Merchant;
 import com.cmc777.shop.entity.vo.GoodsFilter;
 import com.cmc777.shop.service.GoodsService;
 import com.cmc777.shop.util.BeanUtil;
@@ -34,6 +36,7 @@ public class GoodsController {
 	public RetMsg getGoodsPage(GoodsFilter goodsFilter, Integer page, Integer count) {
 		LOGGER.info(JsonUtil.objectToJson(goodsFilter));
 		Goods goods = goodsFilter.getGoods();
+		goods.setIsShelves(null);
 		Page<Goods> goodsPage = goodsService.find(goods, page, count);
 		
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goodsPage);
@@ -44,6 +47,10 @@ public class GoodsController {
 	public RetMsg getFrontGoodsPage(GoodsFilter goodsFilter, Integer page, Integer count) {
 		LOGGER.info(JsonUtil.objectToJson(goodsFilter));
 		Goods goods = goodsFilter.getGoods();
+		Merchant merchant = new Merchant();
+		merchant.setIsForbidden(false);
+		goods.setMerchant(merchant);
+		goods.setIsShelves(true);
 		Page<Goods> goodsPage = goodsService.findFrontGoods(goods, page, count);
 		
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goodsPage);
@@ -106,5 +113,25 @@ public class GoodsController {
 			LOGGER.error("id = " + goods.getId().toString() + ",删除商品失败");
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
+	}
+	
+	@RequestMapping(value = "shelves-goods.json", method = RequestMethod.POST)
+	@ResponseBody
+	public RetMsg shelves(@RequestBody Goods goods) {
+		if (goods == null || goods.getId() == null) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		try {
+			if (goods.getIsShelves()) {
+				goodsService.shelvesGoods(goods);
+			} else {
+				
+				goodsService.shelvesOutGoods(goods);
+			}
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} catch (BaseException e) {
+			return new RetMsg(e.getErrorCode(), e.getMessage());
+		} 
 	}
 }

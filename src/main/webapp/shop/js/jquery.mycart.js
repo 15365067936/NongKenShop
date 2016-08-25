@@ -189,13 +189,14 @@
         '<div class="modal-body">' +
         	'<table class="table table-hover table-responsive" id="' + idCartTable + '"></table>' +
         	'<div>' + 
+        		'<span class="col-md-2">收货人:</span><input id="customerName" class="col-md-4" type="text" />' +
         		'<span class="col-md-2">收货地址:</span><input id="address" class="col-md-4" type="text" /><br><br>' + 
         		'<span class="col-md-2">电话号码:</span><input id="phone" class="col-md-4" type="text" /></div>' +
         	'<br>' + 
         '</div>' +
         '<div class="modal-footer">' +
-        '<button id="submitOrder" type="button" class="btn btn-default" data-dismiss="modal">提交</button>' +
-        '<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>' +
+        	'<button id="submitOrder" type="button" class="btn btn-default" data-dismiss="modal">提交</button>' +
+        	'<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>' +
 
         '</div>' +
         '</div>' +
@@ -249,12 +250,14 @@
     				customerOrderDetails: customerOrderDetails,
     				address:$("#address").val(),
     				phone:$("#phone").val(),
+    				customerName:$("#customerName").val(),
     				totalPrice:Number(totalPrice)
     		}
     		
         	localStorage.products = JSON.stringify([]);
         	$("#phone").val("");
         	$("#address").val("");
+        	$("#customerName").val("");
         	$cartBadge.text(ProductManager.getTotalQuantity());
     		
     		$.ajax({

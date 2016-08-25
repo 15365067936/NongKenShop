@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
+<meta name="renderer" content="webkit">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 		function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- //for-mobile-apps -->
@@ -184,6 +185,7 @@
 					<tr>
 						<th>订单编号</th>
 						<th>订单状态</th>
+						<th>收货人</th>
 						<th>送货地址</th>
 						<th>送货电话</th>
 						<th>订单总价</th>
@@ -307,7 +309,8 @@
 				var buttonStr = (order.status == "HAS_DELIVER" ? receiveButton : "");
 				var tr = '<tr class="' + showStype[order.status] + '">' + 
 							'<td>' + order.orderCode + '</td>' + 
-							'<td>' + status[order.status] + '</td>' + 
+							'<td>' + status[order.status] + '</td>' +
+							'<td>' + order.customerName + '</td>' +
 							'<td>' + order.address + '</td>' +
 							'<td>' + order.phone + '</td>' +
 							'<td>' + order.totalPrice + '</td>' +

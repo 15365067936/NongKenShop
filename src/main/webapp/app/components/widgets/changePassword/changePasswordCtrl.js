@@ -5,9 +5,9 @@ module.exports = function ($scope, $uibModalInstance, $resource, currentUser) {
    
 
     $scope.submit = function () {
-        var url = '/NongKenShop/merchant/change-password.json?loginName=' + currentUser.loginName 
-                  + '&oldPassword=' + $("#old-password").val()
-                  + '&newPassword=' + $("#new-password").val();
+        var url = '/NongKenShop/merchant/change-password.json?loginName=' + encodeURI(encodeURI(currentUser.loginName)) 
+                  + '&oldPassword=' + encodeURI(encodeURI($("#old-password").val()))
+                  + '&newPassword=' + encodeURI(encodeURI($("#new-password").val()));
         $resource(url).save(null).$promise.then(function (ack) {
             console.log(ack);
 

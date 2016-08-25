@@ -21,11 +21,14 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
         page: 1,           
         count: 5
     }, {
-        counts: [5, 10, 15],
+        counts: [5, 15, 30],
         paginationMaxBlocks: 9,
         total: 0,          
         getData: function (params) {
             return url.get(params.url()).$promise.then(function (body) {
+            	var totalPage = Number(body.data.totalPages);
+            	var size = Number(body.data.size);
+                params.total(totalPage * size);
                 return body.data.content;
             });
         }

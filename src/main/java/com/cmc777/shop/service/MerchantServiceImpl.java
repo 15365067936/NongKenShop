@@ -33,6 +33,9 @@ public class MerchantServiceImpl implements MerchantService{
 	@Autowired
 	private MerchantRepository merchantRepository;
 	
+	@Autowired
+	private GoodsService goodsService;
+	
 	
 
 	@Override
@@ -59,7 +62,8 @@ public class MerchantServiceImpl implements MerchantService{
 	@Transactional(readOnly = false)
 	@Override
 	public void delete(Integer id) {
-		merchantRepository.delete(id);
+		merchantRepository.deleteMerchant(id, Boolean.valueOf("true"));
+		goodsService.deleteByMerchantId(id);
 	}
 	
 	
@@ -86,6 +90,9 @@ public class MerchantServiceImpl implements MerchantService{
 				
 				Predicate deletedPredicate = cb.equal(root.get("isDeleted").as(Boolean.class), false);
 				predicates.add(deletedPredicate);
+				
+				Predicate adminPredicate = cb.notEqual(root.get("loginName").as(String.class), "admin");
+				predicates.add(adminPredicate);
 				
 				Predicate[] pre = new Predicate[predicates.size()];
 	            return cq.where(predicates.toArray(pre)).getRestriction();

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -48,6 +49,8 @@ public class Merchant {
 	//地域
 	@Column(length = 500)
 	private String address;
+	@Transient
+	private String isForbiddenName;
 	
 	private Boolean isDeleted = false;
 	
@@ -122,4 +125,14 @@ public class Merchant {
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
+	public String getIsForbiddenName() {
+		return isForbidden ? "是" : "否" ;
+	}
+
+	public void setIsForbiddenName(String isForbiddenName) {
+		this.isForbiddenName = isForbiddenName;
+	}
+	
+	
 }

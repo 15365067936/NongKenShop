@@ -1,5 +1,7 @@
 package com.cmc777.shop.controller.admin;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmc777.shop.common.BaseException;
+import com.cmc777.shop.common.Global;
 import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Merchant;
@@ -22,7 +25,6 @@ import com.cmc777.shop.service.MerchantService;
 import com.cmc777.shop.util.BeanUtil;
 import com.cmc777.shop.util.JsonUtil;
 import com.cmc777.shop.util.MD5;
-import com.cmc777.shop.util.PasswordUtil;
 
 /**
  * merchant管理
@@ -74,8 +76,7 @@ public class MerchantController {
 	@ResponseBody
 	public RetMsg addMerchant(@RequestBody Merchant merchant) {
 		LOGGER.info("add merchant ====>" + JsonUtil.objectToJson(merchant));
-		String password = PasswordUtil.genRandomNum();
-		merchant.setPassword(password);
+		merchant.setPassword(Global.PASSWORD);
 		String validateStr = BeanUtil.validateBean(merchant);
 		if (StringUtils.isNotBlank(validateStr)) {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), validateStr);
@@ -85,7 +86,7 @@ public class MerchantController {
 			merchant.setPassword(MD5.GetMD5Code(merchant.getPassword()));
 			merchantService.add(merchant);
 			
-			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), password);
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
 		} catch (BaseException b) {
 			LOGGER.error("merchant" + merchant.getLoginName() + "add fail", b);
 			return new RetMsg(b.getErrorCode(), b.getMessage());
@@ -116,13 +117,12 @@ public class MerchantController {
 		}
 		
 		Merchant inDb = merchantService.findOne(merchant);
-		String password = PasswordUtil.genRandomNum();
-		inDb.setPassword(MD5.GetMD5Code(password));
+		inDb.setPassword(MD5.GetMD5Code(Global.PASSWORD));
 		
 		try {
 			merchantService.update(inDb);
 			
-			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), password);
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
 		} catch (Exception e) {
 			LOGGER.error("merchant" + merchant.getLoginName() + "reset password  fail", e);
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
@@ -153,6 +153,14 @@ public class MerchantController {
 				StringUtils.isBlank(oldPassword) || 
 				StringUtils.isBlank(newPassword)) {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		try {
+			loginName = URLDecoder.decode(loginName, "utf-8");
+			oldPassword = URLDecoder.decode(oldPassword, "utf-8");
+			newPassword = URLDecoder.decode(newPassword, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 		
 		List<Merchant> merchants = merchantService.findByLoginName(loginName);

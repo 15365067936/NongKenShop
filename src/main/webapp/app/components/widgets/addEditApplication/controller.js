@@ -24,19 +24,26 @@ module.exports = function ($scope, Upload, $uibModalInstance, $resource, NgTable
     }
 
     $scope.submit = function (NgTableParams) {
-
         if (isEditModel()) {
             url = '/NongKenShop/goods/update-goods.json';
         }
-
-        $scope.application.imageUrls = JSON.stringify($scope.application.imageUrls);
-
-        $resource(url).save($scope.application).$promise.then(
-            function (ack) {
+        
+        //$scope.application.imageUrls = JSON.stringify($scope.application.imageUrls);
+         
+        var params = {
+        		categoryId: $scope.application.categoryId,
+        		categoryTypeId: $scope.application.categoryTypeId,
+        		imageUrls:JSON.stringify($scope.application.imageUrls),
+        		merchant:{id:$scope.application.merchant.id},
+        		name: $scope.application.name,
+        		origin:$scope.application.origin
+        }
+       
+        $resource(url).save(params).$promise.then(function (ack) {
 
             if (ack.respCode != '1000') {
                 $scope.errorMsg = ack.respMsg;
-                return;
+                return false;
             }
             
             $uibModalInstance.close();

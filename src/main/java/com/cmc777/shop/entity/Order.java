@@ -62,6 +62,8 @@ public class Order {
 	@Transient
 	private String updateDateStr;
 	
+	private String customerName;
+	
 	public Long getId() {
 		return id;
 	}
@@ -220,6 +222,14 @@ public class Order {
 
 	public String getStatusName() {
 		return OrderStatus.getStatusName(status);
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 	
 	

@@ -13,6 +13,7 @@ public enum RespInfo {
 	FILE_UPLOAD_FAIL("1101", "文件上传失败"),
 	COMMON_ERROR("1001", "系统异常,请稍后再试"),
 	
+	SHELVE_ERROR("3010", "调整货架失败"),
 	ERR_TOTAL_PRICE("4001", "用户总价格异常"),
 	GOODS_IS_NOT_AVAILABLE("4002", "库存不够");
 	

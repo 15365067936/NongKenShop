@@ -41,6 +41,7 @@ public class CustomerOrder {
 	@Column(length = 500)
 	@NotNull(message = "发货地址不能为空")
 	private String address;
+	private String customerName;
 	@Column(length = 20)
 	@NotNull(message = "电话号码不能为空")
 	private String phone;
@@ -175,6 +176,16 @@ public class CustomerOrder {
 		order.setStatus(this.status);
 		order.setTotalPrice(this.totalPrice);
 		order.setPhone(this.phone);
+		order.setCustomerName(this.customerName);
 		return order;
 	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
 }
