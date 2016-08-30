@@ -275,37 +275,71 @@
 				if (Number(goods.goodsDetail[0].number) <= 0) {
 					$(".my-cart-btn").attr("disabled",true);
 				}
-				$(".my-cart-btn").attr("data-id", goods.goodsDetail[0].id);
+				/*$(".my-cart-btn").attr("data-id", goods.goodsDetail[0].id);
 				$(".my-cart-btn").attr("data-name", goods.name + "-" + goods.goodsDetail[0].specifications);
 				$(".my-cart-btn").attr("data-summary", goods.name + "-" + goods.goodsDetail[0].specifications);
 				$(".my-cart-btn").attr("data-price", goods.goodsDetail[0].price);
 				$(".my-cart-btn").attr("data-quantity", "1");
-				$(".my-cart-btn").attr("data-image", imageUrls[0]);
+				$(".my-cart-btn").attr("data-image", imageUrls[0]);*/
 				$("#specifications").empty();
 				$("#mycart").empty();
 				for (var s = 0;s < goods.goodsDetail.length;s++) {
 					var specInfo = '<a name="spec-info" class="btn btn-info" data="' + encodeURI(JSON.stringify(goods.goodsDetail[s])) + '">' + goods.goodsDetail[s].specifications + '</a> ';
 					$("#specifications").append(specInfo);
-					$(".my-cart-btn").attr("data-id", goods.goodsDetail[s].id);
+					/*$(".my-cart-btn").attr("data-id", goods.goodsDetail[s].id);
 					$(".my-cart-btn").attr("data-name", goods.name + "-" + goods.goodsDetail[s].specifications);
 					$(".my-cart-btn").attr("data-summary", goods.name + "-" + goods.goodsDetail[s].specifications);
 					$(".my-cart-btn").attr("data-price", goods.goodsDetail[s].price);
 					$(".my-cart-btn").attr("data-quantity", "1");
-					$(".my-cart-btn").attr("data-image", imageUrls[0]);
-					/*
+					$(".my-cart-btn").attr("data-image", imageUrls[0]);*/
+					
 					var mycartDiv = '<button id="mycart_' + goods.goodsDetail[s].id + '"' +
-					'class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="76" data-name="Pulao basmati rice" data-summary="summary 76"' + 
-					'data-price="21.00" data-quantity="1" data-image="images/76.png">添加购物车</button>';
+					'class="btn btn-danger my-cart-btn hvr-sweep-to-right" data-id="' + goods.goodsDetail[s].id + '" ' + 
+					'" data-name="' + goods.name + "-" + goods.goodsDetail[s].specifications  + '" ' + 
+					'" data-summary="' +　goods.name + "-" + goods.goodsDetail[s].specifications +　'" ' + 
+					'data-price="' + goods.goodsDetail[s].price + '" ' + 
+					'" data-quantity="1" data-image="' + imageUrls[0] + '">添加购物车</button>';
 					mycartDivs.push(mycartDiv);
 					if (s == 0) {
 						$("#mycart").append(mycartDiv);
 					}
-					*/
-					/*
-					<button
-					data-id="76" data-name="Pulao basmati rice" data-summary="summary 76" 
-					data-price="21.00" data-quantity="1" data-image="images/76.png">添加购物车</button>*/
+					
+					var goToCartIcon = function($addTocartBtn){
+					      var $cartIcon = $(".my-cart-icon");
+					      var $image = $('<img width="30px" height="30px" src="' + $addTocartBtn.data("image") + '"/>').css({"position": "fixed", "z-index": "999"});
+					      $addTocartBtn.prepend($image);
+					      var position = $cartIcon.position();
+					      $image.animate({
+						  
+					      }, 500 , "linear", function() {
+					        $image.remove();
+					      });
+					    }
+
+					    $('#mycart_' + goods.goodsDetail[s].id).myCart({
+					      classCartIcon: 'my-cart-icon',
+					      classCartBadge: 'my-cart-badge',
+					      affixCartIcon: true,
+					      checkoutCart: function(products) {
+					        $.each(products, function(){
+					          console.log(this);
+					        });
+					      },
+					      clickOnAddToCart: function($addTocart){
+					        goToCartIcon($addTocart);
+					      },
+					      getDiscountPrice: function(products) {
+					        var total = 0;
+					        $.each(products, function(){
+					          total += this.quantity * this.price;
+					        });
+					        return total * 1;
+					      }
+					    });
 				}
+				
+
+			    
 			}
 			//console.log($(mycartDivs));
 			/*for(var m = 0;m < mycartDivs.length;m++) {
@@ -322,6 +356,14 @@
 				$("#areas").html(goodsDetail.areas);
 				$("#description").html(goodsDetail.description);
 				$("#sinPrice").html("￥" + goodsDetail.price);
+				console.log(mycartDivs);
+				for(var i = 0; i < mycartDivs.length;i++) {
+					if (mycartDivs[i].indexOf("mycart_" + goodsDetail.id) > 0) {
+						$("#mycart").empty();
+						$("#mycart").append(mycartDivs[i]);
+						break;
+					}
+				}
 				if (Number(goodsDetail.number) <= 0) {
 					$(".my-cart-btn").attr("disabled",true);
 				} else {
@@ -353,7 +395,7 @@ $(document).ready(function(){
 
 <script type='text/javascript' src="js/jquery.mycart.js"></script>
 <script type="text/javascript">
-  $(function () {
+ /* $(function () {
 
     var goToCartIcon = function($addTocartBtn){
       var $cartIcon = $(".my-cart-icon");
@@ -389,6 +431,7 @@ $(document).ready(function(){
     });
 
   });
+ */
   </script>
 </body>
 </html>
