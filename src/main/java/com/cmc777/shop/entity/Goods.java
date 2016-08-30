@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.DynamicInsert;
@@ -37,6 +38,7 @@ public class Goods {
 	//商品名称
 	@Column(length = 100, nullable = false)
 	@NotNull(message = "商品名称不能为空")
+	@Size(min = 1, message = "商品名称不能为空")
 	private String name;
 	
 	@ManyToOne
@@ -46,6 +48,7 @@ public class Goods {
 	
 	//产地
 	@Column(length = 200)
+	@Size(min = 1, message = "产地不能为空")
 	private String origin;
 	
 	@NotNull(message = "商品一级分类不能为空")

@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.apache.avro.data.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ import com.cmc777.shop.entity.GoodsDetail;
 import com.cmc777.shop.repository.shop.GoodsCategoryRepository;
 import com.cmc777.shop.repository.shop.GoodsCategoryTypeRepository;
 import com.cmc777.shop.repository.shop.GoodsRepository;
+import com.cmc777.shop.util.JsonUtil;
 
 @Service
 public class GoodsServiceImpl implements GoodsService{
@@ -81,7 +83,7 @@ public class GoodsServiceImpl implements GoodsService{
 				}
 				
 				if (search != null && search.getMerchant() != null && StringUtils.isNotBlank(search.getMerchant().getLoginName())) {
-					Predicate merchantPredicate = cb.equal(root.join("merchant").get("loginName").as(String.class), search.getMerchant().getLoginName());
+					Predicate merchantPredicate = cb.like(root.join("merchant").get("loginName").as(String.class), "%" + search.getMerchant().getLoginName() + "%");
 					predicates.add(merchantPredicate);
 				}
 				
@@ -103,9 +105,10 @@ public class GoodsServiceImpl implements GoodsService{
 
 	@Override
 	@Transactional(readOnly = false)
-	public void add(Goods goods) {
+	public Goods add(Goods goods) {
 		goods.setGoodsCode(Goods.createGoodsCode());
-		goodsRepository.save(goods);
+		goods = goodsRepository.save(goods);
+		return goods;
 	}
 
 	@Override
@@ -175,5 +178,13 @@ public class GoodsServiceImpl implements GoodsService{
 			throw new BaseException(RespInfo.SHELVE_ERROR.getRespCode(), RespInfo.SHELVE_ERROR.getRespMsg() );
 		}
 		
+	}
+
+	@Override
+	public Goods getCurrentGoods(Integer id) {
+		Goods goods = goodsRepository.findOne(id);
+		goods.setCategory(goodsCategoryRepository.findOne(goods.getCategoryId()));
+		goods.setCategoryType(goodsCategoryTypeRepository.findOne(goods.getCategoryTypeId()));
+		return goods;
 	}
 }

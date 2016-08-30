@@ -45,7 +45,7 @@ public class CustomerOrderController {
 			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), customerOrder.getOrderCode());
 		} catch (BaseException e1) {
 			LOGGER.warn("goods number is not available, order code is " + customerOrder.getOrderCode());
-			return new RetMsg(RespInfo.ERR_TOTAL_PRICE.getRespCode(), RespInfo.ERR_TOTAL_PRICE.getRespMsg());
+			return new RetMsg(e1.getErrorCode(), e1.getMessage());
 		} catch (Exception e) {
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		} 

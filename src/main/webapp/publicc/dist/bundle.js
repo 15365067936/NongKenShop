@@ -78562,11 +78562,11 @@
 
 	    user.initCheck = function() {
 	        
-	        console.log(user);
+	        //console.log(user);
 	        if (!sessionStorage.getItem('role')) {
 	            $window.location.href = '../admin/admin_login.html';
 	        } else {
-	            console.log(sessionStorage.getItem('role'))
+	            //console.log(sessionStorage.getItem('role'))
 
 	            user.userInfo.role = sessionStorage.getItem('role');
 	            user.userInfo.id = sessionStorage.getItem('id');
@@ -78691,12 +78691,12 @@
 	            }
 
 	            $scope.changedValue = function(selected) {
-	                console.log(selected);
+	                //console.log(selected);
 	                userService.currentApp = angular.copy(selected);
 	                localStorageService.set('currentApp', selected);
 	                $state.go('send-message-edit');
 
-	                console.log(userService.currentApp);
+	                //console.log(userService.currentApp);
 	            }
 	        }
 		}
@@ -78783,7 +78783,6 @@
 	            scope.menus = userService.getSidebarMenus(userService.userInfo.role);
 
 	            scope.$watch(function(){return userService.currentApp;}, function(value) {
-	                console.log(999);
 	                scope.menus = userService.getSidebarMenus(userService.userInfo.role, userService.currentApp.channel);
 	            });
 
@@ -78798,7 +78797,7 @@
 /* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "21132e280543039496b8c45b2e35b063.html";
+	module.exports = __webpack_require__.p + "25aeca40cc884197f01c0c03eb1072c3.html";
 
 /***/ },
 /* 59 */
@@ -81387,15 +81386,33 @@
 	//        var $state = $injector.get('$state');
 	//        $state.go('home');
 	//    });
-	    $stateProvider.state('application-list', {
-	            url: "/application-list:applicationId",
+	    $stateProvider.state('goods-list', {
+	            url: "/goods-list",
 	            templateUrl: __webpack_require__(75),
-	            controller: 'applicationListCtrl',
+	            controller: 'goodsListCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
 	                __webpack_require__.e/* nsure */(1, function(require) {
-	                    var mod = __webpack_require__(83);
+	                    var mod = __webpack_require__(84);
+	                    $ocLazyLoad.load({
+	                        name: mod.name,
+	                    });
+
+	                    deferred.resolve(mod.controller);
+	                });
+
+	                return deferred.promise;
+	            }]
+	        }).state('goods-form', {
+	            url: "/goods-form:goodsId",
+	            templateUrl: __webpack_require__(76),
+	            controller: 'goodsFormCtrl',
+	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+	                var deferred = $q.defer();
+
+	                __webpack_require__.e/* nsure */(2, function(require) {
+	                    var mod = __webpack_require__(99);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81407,13 +81424,13 @@
 	            }]
 	        }).state('detail-goods-list', {
 	            url: "/detail-goods-list:good",
-	            templateUrl: __webpack_require__(76),
+	            templateUrl: __webpack_require__(77),
 	            controller: 'detailGoodsListCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(2, function(require) {
-	                    var mod = __webpack_require__(98);
+	                __webpack_require__.e/* nsure */(3, function(require) {
+	                    var mod = __webpack_require__(108);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81425,13 +81442,13 @@
 	            }]
 	        }).state('user-list', {
 	            url: "/user-list",
-	            templateUrl: __webpack_require__(77),
+	            templateUrl: __webpack_require__(78),
 	            controller: 'userListCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(3, function(require) {
-	                    var mod = __webpack_require__(107);
+	                __webpack_require__.e/* nsure */(4, function(require) {
+	                    var mod = __webpack_require__(117);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81443,13 +81460,13 @@
 	            }]
 	        }).state('goods-category', {
 	            url: "/goods-category",
-	            templateUrl: __webpack_require__(78),
+	            templateUrl: __webpack_require__(79),
 	            controller: 'goodsCategoryCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(4, function(require) {
-	                    var mod = __webpack_require__(116);
+	                __webpack_require__.e/* nsure */(5, function(require) {
+	                    var mod = __webpack_require__(126);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81461,13 +81478,13 @@
 	            }]
 	        }).state('goods-category-type', {
 	            url: "/goods-category-type:category",
-	            templateUrl: __webpack_require__(79),
+	            templateUrl: __webpack_require__(80),
 	            controller: 'categoryTypeCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(5, function(require) {
-	                    var mod = __webpack_require__(125);
+	                __webpack_require__.e/* nsure */(6, function(require) {
+	                    var mod = __webpack_require__(135);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81479,13 +81496,13 @@
 	            }]
 	        }).state('myinfo', {
 	            url: "/myinfo",
-	            templateUrl: __webpack_require__(80),
+	            templateUrl: __webpack_require__(81),
 	            controller: 'myInfoCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(6, function(require) {
-	                    var mod = __webpack_require__(134);
+	                __webpack_require__.e/* nsure */(7, function(require) {
+	                    var mod = __webpack_require__(144);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81497,13 +81514,13 @@
 	            }]
 	        }).state('order-manager', {
 	            url: "/order-manager",
-	            templateUrl: __webpack_require__(81),
+	            templateUrl: __webpack_require__(82),
 	            controller: 'orderManegerCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(7, function(require) {
-	                    var mod = __webpack_require__(139);
+	                __webpack_require__.e/* nsure */(8, function(require) {
+	                    var mod = __webpack_require__(149);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81515,13 +81532,13 @@
 	            }]
 	        }).state('order-detail', {
 	            url: "/order-detail:order",
-	            templateUrl: __webpack_require__(82),
+	            templateUrl: __webpack_require__(83),
 	            controller: 'orderDetailCtrl',
 	            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
 	                var deferred = $q.defer();
 
-	                __webpack_require__.e/* nsure */(8, function(require) {
-	                    var mod = __webpack_require__(148);
+	                __webpack_require__.e/* nsure */(9, function(require) {
+	                    var mod = __webpack_require__(158);
 	                    $ocLazyLoad.load({
 	                        name: mod.name,
 	                    });
@@ -81539,46 +81556,52 @@
 /* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "d29d65d5fdc276a1438094f6d3fc61fc.html";
+	module.exports = __webpack_require__.p + "13c70116b1205745c9286178e130783e.html";
 
 /***/ },
 /* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "2c2800f3774fa44d9d0d41768fe4f924.html";
+	module.exports = __webpack_require__.p + "218175c6f9abfbf45d46b0a6c3c6c498.html";
 
 /***/ },
 /* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "1fe15ef573847382a89cd4abe06d0026.html";
+	module.exports = __webpack_require__.p + "e98bc57e71d2a9c0c00cf7b120e6ae01.html";
 
 /***/ },
 /* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "b4b019054c87730022b3c538898cee4b.html";
+	module.exports = __webpack_require__.p + "1fe15ef573847382a89cd4abe06d0026.html";
 
 /***/ },
 /* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "832b3725fa064f417b8f060199703cd4.html";
+	module.exports = __webpack_require__.p + "b4b019054c87730022b3c538898cee4b.html";
 
 /***/ },
 /* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "a5e5bf22f28d0aaa8ff941f99568b0c8.html";
+	module.exports = __webpack_require__.p + "832b3725fa064f417b8f060199703cd4.html";
 
 /***/ },
 /* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "2f1e883abf5f92720b1bccd207c6ff86.html";
+	module.exports = __webpack_require__.p + "a5e5bf22f28d0aaa8ff941f99568b0c8.html";
 
 /***/ },
 /* 82 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2f1e883abf5f92720b1bccd207c6ff86.html";
+
+/***/ },
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "69fd22e24e6ca8552f9cf3c1d686dd64.html";

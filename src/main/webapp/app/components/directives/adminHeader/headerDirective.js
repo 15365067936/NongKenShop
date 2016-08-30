@@ -25,12 +25,12 @@ module.exports = function($rootScope, $scope, $resource, $state, userService, lo
             }
 
             $scope.changedValue = function(selected) {
-                console.log(selected);
+                //console.log(selected);
                 userService.currentApp = angular.copy(selected);
                 localStorageService.set('currentApp', selected);
                 $state.go('send-message-edit');
 
-                console.log(userService.currentApp);
+                //console.log(userService.currentApp);
             }
         }
 	}

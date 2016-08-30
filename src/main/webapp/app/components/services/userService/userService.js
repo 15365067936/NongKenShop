@@ -47,11 +47,11 @@ module.exports = function($rootScope, $window, $location, localStorageService) {
 
     user.initCheck = function() {
         
-        console.log(user);
+        //console.log(user);
         if (!sessionStorage.getItem('role')) {
             $window.location.href = '../admin/admin_login.html';
         } else {
-            console.log(sessionStorage.getItem('role'))
+            //console.log(sessionStorage.getItem('role'))
 
             user.userInfo.role = sessionStorage.getItem('role');
             user.userInfo.id = sessionStorage.getItem('id');

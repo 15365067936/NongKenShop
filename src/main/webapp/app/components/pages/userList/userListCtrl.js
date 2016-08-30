@@ -63,19 +63,15 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     };
     
     $scope.resetPassword = function(user) {
-    	 console.log($scope.categoryType);
          var url = '/NongKenShop/merchant/reset-password.json'
-         $resource(url).save(user).$promise.then(
-             function (ack) {
- 	            console.log(ack);
- 	            if (ack.respCode != '1000') {
- 	                alert(ack.respMsg);
- 	                return;
+         $resource(url).save(user).$promise.then(function (ack) {
+            if (ack.respCode != '1000') {
+                alert(ack.respMsg);
+                return;
              } else {
-            	 alert(ack.data);
+            	 alert("重置密码成功");
              }
-             
-             $scope.tableParams.page(1);
+             //$scope.tableParams.page(1);
              $scope.tableParams.reload();
          });
     }
@@ -95,7 +91,6 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
 
         modalInstance.result.then(function () {
             $resource('/NongKenShop/merchant/delete.json').save({id: User.id}).$promise.then(function (ack) {
-                console.log(ack.respCode);
                 if (ack.respCode != '1000') {
                     alert(ack.respMsg);
                 }

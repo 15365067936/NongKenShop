@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cmc777.shop.common.BaseException;
+import com.cmc777.shop.common.Global;
 import com.cmc777.shop.common.RespInfo;
 import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.Goods;
@@ -65,20 +66,22 @@ public class GoodsController {
 			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), errMsg);
 		}
 		
-//		Merchant current = (Merchant) request.getSession().getAttribute(Global.KEY_CURRENT_USER);
-//		if (goods.getMerchant().getId() == null ||  
-//				!goods.getMerchant().getId().equals(current.getId())) {
-//			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), errMsg);
-//		}
+		Merchant current = (Merchant) request.getSession().getAttribute(Global.KEY_CURRENT_USER);
+		LOGGER.info("当前商户 =" + JsonUtil.objectToJson(current));
+		LOGGER.info("传进来的商户 =" + goods.getMerchant().getId());
+		if (goods.getMerchant().getId() == null ||  
+				!goods.getMerchant().getId().equals(current.getId())) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), errMsg);
+		}
 		
 		try {
-			goodsService.add(goods);
+			goods = goodsService.add(goods);
 		} catch (Exception e) {
 			LOGGER.error("保存商品失败", e);
 			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
 		}
 		
-		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goods);
 	}
 	
 	@RequestMapping(value = "update-goods.json", method = RequestMethod.POST)
@@ -133,5 +136,12 @@ public class GoodsController {
 		} catch (BaseException e) {
 			return new RetMsg(e.getErrorCode(), e.getMessage());
 		} 
+	}
+	
+	@RequestMapping(value = "get-current-goods.json", method = RequestMethod.GET)
+	@ResponseBody
+	public RetMsg getCurrentGoods(Integer id) {
+		Goods goods = goodsService.getCurrentGoods(id);
+		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg(), goods);
 	}
 }

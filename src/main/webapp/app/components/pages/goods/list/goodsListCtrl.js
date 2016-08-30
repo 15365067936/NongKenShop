@@ -11,9 +11,9 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
 
     }
 
-    if($stateParams.applicationId) {
-        $scope.filterField.id = $stateParams.applicationId;
-    }
+    //if($stateParams.applicationId) {
+    //    $scope.filterField.id = $stateParams.applicationId;
+    //}
     $scope.tableParams = new NgTableParams({
         page: 1,           
         count: 5
@@ -80,7 +80,7 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
     $scope.edit = function (application) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: require('file!../../widgets/addEditApplication/template.html'),
+            templateUrl: require('file!../../../widgets/addEditApplication/template.html'),
             controller: 'addEditApplicationCtrl',
             scope: $scope,
             resolve: {
@@ -97,7 +97,7 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
     $scope.new = function (application) {0
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: require('file!../../widgets/addEditApplication/template.html'),
+            templateUrl: require('file!../../../widgets/addEditApplication/template.html'),
             controller: 'addEditApplicationCtrl',
             scope: $scope,
             resolve: {
@@ -147,7 +147,7 @@ module.exports = function ($stateParams, Upload, $scope, $uibModal, $timeout, $r
     $scope.delete = function (application) {
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: require('file!../../widgets/confirmPopup/template.html'),
+            templateUrl: require('file!../../../widgets/confirmPopup/template.html'),
             controller: 'confirmPopupCtrl',
             scope: $scope,
             resolve: {

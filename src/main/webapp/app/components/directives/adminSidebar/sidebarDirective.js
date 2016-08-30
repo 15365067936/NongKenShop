@@ -20,7 +20,6 @@ module.exports = function(userService) {
             scope.menus = userService.getSidebarMenus(userService.userInfo.role);
 
             scope.$watch(function(){return userService.currentApp;}, function(value) {
-                console.log(999);
                 scope.menus = userService.getSidebarMenus(userService.userInfo.role, userService.currentApp.channel);
             });
 

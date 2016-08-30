@@ -46,6 +46,7 @@ public class AlipayPayController {
 		return "alipay/alipayapi";
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@RequestMapping("notify.json")
 	public String notify(HttpServletRequest request) throws UnsupportedEncodingException {
 		//获取支付宝POST过来反馈信息

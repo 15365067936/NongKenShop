@@ -40,7 +40,13 @@ public class GoodsDetailServiceImpl implements GoodsDetailService{
 	@Override
 	@Transactional(readOnly = false)
 	public void update(GoodsDetail detail) {
-		goodsDetailRepository.save(detail);
+		try {
+			adjustNumber(detail, "add", 0f);
+		} catch (BaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//goodsDetailRepository.save(detail);
 	}
 
 	@Override
@@ -54,7 +60,10 @@ public class GoodsDetailServiceImpl implements GoodsDetailService{
 	@Override
 	@Transactional
 	public synchronized void adjustNumber(GoodsDetail goodsDetail, String operation, Float goodsCount) throws BaseException {
-		goodsDetail = goodsDetailRepository.findOne(goodsDetail.getId());
+		if (goodsDetail.getGoods() == null) {
+			goodsDetail = goodsDetailRepository.findOne(goodsDetail.getId());
+		}
+		
 		if (operation.equals("add")) {
 			goodsDetail.setNumber(goodsDetail.getNumber() + goodsCount);
 		} else {

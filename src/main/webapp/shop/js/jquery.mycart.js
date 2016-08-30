@@ -226,10 +226,11 @@
     	
     	var table = $("#my-cart-table");
     	
-    	var tr = table.children().children();
-    	if (tr.length > 0) {
+    	var trs = table.children().children();
+    	if (trs.length > 0) {
     		var customerOrderDetails = [];
-    		for (var i = 0;i < tr.length -2;i++) {
+    		for (var i = 0;i < trs.length -2;i++) {
+    			var tr = $(tr[i]);
     			var goodsDetailId = tr.attr("data-id");
     			var goodsCount = $(tr.children()[3]).children(":first").val();
     			var singlPrice = tr.attr("data-price");
@@ -243,7 +244,7 @@
     			customerOrderDetails.push(detail);
     			
     		}
-    		var totalPrice = $($(tr[tr.length - 2]).children()[4]).children(":first").html();
+    		var totalPrice = $($(trs[trs.length - 2]).children()[4]).children(":first").html();
     		totalPrice = totalPrice.substring(1);
     		var customerOrder = {
     				customerId: customer.id,
@@ -270,7 +271,7 @@
     				if (respData.respCode == "1000") {
     					window.location.href = "../alipay/pay.json?orderCode=" + respData.data;
     				} else {
-    					alert("下单失败");
+    					alert("下单失败， 失败原因:" + respData.respMsg);
     				}
     				
     			},error:function() {

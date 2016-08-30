@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +54,8 @@ public class MerchantServiceImpl implements MerchantService{
 	@Override
 	public Page<Merchant> find(Merchant search, int page, int count) {
 		
-		Pageable pageable = new PageRequest(page - 1, count);
+		Sort sort = new Sort(Direction.DESC, "id");
+		Pageable pageable = new PageRequest(page - 1, count, sort);
 		Specification<Merchant> spec = getWhere(search);
 		Page<Merchant> merchants = merchantRepository.findAll(spec, pageable);
 		LOGGER.info(JsonUtil.objectToJson(merchants));

@@ -1,7 +1,9 @@
 <div>
     <div class="clearfix list-bar">
         <div class="col-sm-4 pull-right">
-            <button type="submit" ng-click="new()" class="btn button-cancel btn-default pull-right">新建商品</button>
+            <!-- <button type="submit" ng-click="new()" class="btn button-cancel btn-default pull-right">新建商品</button> -->
+            <button type="submit" ui-sref="goods-form({goodsId: ''})" class="btn button-cancel btn-default pull-right">新建商品</button>
+        	
         </div>
     </div>
 
@@ -39,8 +41,9 @@
                     <switch name="isShelves" class="wide" ng-model="application.isShelves" ng-click="isShelves(application)"></switch>
                 </td>
                 <td data-title="'操作'">
-                    <a type="button" ng-click="edit(application)" class="btn btn-default btn-operation" title = "详情/编辑">编辑</a>
-                    <a type="button" ui-sref="detail-goods-list({good: '{{application}}'})" class="btn btn-default btn-operation" title = "详情/编辑">管理商品</a>
+                	<a type="button" ui-sref="goods-form({goodsId: '{{application.id}}'})" class="btn btn-default btn-operation" title = "详情/编辑">编辑</a>
+                    <!-- <a type="button" ng-click="edit(application)" class="btn btn-default btn-operation" title = "详情/编辑">编辑</a> -->
+                    <a type="button" ui-sref="detail-goods-list({good: '{{application}}'})" class="btn btn-default btn-operation" title = "查看详情">查看详情</a>
                     <a type="button" ng-click="delete(application)" class="btn btn-default btn-operation" title = "删除">删除</a>
                 </td> 
             </tr>

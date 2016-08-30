@@ -1,0 +1,29 @@
+<div class="popup">
+    <div class="popup-header">
+        <h2 class="popup-title text-center">修改商品库存</h2>
+    </div>
+    <div class="popup-body">
+        <form class="form-horizontal">
+            <label class="expire-color error-label">{{errorMsg}}</label>
+            
+            <div class="form-group">
+                <label for="application-channel" class="col-sm-3 control-label">库存</label>
+                <div class="col-sm-8">
+                    <input type="number" ng-click="applicationInputClick()" class="form-control application-input" id="application-channel" ng-model="goodsNumber" maxlength="47">
+                </div>
+            </div>
+          	<div class="form-group">
+                <label for="operation" class="col-sm-3 control-label">操作类型</label>
+                <div class="col-sm-8">
+                    <select id="operation" ng-model="adjustOperation" ng-options="operation.value as operation.name for operation in operations">  
+                    </select>
+                </div>
+            </div>
+ 
+            <div class="clearfix">
+                <button type="submit" ng-click="cancle()" class="btn button-cancel btn-default pull-right">取消</button>
+                <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">提交</button>
+            </div>
+        </form>
+    </div>  
+</div>

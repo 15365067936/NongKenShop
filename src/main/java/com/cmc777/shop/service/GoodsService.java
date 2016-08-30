@@ -8,7 +8,7 @@ import com.cmc777.shop.entity.Goods;
 public interface GoodsService {
 	Page<Goods> find(Goods search, int page, int count);
 	
-	void add(Goods goods);
+	Goods add(Goods goods);
 	
 	void update(Goods goods);
 	
@@ -21,4 +21,6 @@ public interface GoodsService {
 	void shelvesGoods(Goods goods) throws BaseException;
 
 	void shelvesOutGoods(Goods goods) throws BaseException;
+
+	Goods getCurrentGoods(Integer id);
 }

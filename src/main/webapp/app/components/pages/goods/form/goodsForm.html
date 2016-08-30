@@ -1,0 +1,127 @@
+<div class="popup">
+<fieldset>
+	<legend>编辑商品</legend>
+    <div class="popup-body ">
+        <form class="form-horizontal">
+             <label class="expire-color error-label">{{errorMsg}}</label>
+             <div class="form-group application-property">
+                <label for="application-id" class="col-sm-3 control-label">名称</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-click="applicationInputClick()" 
+                           class="form-control application-input col-sm-4" id="application-id" 
+                           placeholder="(必填)" ng-model="application.name" 
+                           value="{{application.name}}" maxlength="47">
+                </div>
+            </div>
+            <!-- <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">所属商户</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchantId" value="{{application.merchantId}}" maxlength="47">
+                </div>
+            </div> -->
+            <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">产地</label>
+                <div class="col-sm-4">
+                    <input type="text" ng-click="applicationInputClick()" class="col-sm-4 form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.origin" value="{{application.origin}}" maxlength="47">
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-channel" class="col-sm-3 control-label">商品一级分类</label>
+                <div class="col-sm-8">
+                    <select ng-change="getCategoryTypes()" ng-model="application.categoryId" ng-options="c.id as c.name for c in goodsCategorys">  
+                    </select>
+                </div>
+            </div>
+            <div class="form-group application-property">
+                <label for="application-channel" class="col-sm-3 control-label">商品二级分类</label>
+                <div class="col-sm-8">
+                    <select ng-model="application.categoryTypeId" ng-options="categoryType.id as categoryType.name for categoryType in categoryTypes">  
+                    </select>
+                </div>
+            </div>
+            <div ng-repeat="img in application.imageUrls track by $index" class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">图片{{$index + 1}}</label>
+                <div class="col-sm-6">
+                    <img src="{{img}}" width="220" height="220">
+                </div>
+                <a class="col-sm-1 btn btn-default" type="button" ng-click="deleteImg($index)">删除</a>
+            </div>
+            <!-- <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">发货地区</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.goodsArea" value="{{application.goodsArea}}" maxlength="47">
+                </div>
+            </div> -->
+            <!-- <div class="form-group application-property">
+                <label for="application-name" class="col-sm-3 control-label">所属商户</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-name" placeholder="(必填)" ng-model="application.merchant.id" value="{{application..merchant.id}" maxlength="47">
+                </div>
+            </div> -->
+            <div ng-show="application.channel=='FWweixin'" class="form-group application-property">
+                <label for="application-goodsCode" class="col-sm-3 control-label">商品编号</label>
+                <div class="col-sm-8">
+                    <input type="text" ng-click="applicationInputClick()" class="form-control application-input" id="application-goodsCode" placeholder="原始ID" ng-model="application.goodsCode" value="{{application.goodsCode}}" maxlength="47">
+                </div>
+            </div>
+
+          
+           <!--  <div class="form-group isDeleted-switch">
+                <label for="isDeleted-switch" class="col-sm-3 control-label">是否删除</label>
+                <div class="application-switch col-sm-2">
+                    <switch class="wide" name="enabled" ng-model="application.isDeleted"></switch>
+                </div>
+            </div> -->
+        
+            <div class="clearfix col-sm-7">
+                <a type="button" ngf-select="upload($scope, openIdFile, application)" ng-model="openIdFile" name="file" class="pull-right btn btn-default btn-operation" title="上传">上传图片</a>
+                <button type="submit" ng-click="submit()" class="btn btn-primary pull-right">提交</button>
+                <!-- ngf-accept="'image/*'"  -->
+                
+            </div>
+        </form>
+    </div>  
+</fieldset>
+<fieldset>
+	<legend>编辑商品详情</legend>
+	<div loading-container="tableParams.settings().$loading">
+        <table ng-table="tableParams" show-filter="true" class="table table-condensed table-striped">   
+            <tr ng-repeat="detail in details track by $index">
+                <td data-title="'规格'">
+                    <input class="form-control" type="text" value="{{detail.specifications}}" ng-model="detail.specifications" />
+                </td>
+                <td data-title="'单位'">
+                	<input class="form-control" type="text" value="{{detail.unit}}" ng-model="detail.unit" />
+                </td>
+                <td data-title="'单价'">
+                	<input class="form-control" type="number" value="{{detail.price}}" ng-model="detail.price" />
+                </td>
+                <td data-title="'库存'">
+                	<input class="form-control" type="number" value="{{detail.number}}" ng-model="detail.number" ng-disabled="{{detail.id}}" />
+                </td>
+                <td data-title="'打包方式'">
+                	<input class="form-control" type="text" value="{{detail.wayOfPacking}}" ng-model="detail.wayOfPacking" />
+                </td>
+                <td data-title="'运输方式'">
+                	<input class="form-control" type="text" value="{{detail.wayOfTransport}}" ng-model="detail.wayOfTransport" />
+                </td>
+                <td data-title="'物流公司'">
+                	<input class="form-control" type="text" value="{{detail.logisticsCompany}}" ng-model="detail.logisticsCompany" />
+                </td>
+                <td data-title="'配送地区'">
+                	<input class="form-control" type="text" value="{{detail.areas}}" ng-model="detail.areas" />
+                </td>
+                <td data-title="'描述'">
+                	<input class="form-control" type="text" value="{{detail.description}}" ng-model="detail.description" />
+                </td>
+                <td data-title="'操作'">
+                    <a type="button" ng-click="save(detail)" class="btn btn-default btn-operation" title = "新增" ng-show="{{!detail.id}}">新增</a>
+                    <a type="button" ng-click="edit(detail)" class="btn btn-default btn-operation" title = "编辑" ng-show="{{detail.id}}">编辑</a>
+                    <a type="button" ng-click="delete(detail)" class="btn btn-default btn-operation" title = "删除" ng-show="{{detail.id}}">删除</a>
+                	<a type="button" ng-click="adjustNumber(detail)" class="btn btn-default btn-operation" title = "增加库存" ng-show="{{detail.id}}">调整库存</a>
+                </td> 
+            </tr>
+        </table> 
+    </div>
+</fieldset>
+</div>

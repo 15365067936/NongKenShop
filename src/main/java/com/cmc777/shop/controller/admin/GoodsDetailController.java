@@ -18,7 +18,6 @@ import com.cmc777.shop.common.RetMsg;
 import com.cmc777.shop.entity.GoodsDetail;
 import com.cmc777.shop.service.GoodsDetailService;
 import com.cmc777.shop.util.BeanUtil;
-import com.cmc777.shop.util.JsonUtil;
 
 @Controller
 @RequestMapping("goods-detail")
@@ -44,7 +43,6 @@ public class GoodsDetailController {
 	@RequestMapping(value = "add-detail.json", method = RequestMethod.POST)
 	@ResponseBody
 	public RetMsg addDetail(@RequestBody GoodsDetail detail) {
-		LOGGER.info("========>" + JsonUtil.objectToJson(detail));
 		String validate = BeanUtil.validateBean(detail);
 		if (StringUtils.isNotBlank(validate) || 
 				(detail != null && detail.getId() != null)) {
@@ -106,4 +104,25 @@ public class GoodsDetailController {
 		return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
 	}
 	
+	@RequestMapping(value = "adjust-number.json")
+	@ResponseBody
+	public RetMsg adjustDetail(Integer detailId, String operation, Float number) {
+		if (detailId == null || StringUtils.isBlank(operation) || number == null) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		if (!operation.equals("add") &&  !operation.equals("minus")) {
+			return new RetMsg(RespInfo.VALIDATE_ERROR.getRespCode(), RespInfo.VALIDATE_ERROR.getRespMsg());
+		}
+		
+		GoodsDetail detail = new GoodsDetail();
+		detail.setId(detailId);
+		try {
+			goodsDetailService.adjustNumber(detail, operation, number);
+			return new RetMsg(RespInfo.SUCCESS.getRespCode(), RespInfo.SUCCESS.getRespMsg());
+		} catch (Exception e) {
+			LOGGER.error("调整库存失败, 详情id = " + detailId, e);
+			return new RetMsg(RespInfo.COMMON_ERROR.getRespCode(), RespInfo.COMMON_ERROR.getRespMsg());
+		}
+	}
 }

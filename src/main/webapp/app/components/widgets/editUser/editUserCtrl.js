@@ -10,7 +10,6 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
     }
 
     $scope.submit = function () {
-        console.log($scope.user);
         if ($scope.method === '编辑') {
             url = '/NongKenShop/merchant/update.json'
         }
@@ -20,10 +19,6 @@ module.exports = function ($scope, $uibModalInstance, $resource, method, current
                 alert(ack.respMsg);
                 return;
             } 
-            
-            if ($scope.method === "添加") {
-            	alert(ack.data);
-            }
             
             $uibModalInstance.close();
             $scope.tableParams.page(1);

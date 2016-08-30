@@ -9,15 +9,33 @@ angular.module('app').config(['$stateProvider', '$urlRouterProvider', 'localStor
 //        var $state = $injector.get('$state');
 //        $state.go('home');
 //    });
-    $stateProvider.state('application-list', {
-            url: "/application-list:applicationId",
-            templateUrl: require("file!../pages/applicationList/template.html"),
-            controller: 'applicationListCtrl',
+    $stateProvider.state('goods-list', {
+            url: "/goods-list",
+            templateUrl: require("file!../pages/goods/list/template.html"),
+            controller: 'goodsListCtrl',
             resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
                 var deferred = $q.defer();
 
                 require.ensure([], function(require) {
-                    var mod = require('pages/applicationList');
+                    var mod = require('pages/goods/list');
+                    $ocLazyLoad.load({
+                        name: mod.name,
+                    });
+
+                    deferred.resolve(mod.controller);
+                });
+
+                return deferred.promise;
+            }]
+        }).state('goods-form', {
+            url: "/goods-form:goodsId",
+            templateUrl: require("file!../pages/goods/form/goodsForm.html"),
+            controller: 'goodsFormCtrl',
+            resolve: ['$q', '$ocLazyLoad', function($q, $ocLazyLoad) {
+                var deferred = $q.defer();
+
+                require.ensure([], function(require) {
+                    var mod = require('pages/goods/form');
                     $ocLazyLoad.load({
                         name: mod.name,
                     });
