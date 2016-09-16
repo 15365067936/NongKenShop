@@ -8,7 +8,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.avro.data.Json;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,6 @@ import com.cmc777.shop.entity.GoodsDetail;
 import com.cmc777.shop.repository.shop.GoodsCategoryRepository;
 import com.cmc777.shop.repository.shop.GoodsCategoryTypeRepository;
 import com.cmc777.shop.repository.shop.GoodsRepository;
-import com.cmc777.shop.util.JsonUtil;
 
 @Service
 public class GoodsServiceImpl implements GoodsService{
@@ -144,12 +142,13 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteByMerchantId(Integer merchantId) {
 		goodsRepository.deleteByMerchantId(merchantId);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void shelvesGoods(Goods goods) throws BaseException {
 		Goods inDb = goodsRepository.findOne(goods.getId());
 		if (inDb.getGoodsDetail().size() <= 0) {

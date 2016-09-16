@@ -1,5 +1,7 @@
 package com.cmc777.shop.entity.vo;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,8 +32,15 @@ public class OrderFilter {
 		}
 		
 		if (StringUtils.isNotBlank(filter.get("loginName"))) {
+			String loginName = "";
+			try {
+				loginName = URLDecoder.decode(filter.get("loginName"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Merchant merchant = new Merchant();
-			merchant.setLoginName(filter.get("loginName"));
+			merchant.setLoginName(loginName);
 			order.setMerchant(merchant);
 		}
 		

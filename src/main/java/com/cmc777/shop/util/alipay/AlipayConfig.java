@@ -1,5 +1,7 @@
 package com.cmc777.shop.util.alipay;
 
+import com.cmc777.shop.common.Global;
+
 /* *
  *类名：AlipayConfig
  *功能：基础配置类
@@ -26,10 +28,11 @@ public class AlipayConfig {
     public static String key = "7xq77seedbi9vz044vv0jk79hwzvt5mr";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://116.228.50.26:11500/test/notify.json";
+	public static String notify_url = Global.ALIPAY_RETURN_URL;
+			//"http://116.228.50.26:11500/test/notify.json";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://116.228.50.26:11500/NongKenShop/alipay/notify.json";
+	public static String return_url = Global.ALIPAY_RETURN_URL;
 			//"http://116.228.50.26:11500/NongKenShop/shop/index.html";
 			//"http://116.228.50.26:11500/test/notify.json";
 			//"http://商户网址/create_direct_pay_by_user-JAVA-UTF-8/return_url.jsp";

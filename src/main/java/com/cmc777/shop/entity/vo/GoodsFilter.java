@@ -41,12 +41,26 @@ public class GoodsFilter {
 		}
 		
 		if (StringUtils.isNotBlank(filter.get("loginName"))) {
+			String loginName = "";
+			try {
+				loginName = URLDecoder.decode(filter.get("loginName"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Merchant merchant = new Merchant();
-			merchant.setLoginName(filter.get("loginName"));
+			
+			merchant.setLoginName(loginName);
 			goods.setMerchant(merchant);
 		}
 		
 		if (StringUtils.isNotBlank(loginName)) {
+			try {
+				loginName = URLDecoder.decode(loginName, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			Merchant merchant = new Merchant();
 			merchant.setLoginName(loginName);
 			goods.setMerchant(merchant);

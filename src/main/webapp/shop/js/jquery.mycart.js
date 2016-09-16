@@ -204,23 +204,35 @@
         '</div>'
       );
     }
+    
+    var flag = false;
+    
 
     $("#submitOrder").click(function() {
+    	
+    	if(flag) {
+    		return false;
+    	}
+    	flag = true;
     	if(!confirm('是否提交订单?')) {
+    		flag = false;
     		return false;
 		}
     	
     	if (!$("#address").val()) {
     		alert("收货地址不能为空");
+    		flag = false;
     		return false;
     	}
     	if (!$("#phone").val()) {
     		alert("电话号码不能为空");
+    		flag = false;
     		return false;
     	}
     	var customer = JSON.parse(sessionStorage.getItem("currCustomer"));
     	if (!customer) {
     		alert("请重新登录");
+    		flag = false;
     		return false;
     	}
     	
@@ -230,7 +242,7 @@
     	if (trs.length > 0) {
     		var customerOrderDetails = [];
     		for (var i = 0;i < trs.length -2;i++) {
-    			var tr = $(tr[i]);
+    			var tr = $(trs[i]);
     			var goodsDetailId = tr.attr("data-id");
     			var goodsCount = $(tr.children()[3]).children(":first").val();
     			var singlPrice = tr.attr("data-price");
@@ -282,7 +294,7 @@
     		
     	} 
 
-
+    	flag = false;
     	//return false;
     });
     

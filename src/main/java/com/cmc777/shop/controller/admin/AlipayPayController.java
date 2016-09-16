@@ -40,9 +40,9 @@ public class AlipayPayController {
 		
 		request.setAttribute("orderCode", orderCode);
 		System.out.println(orderCode);
-		request.setAttribute("orderName", "农垦商城订单");
+		request.setAttribute("orderName", "农肯商城订单");
 		request.setAttribute("price", customerOrder.getTotalPrice().toString());
-		request.setAttribute("description", "农垦商城订单");
+		request.setAttribute("description", "农肯商城订单");
 		return "alipay/alipayapi";
 	}
 	

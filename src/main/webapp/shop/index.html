@@ -167,28 +167,15 @@
 					<ul class="slides">
 						<li>
 							<div class="w3l_banner_nav_right_banner">
-								<h3>Make your <span>food</span> with Spicy.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
+								
 							</div>
 						</li>
 						<li>
 							<div class="w3l_banner_nav_right_banner1">
-								<h3>Make your <span>food</span> with Spicy.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
+								
 							</div>
 						</li>
-						<li>
-							<div class="w3l_banner_nav_right_banner2">
-								<h3>upto <i>50%</i> off.</h3>
-								<div class="more">
-									<a href="products.html" class="button--saqui button--round-l button--text-thick" data-text="Shop now">Shop now</a>
-								</div>
-							</div>
-						</li>
+				
 					</ul>
 				</div>
 			</section>
@@ -319,6 +306,8 @@
 				for(var i = 0;i < goodsArray.length;i++) {
 					var goods = goodsArray[i];
 					var image = $.parseJSON(goodsArray[i].imageUrls);
+					var goodsName = goods.name + "                    ";
+					goodsName = goodsName.substring(0, 20);
 					var div = '<div class="col-md-3 top_brand_left">' + 
 								   '<div class="hover14 column">' + 
 					          			'<div class="agile_top_brand_left_grid">' + 
@@ -327,7 +316,7 @@
 					          						'<div class="snipcart-item block" >' +
 					          							'<div class="snipcart-thumb">' + 
 					          								'<a href="single.html?goods=' + encodeURI(encodeURI(JSON.stringify(goods))) + '"><img title=" " alt=" " height="220" src="' + (image==null?"":image[0]) + '" /></a>' + 
-					          								'<p><h4>商品名称:</h4>' + goods.name + '</p>' +
+					          								'<p><h4>商品名称:</h4>' + goodsName + '</p>' +
 					          								'<p><h4>商品编号:</h4>' + goods.goodsCode + '</p>' +
 					          								'<p>' + goods.discription + '</p>' +  
 					          							'</div>' + 

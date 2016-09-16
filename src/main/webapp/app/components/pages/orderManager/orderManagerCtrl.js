@@ -4,7 +4,7 @@ module.exports = function ($stateParams, $scope, $uibModal, $timeout, $resource,
     $scope.user = userService;
 
     if ($scope.user.userInfo.role !== 'admin') {
-        var url = $resource('/NongKenShop/order/get-orders-page.json?filter[loginName]=' + $scope.user.userInfo.role);
+        var url = $resource('/NongKenShop/order/get-orders-page.json?filter[loginName]=' + encodeURI(encodeURI($scope.user.userInfo.role)));
 
     } else {
         var url = $resource('/NongKenShop/order/get-orders-page.json');
